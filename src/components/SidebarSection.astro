@@ -1,0 +1,79 @@
+---
+interface Props {
+  title: string;
+  docs: Array<{ slug: string; title: string; order: number }>;
+}
+
+const { title, docs } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<div class="sidebar-section">
+  <button
+    class="sidebar-section-toggle flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+  >
+    <span>{title}</span>
+    <svg
+      class="sidebar-section-icon w-4 h-4 transform transition-transform"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  
+  <div class="sidebar-section-content ml-3 mt-2 space-y-1">
+    {docs.map(doc => {
+      const href = `/docs/${doc.slug}`;
+      const isActive = currentPath === href || currentPath === `${href}/`;
+      
+      return (
+        <a
+          href={href}
+          class={`block px-3 py-2 text-sm rounded-md transition-colors ${
+            isActive
+              ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-600'
+              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+          }`}
+        >
+          {doc.title}
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  // Add dropdown functionality to each section
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.sidebar-section');
+    
+    sections.forEach(section => {
+      const toggle = section.querySelector('.sidebar-section-toggle');
+      const content = section.querySelector('.sidebar-section-content');
+      const icon = section.querySelector('.sidebar-section-icon');
+      
+      // Check if section contains active link
+      const hasActiveLink = content?.querySelector('.bg-primary-50');
+      
+      // Keep sections with active links open by default
+      if (!hasActiveLink) {
+        content?.classList.add('hidden');
+        icon?.classList.add('rotate-180');
+      }
+      
+      toggle?.addEventListener('click', () => {
+        const isHidden = content?.classList.contains('hidden');
+        
+        if (isHidden) {
+          content?.classList.remove('hidden');
+          icon?.classList.remove('rotate-180');
+        } else {
+          content?.classList.add('hidden');
+          icon?.classList.add('rotate-180');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,240 @@
+<div class="relative">
+  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+  </div>
+  <input
+    id="search-input"
+    type="text"
+    placeholder="Search documentation..."
+    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 text-sm"
+  />
+  
+  <!-- Search results dropdown -->
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden max-h-80 overflow-y-auto"
+  >
+    <!-- Results will be populated by JavaScript -->
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+
+<script>
+  // Search data
+  const searchData = [
+    {
+      title: 'Introduction',
+      content: 'Welcome to our comprehensive documentation. Learn how to get started quickly.',
+      category: 'Getting Started',
+      url: '/docs/getting-started/introduction'
+    },
+    {
+      title: 'Quick Start Guide',
+      content: 'Get up and running in just a few minutes with this quick start guide.',
+      category: 'Getting Started',
+      url: '/docs/getting-started/quick-start'
+    },
+    {
+      title: 'Configuration Guide',
+      content: 'Learn how to configure and customize your setup with advanced options.',
+      category: 'Guides',
+      url: '/docs/guides/configuration'
+    },
+    {
+      title: 'API Overview',
+      content: 'Complete reference for all available API methods and endpoints.',
+      category: 'API Reference',
+      url: '/docs/api/overview'
+    },
+    {
+      title: 'Basic Usage Examples',
+      content: 'Simple examples to get you started with basic functionality.',
+      category: 'Examples',
+      url: '/docs/examples/basic-usage'
+    },
+    {
+      title: 'FAQ',
+      content: 'Common questions and answers about using our platform.',
+      category: 'Help & Support',
+      url: '/docs/help/faq'
+    }
+  ];
+
+  // Initialize Fuse.js
+  let fuse = null;
+
+  function initSearch() {
+    if (typeof Fuse !== 'undefined') {
+      fuse = new Fuse(searchData, {
+        keys: ['title', 'content', 'category'],
+        threshold: 0.3,
+        includeScore: false,
+        includeMatches: true
+      });
+      console.log('Search initialized successfully');
+    } else {
+      console.error('Fuse.js not loaded');
+      setTimeout(initSearch, 100); // Retry after 100ms
+    }
+  }
+
+  // Perform search
+  function performSearch(query) {
+    if (!fuse || !query.trim()) {
+      hideSearchResults();
+      return;
+    }
+
+    try {
+      const results = fuse.search(query).slice(0, 8);
+      displaySearchResults(results, query);
+    } catch (error) {
+      console.error('Search error:', error);
+    }
+  }
+
+  // Display search results
+  function displaySearchResults(results, query) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!resultsContainer) return;
+
+    if (results.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="px-4 py-3 text-sm text-gray-500">
+          No results found for "${query}"
+        </div>
+      `;
+    } else {
+      resultsContainer.innerHTML = results.map(result => {
+        const item = result.item;
+        const titleHighlighted = highlightMatches(item.title, result.matches, 'title');
+        const contentHighlighted = highlightMatches(item.content, result.matches, 'content');
+        
+        return `
+          <a
+            href="${item.url}"
+            class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
+          >
+            <div class="flex items-start space-x-3">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">
+                  ${titleHighlighted}
+                </p>
+                <p class="text-xs text-gray-500 mt-1">
+                  ${item.category}
+                </p>
+                <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                  ${contentHighlighted}
+                </p>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    resultsContainer.classList.remove('hidden');
+  }
+
+  // Highlight search matches
+  function highlightMatches(text, matches = [], targetKey = '') {
+    if (!matches || matches.length === 0) return text;
+
+    let highlightedText = text;
+    
+    // Find matches for the specific key (title or content)
+    const relevantMatches = matches.filter(match => match.key === targetKey);
+    
+    if (relevantMatches.length === 0) return text;
+
+    // Sort indices in reverse order to avoid position shifts
+    const allIndices = [];
+    relevantMatches.forEach(match => {
+      if (match.indices) {
+        match.indices.forEach(([start, end]) => {
+          allIndices.push({ start, end });
+        });
+      }
+    });
+
+    // Sort by start position in descending order
+    allIndices.sort((a, b) => b.start - a.start);
+
+    // Apply highlights from end to beginning
+    allIndices.forEach(({ start, end }) => {
+      const before = text.substring(0, start);
+      const match = text.substring(start, end + 1);
+      const after = text.substring(end + 1);
+      highlightedText = before + `<mark class="bg-yellow-200 px-1 rounded">${match}</mark>` + after;
+      text = highlightedText; // Update text for next iteration
+    });
+
+    return highlightedText;
+  }
+
+  // Hide search results
+  function hideSearchResults() {
+    const resultsContainer = document.getElementById('search-results');
+    if (resultsContainer) {
+      resultsContainer.classList.add('hidden');
+    }
+  }
+
+  // Initialize search when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for Fuse.js to load
+    setTimeout(initSearch, 100);
+
+    const searchInput = document.getElementById('search-input');
+    let searchTimeout;
+
+    if (searchInput) {
+      // Handle input changes with debouncing
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          performSearch(query);
+        }, 300);
+      });
+
+      // Show results on focus if there's a query
+      searchInput.addEventListener('focus', function() {
+        if (searchInput.value.trim()) {
+          performSearch(searchInput.value);
+        }
+      });
+
+      // Handle keyboard navigation
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideSearchResults();
+          searchInput.blur();
+        }
+      });
+    }
+
+    // Hide results when clicking outside
+    document.addEventListener('click', function(e) {
+      const searchContainer = e.target.closest('.relative');
+      const searchInput = document.getElementById('search-input');
+      
+      if (!searchContainer || !searchContainer.contains(searchInput)) {
+        hideSearchResults();
+      }
+    });
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

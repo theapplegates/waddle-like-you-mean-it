@@ -1,0 +1,55 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import SearchBar from '../components/SearchBar.astro';
+import MobileMenuToggle from '../components/MobileMenuToggle.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Mobile header -->
+    <header class="lg:hidden bg-white border-b border-gray-200 px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <MobileMenuToggle />
+          <h1 class="text-lg font-semibold text-gray-900">Documentation</h1>
+        </div>
+        <div class="flex-1 max-w-md ml-4">
+          <SearchBar />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex">
+      <!-- Sidebar -->
+      <Sidebar />
+      
+      <!-- Main content -->
+      <main class="flex-1 min-w-0">
+        <!-- Desktop header -->
+        <header class="hidden lg:block bg-white border-b border-gray-200 px-8 py-4">
+          <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-900">Documentation</h1>
+            <div class="max-w-md w-full">
+              <SearchBar />
+            </div>
+          </div>
+        </header>
+        
+        <!-- Content -->
+        <div class="px-4 lg:px-8 py-6">
+          <article class="max-w-4xl mx-auto prose">
+            <slot />
+          </article>
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>

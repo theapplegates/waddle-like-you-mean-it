@@ -1,0 +1,108 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((doc) => ({
+    params: { slug: doc.slug },
+    props: doc,
+  }));
+}
+
+type Props = CollectionEntry<'docs'>;
+
+const doc = Astro.props;
+const { Content } = await doc.render();
+
+// Format the date
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date);
+};
+---
+
+<DocsLayout title={doc.data.title} description={doc.data.description}>
+  <!-- Document header -->
+  <header class="mb-8 pb-6 border-b border-gray-200">
+    <div class="flex items-center text-sm text-gray-500 mb-4">
+      <a href="/" class="hover:text-primary-600">Home</a>
+      <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="capitalize">{doc.data.category.replace('-', ' ')}</span>
+      <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="text-gray-900">{doc.data.title}</span>
+    </div>
+    
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">{doc.data.title}</h1>
+    <p class="text-lg text-gray-600 mb-4">{doc.data.description}</p>
+    
+    {doc.data.lastUpdated && (
+      <div class="flex items-center text-sm text-gray-500">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Last updated: {formatDate(doc.data.lastUpdated)}
+      </div>
+    )}
+  </header>
+
+  <!-- Document content -->
+  <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-code:text-pink-600 prose-code:bg-pink-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
+    <Content />
+  </div>
+
+  <!-- Document footer -->
+  <footer class="mt-12 pt-8 border-t border-gray-200">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+      <div class="text-sm text-gray-500">
+        Found an issue with this page? 
+        <a href="#" class="text-primary-600 hover:text-primary-700">Edit on GitHub</a>
+      </div>
+      <div class="mt-4 sm:mt-0 text-sm text-gray-500">
+        Was this helpful? Let us know!
+      </div>
+    </div>
+  </footer>
+</DocsLayout>
+
+<style>
+  /* Custom prose styles for better code highlighting */
+  .prose pre {
+    @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto;
+  }
+  
+  .prose code {
+    @apply bg-pink-50 text-pink-600 px-1 py-0.5 rounded text-sm;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent text-gray-100 p-0 rounded-none;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-primary-200 bg-primary-50 py-2 px-4 rounded-r-lg;
+  }
+  
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    @apply text-gray-900 font-semibold;
+  }
+  
+  .prose h2 {
+    @apply text-2xl mt-8 mb-4;
+  }
+  
+  .prose h3 {
+    @apply text-xl mt-6 mb-3;
+  }
+  
+  .prose h4 {
+    @apply text-lg mt-4 mb-2;
+  }
+</style>
