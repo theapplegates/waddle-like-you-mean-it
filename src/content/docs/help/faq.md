@@ -3,12 +3,8 @@ title: "Frequently Asked Questions"
 description: "Common questions and answers about using our platform."
 category: "help"
 order: 1
-lastUpdated: 2024-01-15
+lastUpdated: 2025-07-01
 ---
-
-# Frequently Asked Questions
-
-Find answers to common questions about our platform.
 
 ## General Questions
 
@@ -54,12 +50,12 @@ Authentication is handled via API keys:
 ```javascript
 // Include in headers
 const headers = {
-  'Authorization': `Bearer ${YOUR_API_KEY}`
+  Authorization: `Bearer ${YOUR_API_KEY}`,
 };
 
 // Or configure in SDK
 const app = initialize({
-  apiKey: YOUR_API_KEY
+  apiKey: YOUR_API_KEY,
 });
 ```
 
@@ -68,7 +64,7 @@ const app = initialize({
 Rate limits depend on your plan:
 
 - **Free**: 100 requests/hour
-- **Pro**: 1,000 requests/hour  
+- **Pro**: 1,000 requests/hour
 - **Enterprise**: 10,000 requests/hour
 
 You can check your current usage in the dashboard.
@@ -81,8 +77,8 @@ Always wrap API calls in try-catch blocks:
 try {
   const result = await app.getData();
 } catch (error) {
-  console.error('Error code:', error.code);
-  console.error('Error message:', error.message);
+  console.error("Error code:", error.code);
+  console.error("Error message:", error.message);
 }
 ```
 
@@ -104,8 +100,8 @@ Absolutely! Set up webhooks to receive real-time notifications:
 ```javascript
 // Configure webhook endpoint
 app.webhook.configure({
-  url: 'https://your-app.com/webhook',
-  events: ['data.created', 'data.updated', 'data.deleted']
+  url: "https://your-app.com/webhook",
+  events: ["data.created", "data.updated", "data.deleted"],
 });
 ```
 
@@ -171,6 +167,7 @@ Report bugs through:
 3. **Email** - security@example.com for security issues
 
 Include:
+
 - Steps to reproduce
 - Expected vs actual behavior
 - Code samples
@@ -178,7 +175,7 @@ Include:
 
 ## Still Have Questions?
 
-Can't find what you're looking for? 
+Can't find what you're looking for?
 
 - Check our [Troubleshooting Guide](/docs/help/troubleshooting)
 - Visit our [Community Forum](https://community.example.com)

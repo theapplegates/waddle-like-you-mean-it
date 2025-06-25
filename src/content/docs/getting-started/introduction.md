@@ -3,12 +3,8 @@ title: "Introduction"
 description: "Welcome to our documentation. Learn how to get started quickly."
 category: "getting-started"
 order: 1
-lastUpdated: 2024-01-15
+lastUpdated: 2025-07-01
 ---
-
-# Introduction
-
-Welcome to our comprehensive documentation! This guide will help you get started quickly and efficiently.
 
 ## What You'll Learn
 
@@ -41,4 +37,4 @@ If you run into any issues, check out our:
 
 ---
 
-*Ready to dive in? Let's start with the [Quick Start Guide](/docs/getting-started/quick-start)!*
+_Ready to dive in? Let's start with the [Quick Start Guide](/docs/getting-started/quick-start)!_

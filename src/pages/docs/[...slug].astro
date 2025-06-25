@@ -1,20 +1,51 @@
 ---
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
+import ChevronLeft from "@/components/fundations/icons/ChevronLeft.astro";
 // Components
-import Footer from "@/components/global/Footer.astro";
+import DocsFooter from "@/components/global/footers/DocsFooter.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
+
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
-  return docs.map((doc) => ({
-    params: { slug: doc.slug },
-    props: doc,
-  }));
+
+  // Sort docs by order within each category
+  const sortedDocs = docs.sort((a, b) => {
+    if (a.data.category === b.data.category) {
+      return a.data.order - b.data.order;
+    }
+    return a.data.category.localeCompare(b.data.category);
+  });
+
+  return sortedDocs.map((doc, index) => {
+    const prevDoc = index > 0 ? sortedDocs[index - 1] : null;
+    const nextDoc =
+      index < sortedDocs.length - 1 ? sortedDocs[index + 1] : null;
+
+    return {
+      params: { slug: doc.slug },
+      props: {
+        doc,
+        prevDoc,
+        nextDoc,
+      },
+    };
+  });
 }
-type Props = CollectionEntry<"docs">;
-const doc = Astro.props;
+
+type Props = {
+  doc: CollectionEntry<"docs">;
+  prevDoc: CollectionEntry<"docs"> | null;
+  nextDoc: CollectionEntry<"docs"> | null;
+};
+
+const { doc, prevDoc, nextDoc } = Astro.props;
 const { Content } = await doc.render();
+
 // Format the date
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -27,62 +58,130 @@ const formatDate = (date: Date) => {
 
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
-  <header class="mb-8 pb-6 border-b border-base-200">
-    <div class="flex items-center text-sm text-base-500 mb-4">
-      <a href="/" class="hover:text-accent-600">Home</a>
-      <svg
-        class="w-4 h-4 mx-2"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+  <div class="w-full divide-y divide-base-200 dark:divide-base-800">
+    <header>
+      <div
+        class="flex flex-col justify-between h-full px-8 py-4 gap-24 lg:gap-32"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"></path>
-      </svg>
-      <span class="capitalize">{doc.data.category.replace("-", " ")}</span>
-      <svg
-        class="w-4 h-4 mx-2"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"></path>
-      </svg>
-      <span class="text-base-900">{doc.data.title}</span>
-    </div>
-    <h1 class="text-3xl font-bold text-base-900 mb-4">{doc.data.title}</h1>
-    <p class="text-lg text-base-600 mb-4">{doc.data.description}</p>
-    {
-      doc.data.lastUpdated && (
-        <div class="flex items-center text-sm text-base-500">
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div>
+          <div class="flex items-center text-xs gap-1 text-base-500">
+            <a href="/" class="hover:text-accent-600 not-prose">Home</a>
+            <ChevronRight size="xs" />
+            <span class="capitalize">{doc.data.category.replace("-", " ")}</span
+            >
+            <ChevronRight size="xs" />
+            <span class="text-accent-600 dark:text-accent-400"
+              >{doc.data.title}</span
+            >
+          </div>
+          <Text
+            tag="p"
+            variant="textXS"
+            class="mt-1 font-mono font-medium text-base-400 dark:text-base-600"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          Last updated: {formatDate(doc.data.lastUpdated)}
+            Last updated: {formatDate(doc.data.lastUpdated)}
+          </Text>
         </div>
-      )
-    }
-  </header>
-  <!-- Document content -->
-  <Wrapper variant="prose" class="mt-12">
-    <Content />
-  </Wrapper>
-  <Footer />
+        <div>
+          <Text
+            tag="h1"
+            variant="displaySM"
+            class="mt-12 font-meidum text-base-900 dark:text-white"
+          >
+            {doc.data.title}
+          </Text>
+          <Text tag="p" variant="textSM" class="text-base-500 dark:text-white"
+            >{doc.data.description}</Text
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Document content -->
+    <Wrapper variant="prose" class="px-8 py-12">
+      <Content />
+    </Wrapper>
+
+    <!-- Pagination -->
+
+    <div
+      class="w-full grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x"
+    >
+      <div class="w-full">
+        {
+          prevDoc && (
+            <a
+              href={`/docs/${prevDoc.slug}`}
+              class="flex flex-col w-full p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+            >
+              <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+                Previous
+              </div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {prevDoc.data.title}
+              </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {prevDoc.data.category.replace("-", " ")}
+              </div>
+            </a>
+          )
+        }
+      </div>
+
+      <div class="w-full">
+        {
+          nextDoc && (
+            <a
+              href={`/docs/${nextDoc.slug}`}
+              class="flex flex-col justify-end w-full p-8 text-right group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+            >
+              <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+                Next
+              </div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {nextDoc.data.title}
+              </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {nextDoc.data.category.replace("-", " ")}
+              </div>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+
+  <DocsFooter />
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", () => {
+      function copyToClipboard(text, button) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            button.textContent = "Copied!";
+            button.classList.add("copied");
+            setTimeout(() => {
+              button.textContent = "Copy";
+              button.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+            button.textContent = "Failed to copy";
+            setTimeout(() => {
+              button.textContent = "Copy";
+            }, 2000);
+          });
+      }
+
+      document.querySelectorAll("pre code").forEach((block) => {
+        const button = document.createElement("button");
+        button.textContent = "Copy";
+        button.onclick = () => copyToClipboard(block.textContent, button);
+        button.className =
+          "copy-button absolute right-10 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-700 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
+        block.parentElement.insertBefore(button, block);
+      });
+    });
+  </script>
 </DocsLayout>

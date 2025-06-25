@@ -3,12 +3,8 @@ title: "Quick Start Guide"
 description: "Get up and running in just a few minutes with this quick start guide."
 category: "getting-started"
 order: 2
-lastUpdated: 2024-01-15
+lastUpdated: 2025-07-01
 ---
-
-# Quick Start Guide
-
-Get your project up and running in just a few minutes!
 
 ## Installation
 
@@ -30,11 +26,11 @@ pnpm add our-package
 1. **Initialize your project:**
 
 ```javascript
-import { initialize } from 'our-package';
+import { initialize } from "our-package";
 
 const app = initialize({
-  apiKey: 'your-api-key',
-  environment: 'development'
+  apiKey: "your-api-key",
+  environment: "development",
 });
 ```
 
@@ -42,9 +38,9 @@ const app = initialize({
 
 ```javascript
 app.configure({
-  theme: 'light',
-  language: 'en',
-  debug: true
+  theme: "light",
+  language: "en",
+  debug: true,
 });
 ```
 

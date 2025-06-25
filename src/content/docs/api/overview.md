@@ -3,12 +3,8 @@ title: "API Overview"
 description: "Complete overview of our API endpoints and methods."
 category: "api"
 order: 1
-lastUpdated: 2024-01-15
+lastUpdated: 2025-07-01
 ---
-
-# API Overview
-
-Complete reference for all available API methods and endpoints.
 
 ## Authentication
 
@@ -16,8 +12,8 @@ All API requests require authentication using your API key:
 
 ```javascript
 const headers = {
-  'Authorization': `Bearer ${apiKey}`,
-  'Content-Type': 'application/json'
+  Authorization: `Bearer ${apiKey}`,
+  "Content-Type": "application/json",
 };
 ```
 
@@ -44,6 +40,7 @@ async getData(options?: {
 ```
 
 **Parameters:**
+
 - `limit` (optional): Maximum number of results (default: 10)
 - `offset` (optional): Number of results to skip (default: 0)
 - `filter` (optional): Filter criteria object
@@ -53,7 +50,7 @@ async getData(options?: {
 ```javascript
 const data = await app.getData({
   limit: 20,
-  filter: { status: 'active' }
+  filter: { status: "active" },
 });
 ```
 
@@ -69,9 +66,9 @@ async createData(data: CreateDataRequest): Promise<DataResponse>
 
 ```javascript
 const newData = await app.createData({
-  name: 'New Item',
-  description: 'Item description',
-  category: 'example'
+  name: "New Item",
+  description: "Item description",
+  category: "example",
 });
 ```
 
@@ -86,9 +83,9 @@ async updateData(id: string, data: UpdateDataRequest): Promise<DataResponse>
 **Example:**
 
 ```javascript
-const updated = await app.updateData('123', {
-  name: 'Updated Name',
-  status: 'completed'
+const updated = await app.updateData("123", {
+  name: "Updated Name",
+  status: "completed",
 });
 ```
 
@@ -103,7 +100,7 @@ async deleteData(id: string): Promise<void>
 **Example:**
 
 ```javascript
-await app.deleteData('123');
+await app.deleteData("123");
 ```
 
 ## Response Format

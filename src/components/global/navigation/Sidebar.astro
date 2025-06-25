@@ -1,10 +1,13 @@
 ---
-import { getCollection } from "astro:content";
-import SidebarSection from "../navigation/SidebarSection.astro";
-
+// Fundations
+import Button from "@/components/fundations/elements/Button.astro";
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+// Components
+import SidebarLinks from "@/components/global/navigation/SidebarLinks.astro";
 // Get all docs and group by category
+import { getCollection } from "astro:content";
 const allDocs = await getCollection("docs");
-
 const groupedDocs = allDocs.reduce(
   (acc, doc) => {
     const category = doc.data.category;
@@ -20,12 +23,10 @@ const groupedDocs = allDocs.reduce(
   },
   {} as Record<string, Array<{ slug: string; title: string; order: number }>>
 );
-
 // Sort docs within each category by order
 Object.keys(groupedDocs).forEach((category) => {
   groupedDocs[category].sort((a, b) => a.order - b.order);
 });
-
 // Define category display names and order
 const categoryConfig = {
   "getting-started": { name: "Getting Started", order: 1 },
@@ -34,7 +35,6 @@ const categoryConfig = {
   examples: { name: "Examples", order: 4 },
   help: { name: "Help & Support", order: 5 },
 };
-
 const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
   const orderA = categoryConfig[a]?.order || 999;
   const orderB = categoryConfig[b]?.order || 999;
@@ -45,45 +45,29 @@ const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
 <!-- Sidebar backdrop for mobile -->
 <div
   id="sidebar-backdrop"
-  class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"
+  class="fixed inset-0 z-40 hidden bg-base-900/50 lg:hidden"
 >
 </div>
-
 <!-- Sidebar -->
 <aside
   id="sidebar"
-  class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-base-200 transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0"
+  class="fixed inset-y-0 left-0 z-50 bg-white border-r w-72 dark:bg-base-900 border-base-200 dark:border-base-800 transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0"
 >
   <div class="flex flex-col h-full">
     <!-- Logo/Title -->
-    <div
-      class="flex items-center justify-between px-6 py-4 border-b border-base-200"
-    >
-      <a href="/" class="flex items-center space-x-2">
-        <div
-          class="w-8 h-8 bg-accent-600 rounded-lg flex items-center justify-center"
-        >
-          <svg
-            class="w-5 h-5 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-            ></path>
-          </svg>
-        </div>
-        <span class="text-lg font-semibold text-base-900">Docs</span>
+    <div class="flex items-center justify-between px-6 h-14">
+      <a
+        href="/"
+        class="flex items-center space-x-2 text-base-900 dark:text-white"
+      >
+        <Logo class="size-4 text-accent-600 dark:text-accent-400" />
+        <span class="font-semibold text-lg
+ ">ZeroIndex</span>
       </a>
-
       <!-- Close button for mobile -->
       <button
         id="sidebar-close"
-        class="lg:hidden p-2 rounded-md text-base-400 hover:text-base-500 hover:bg-base-100"
+        class="p-2 lg:hidden rounded-md text-base-400 hover:text-base-500 hover:bg-base-200"
       >
         <svg
           class="w-5 h-5"
@@ -99,59 +83,47 @@ const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
         </svg>
       </button>
     </div>
-
-    <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 overflow-y-auto">
-      <div class="space-y-6">
-        {
-          sortedCategories.map((categoryKey) => {
-            const category = categoryConfig[categoryKey];
-            const docs = groupedDocs[categoryKey];
-
-            return (
-              <SidebarSection
-                title={category?.name || categoryKey}
-                docs={docs}
-              />
-            );
-          })
-        }
-      </div>
+      {
+        sortedCategories.map((categoryKey, index) => {
+          const category = categoryConfig[categoryKey];
+          const docs = groupedDocs[categoryKey];
+          return (
+            <SidebarLinks
+              title={category?.name || categoryKey}
+              docs={docs}
+              index={index}
+            />
+          );
+        })
+      }
     </nav>
-
     <!-- Footer -->
-    <div class="px-6 py-4 border-t border-base-200">
-      <div class="text-xs text-base-500">
-        Last updated: {new Date().toLocaleDateString()}
-      </div>
+    <div class="px-6 py-4 border-t border-base-200 dark:border-base-800">
+      <Button isLink={true} size="sm" variant="muted"> Buy ZeroIndex </Button>
     </div>
   </div>
 </aside>
-
 <script>
   // Mobile menu functionality
   const sidebar = document.getElementById("sidebar");
   const sidebarBackdrop = document.getElementById("sidebar-backdrop");
   const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
   const sidebarClose = document.getElementById("sidebar-close");
-
   function openSidebar() {
     sidebar?.classList.remove("-translate-x-full");
     sidebarBackdrop?.classList.remove("hidden");
     document.body.classList.add("menu-open");
   }
-
   function closeSidebar() {
     sidebar?.classList.add("-translate-x-full");
     sidebarBackdrop?.classList.add("hidden");
     document.body.classList.remove("menu-open");
   }
-
   // Event listeners
   mobileMenuToggle?.addEventListener("click", openSidebar);
   sidebarClose?.addEventListener("click", closeSidebar);
   sidebarBackdrop?.addEventListener("click", closeSidebar);
-
   // Close sidebar when clicking on links (mobile)
   const sidebarLinks = sidebar?.querySelectorAll("a");
   sidebarLinks?.forEach((link) => {
@@ -161,7 +133,6 @@ const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
       }
     });
   });
-
   // Handle window resize
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 1024) {

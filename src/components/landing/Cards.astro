@@ -1,0 +1,81 @@
+---
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const cards = [
+  {
+    title: "Quick Start",
+    description: "Get up and running in minutes with our step-by-step guide",
+    href: "/docs/getting-started/quick-start",
+    cta: "Start now →",
+  },
+  {
+    title: "API Reference",
+    description: "Complete reference for all endpoints and methods",
+    href: "/docs/api/overview",
+    cta: "Explore API →",
+  },
+  {
+    title: "Examples",
+    description: "Practical examples and code samples",
+    href: "/docs/examples/basic-usage",
+    cta: "View examples →",
+  },
+  {
+    title: "Guides",
+    description: "In-depth guides for advanced configurations",
+    href: "/docs/guides/configuration",
+    cta: "Read guides →",
+  },
+  {
+    title: "Support",
+    description: "Get help when you need it most",
+    href: "/docs/help/faq",
+    cta: "Get help →",
+  },
+  {
+    title: "Powerful Search",
+    description: "Find exactly what you're looking for instantly",
+    href: "#",
+    cta: "Try searching above ↗",
+  },
+];
+---
+
+<section>
+  <Wrapper class="py-12">
+    <div class="text-center">
+      <Text tag="h2" variant="displaySM" class="font-medium text-base-900"
+        >Everything You Need</Text
+      >
+      <Text tag="p" variant="textBase" class="mt-2 text-base-500">
+        Comprehensive documentation to help you succeed
+      </Text>
+    </div>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        cards.map((card) => (
+          <article
+            role="region"
+            aria-labelledby={card.title.toLowerCase().replace(/\s+/g, "-")}
+          >
+            <header>
+              <h3
+                id={card.title.toLowerCase().replace(/\s+/g, "-")}
+                class="mb-2 text-lg font-semibold text-base-900"
+              >
+                {card.title}
+              </h3>
+            </header>
+            <p class="mb-4 text-base-600">{card.description}</p>
+            <footer>
+              <a href={card.href} class="font-medium">
+                {card.cta}
+              </a>
+            </footer>
+          </article>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

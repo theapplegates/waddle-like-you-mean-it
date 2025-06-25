@@ -1,128 +1,167 @@
 ---
+// Assets
+import Search from "@/components/fundations/icons/Search.astro";
+import RoundedX from "@/components/fundations/icons/RoundedX.astro";
+// Content
 import { getCollection } from "astro:content";
-
-// Load docs content collection
+const { searchId = "default" } = Astro.props;
 const docs = await Promise.all(
   (await getCollection("docs")).map(async (entry) => ({
     title: entry.data.title,
-    content: entry.body, // or entry.data.description if you have a summary
+    content: entry.data.description || entry.body.slice(0, 200),
     category: entry.data.category || "Docs",
     url: `/docs/${entry.slug}`,
   }))
 );
+const inputId = `search-input-${searchId}`;
+const resultsId = `search-results-${searchId}`;
+const modalId = `search-modal-${searchId}`;
 ---
 
-<div class="relative">
+<!-- Trigger Button -->
+<button
+  onclick={`document.getElementById('${modalId}').classList.remove('hidden')`}
+  class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent dark:bg-base-900 transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 dark:ring-base-800 placeholder-base-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-100 focus:outline-none shadow-sm focus:ring-offset-white dark:focus:ring-offset-base-900"
+>
+  <Search slot="icon" size="sm" />
+</button>
+<!-- Modal -->
+<div
+  id={modalId}
+  class="fixed inset-0 flex items-start justify-center hidden p-6 z-60 bg-black/40 backdrop-blur-sm"
+>
+  <!-- Click-outside area -->
   <div
-    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+    class="absolute inset-0"
+    onclick={`document.getElementById('${modalId}').classList.add('hidden')`}
   >
-    <svg
-      class="h-5 w-5 text-gray-400"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-    </svg>
   </div>
-  <input
-    id="search-input"
-    type="text"
-    placeholder="Search documentation..."
-    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 text-sm"
-  />
-
+  <!-- Modal content -->
   <div
-    id="search-results"
-    class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden max-h-80 overflow-y-auto"
+    class="relative z-50 w-full max-w-md mt-24"
+    onclick="event.stopPropagation()"
   >
+    <!--
+      // In case you want  a close button.
+      // But it's not necessary, the modal can be closed by clicking outside of it or pressing the ESC key.
+   Close button
+   <Button
+   iconOnly
+   size="xs"
+   variant="muted"
+   class="hidden ml-auto"
+   onclick={`document.getElementById('${modalId}').classList.add('hidden')`}
+   >
+   <RoundedX slot="icon" size="sm" />
+  </Button>
+  -->
+    <!-- Search Input -->
+    <div class="relative w-full bg-white dark:bg-base-900 rounded-md">
+      <input
+        id={inputId}
+        type="text"
+        autofocus
+        placeholder="Search documentation..."
+        class="block w-full py-2 pl-10 text-xs leading-tight align-middle bg-white border border-transparent dark:bg-base-900 transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 dark:ring-base-800 placeholder-base-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-100 focus:outline-none shadow-sm focus:ring-offset-white dark:focus:ring-offset-base-900"
+      />
+      <div
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+      >
+        <Search slot="icon" size="sm" class="text-base-400" />
+      </div>
+    </div>
+    <!-- Results -->
+    <div
+      id={resultsId}
+      class="flex flex-col w-full overflow-y-auto bg-white max-h-80 rounded-b-md scrollbar-hide focus:outline-none space-y-1 focus:ring-2 focus:ring-accent-500"
+    >
+    </div>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"
-></script>
-
-<script is:inline define:vars={{ docs }}>
-  // Wait for DOM and Fuse to be available
-  document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-input");
-    const resultsContainer = document.getElementById("search-results");
-
+<script is:inline define:vars={{ docs, inputId, resultsId, modalId }}>
+  if (!window.fuseLoaded) {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js";
+    script.onload = () => {
+      window.fuseLoaded = true;
+      window.dispatchEvent(new Event("fuseReady"));
+    };
+    document.head.appendChild(script);
+  }
+  function initializeSearch() {
+    if (typeof Fuse === "undefined") {
+      window.addEventListener("fuseReady", initializeSearch, { once: true });
+      return;
+    }
+    const searchInput = document.getElementById(inputId);
+    const resultsContainer = document.getElementById(resultsId);
+    const modal = document.getElementById(modalId);
+    if (!searchInput || !resultsContainer || !modal) return;
+    if (searchInput.dataset.initialized) return;
+    searchInput.dataset.initialized = "true";
     const fuse = new Fuse(docs, {
       keys: ["title", "content", "category"],
       threshold: 0.3,
       includeMatches: true,
     });
-
     function highlightMatches(text, matches = [], key = "") {
-      if (!matches) return text;
-      const relevant = matches.filter((match) => match.key === key);
-      if (relevant.length === 0) return text;
-
-      let result = text;
-      const indices = relevant
-        .flatMap((m) => m.indices)
-        .sort((a, b) => b[0] - a[0]);
+      if (!matches || !text) return text;
+      const relevant = matches.find((match) => match.key === key);
+      if (!relevant || !relevant.indices) return text;
+      const indices = [...relevant.indices];
+      let result = "";
+      let lastIndex = 0;
       for (const [start, end] of indices) {
-        const before = result.slice(0, start);
-        const match = result.slice(start, end + 1);
-        const after = result.slice(end + 1);
-        result = `${before}<mark class="bg-yellow-200 px-1 rounded">${match}</mark>${after}`;
+        result += text.slice(lastIndex, start);
+        result += `<mark class="font-medium text-blue-600 bg-blue-50">${text.slice(start, end + 1)}</mark>`;
+        lastIndex = end + 1;
       }
+      result += text.slice(lastIndex);
       return result;
     }
-
     function renderResults(results, query) {
-      if (!resultsContainer) return;
       if (!query.trim()) {
-        resultsContainer.classList.add("hidden");
+        resultsContainer.innerHTML = "";
         return;
       }
-
       if (results.length === 0) {
-        resultsContainer.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500">No results for "${query}"</div>`;
+        resultsContainer.innerHTML = `<div class="block p-4 hover:bg-base-50  transition-colors">No results for "${query}"</div>`;
       } else {
         resultsContainer.innerHTML = results
           .slice(0, 8)
           .map((result) => {
             const { title, content, category, url } = result.item;
             const matches = result.matches;
-
             return `
-            <a href="${url}" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors">
-              <div class="text-sm font-medium text-gray-900">${highlightMatches(title, matches, "title")}</div>
-              <div class="text-xs text-gray-500 mt-1">${category}</div>
-              <div class="text-sm text-gray-600 mt-1 line-clamp-2">${highlightMatches(content, matches, "content")}</div>
-            </a>
-          `;
+              <a href="${url}" class="block p-4 hover:bg-base-50 transition-colors">
+                <div class="text-sm font-medium text-base-900">${highlightMatches(title, matches, "title")}</div>
+                <div class="mt-1 text-xs text-base-500">${category}</div>
+                <div class="mt-1 text-sm text-base-600 line-clamp-2">${highlightMatches(content, matches, "content")}</div>
+              </a>
+            `;
           })
           .join("");
       }
-
-      resultsContainer.classList.remove("hidden");
     }
-
     searchInput.addEventListener("input", (e) => {
       const query = e.target.value;
       const results = query.trim() ? fuse.search(query) : [];
       renderResults(results, query);
     });
-
     searchInput.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
-        resultsContainer.classList.add("hidden");
-        searchInput.blur();
+        modal.classList.add("hidden");
       }
     });
-
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".relative")) {
-        resultsContainer.classList.add("hidden");
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modal.classList.add("hidden");
       }
     });
-  });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSearch);
+  } else {
+    initializeSearch();
+  }
 </script>

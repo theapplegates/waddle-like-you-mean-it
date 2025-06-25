@@ -3,12 +3,8 @@ title: "Configuration Guide"
 description: "Learn how to configure and customize your setup."
 category: "guides"
 order: 1
-lastUpdated: 2024-01-15
+lastUpdated: 2025-07-01
 ---
-
-# Configuration Guide
-
-Customize your setup with these configuration options.
 
 ## Basic Configuration
 
@@ -17,7 +13,7 @@ The basic configuration object accepts the following properties:
 ```typescript
 interface Config {
   apiKey: string;
-  environment: 'development' | 'staging' | 'production';
+  environment: "development" | "staging" | "production";
   timeout?: number;
   retries?: number;
 }
@@ -42,9 +38,9 @@ For more advanced use cases, you can configure:
 ```javascript
 app.configure({
   headers: {
-    'X-Custom-Header': 'value',
-    'Authorization': 'Bearer token'
-  }
+    "X-Custom-Header": "value",
+    Authorization: "Bearer token",
+  },
 });
 ```
 
@@ -53,8 +49,8 @@ app.configure({
 ```javascript
 app.configure({
   onError: (error) => {
-    console.error('Custom error handler:', error);
-  }
+    console.error("Custom error handler:", error);
+  },
 });
 ```
 
@@ -65,8 +61,8 @@ app.configure({
   cache: {
     enabled: true,
     ttl: 300000, // 5 minutes
-    maxSize: 100  // Maximum cached items
-  }
+    maxSize: 100, // Maximum cached items
+  },
 });
 ```
 
@@ -86,7 +82,7 @@ Load them in your configuration:
 app.configure({
   apiKey: process.env.API_KEY,
   environment: process.env.ENVIRONMENT,
-  timeout: parseInt(process.env.TIMEOUT)
+  timeout: parseInt(process.env.TIMEOUT),
 });
 ```
 

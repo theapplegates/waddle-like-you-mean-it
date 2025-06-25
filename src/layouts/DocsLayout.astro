@@ -3,48 +3,24 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 // Components
 import Sidebar from "@/components/global/navigation/Sidebar.astro";
-import SearchBar from "@/components/global/navigation/SearchBar.astro";
-import MobileMenuToggle from "@/components/global/navigation/MobileMenuToggle.astro";
-interface Props {
-  title: string;
-  description: string;
-}
-const { title, description } = Astro.props;
+import MobileTopBar from "@/components/global/navigation/MobileTopBar.astro";
+import DesktopTopBar from "@/components/global/navigation/DesktopTopBar.astro";
 ---
 
-<BaseLayout title={title} description={description}>
-  <div class="min-h-screen bg-base-50">
+<BaseLayout hideNav={true} hideFooter={true}>
+  <div class="min-h-screen">
     <!-- Mobile header -->
-    <header class="lg:hidden bg-white border-b border-base-200 px-4 py-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <MobileMenuToggle />
-          <p class="text-lg font-semibold text-base-900">Documentation</p>
-        </div>
-        <div class="flex-1 max-w-md ml-4">
-          <SearchBar />
-        </div>
-      </div>
-    </header>
+    <MobileTopBar />
     <div class="flex">
       <!-- Sidebar -->
       <Sidebar />
       <!-- Main content -->
-      <main class="flex-1 min-w-0">
+      <main class="flex-1 min-w-0 lg:pl-72">
         <!-- Desktop header -->
-        <header
-          class="hidden lg:block bg-white border-b border-base-200 px-8 py-4"
-        >
-          <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-bold text-base-900">Documentation</h1>
-            <div class="max-w-md w-full">
-              <SearchBar />
-            </div>
-          </div>
-        </header>
+        <DesktopTopBar />
         <!-- Content -->
-        <div class="px-4 lg:px-8 py-6">
-          <article class="max-w-4xl mx-auto prose">
+        <div class="py-4 lg:py-14">
+          <article>
             <slot />
           </article>
         </div>
