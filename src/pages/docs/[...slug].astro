@@ -9,10 +9,8 @@ import ChevronLeft from "@/components/fundations/icons/ChevronLeft.astro";
 // Components
 import DocsFooter from "@/components/global/footers/DocsFooter.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
-
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
-
   // Sort docs by order within each category
   const sortedDocs = docs.sort((a, b) => {
     if (a.data.category === b.data.category) {
@@ -20,12 +18,10 @@ export async function getStaticPaths() {
     }
     return a.data.category.localeCompare(b.data.category);
   });
-
   return sortedDocs.map((doc, index) => {
     const prevDoc = index > 0 ? sortedDocs[index - 1] : null;
     const nextDoc =
       index < sortedDocs.length - 1 ? sortedDocs[index + 1] : null;
-
     return {
       params: { slug: doc.slug },
       props: {
@@ -36,16 +32,13 @@ export async function getStaticPaths() {
     };
   });
 }
-
 type Props = {
   doc: CollectionEntry<"docs">;
   prevDoc: CollectionEntry<"docs"> | null;
   nextDoc: CollectionEntry<"docs"> | null;
 };
-
 const { doc, prevDoc, nextDoc } = Astro.props;
-const { Content } = await doc.render();
-
+const { Content, headings } = await doc.render();
 // Format the date
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -58,130 +51,149 @@ const formatDate = (date: Date) => {
 
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
-  <div class="w-full divide-y divide-base-200 dark:divide-base-800">
-    <header>
-      <div
-        class="flex flex-col justify-between h-full px-8 py-4 gap-24 lg:gap-32"
-      >
-        <div>
-          <div class="flex items-center text-xs gap-1 text-base-500">
-            <a href="/" class="hover:text-accent-600 not-prose">Home</a>
-            <ChevronRight size="xs" />
-            <span class="capitalize">{doc.data.category.replace("-", " ")}</span
+
+  <div
+    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
+  >
+    <div class="flex-1 max-w-4xl divide-y divide-base-200 dark:divide-base-800">
+      <header class="px-8 py-4">
+        <div class="flex flex-col justify-between h-full gap-24 lg:gap-62">
+          <div>
+            <div class="flex items-center text-xs gap-1 text-base-500">
+              <a href="/" class="hover:text-accent-600 not-prose">Home</a>
+              <ChevronRight size="xs" />
+              <span class="capitalize"
+                >{doc.data.category.replace("-", " ")}</span
+              >
+              <ChevronRight size="xs" />
+              <span class="text-accent-600 dark:text-accent-400"
+                >{doc.data.title}</span
+              >
+            </div>
+            <Text
+              tag="p"
+              variant="textXS"
+              class="mt-1 font-mono font-medium text-base-400 dark:text-base-600"
             >
-            <ChevronRight size="xs" />
-            <span class="text-accent-600 dark:text-accent-400"
-              >{doc.data.title}</span
+              Last updated: {formatDate(doc.data.lastUpdated)}
+            </Text>
+          </div>
+          <div>
+            <Text
+              tag="h1"
+              variant="displaySM"
+              class="font-meidum text-base-900 dark:text-white"
+            >
+              {doc.data.title}
+            </Text>
+            <Text
+              tag="p"
+              variant="textSM"
+              class="text-base-500 dark:text-base-400"
+              >{doc.data.description}</Text
             >
           </div>
-          <Text
-            tag="p"
-            variant="textXS"
-            class="mt-1 font-mono font-medium text-base-400 dark:text-base-600"
-          >
-            Last updated: {formatDate(doc.data.lastUpdated)}
-          </Text>
         </div>
-        <div>
-          <Text
-            tag="h1"
-            variant="displaySM"
-            class="mt-12 font-meidum text-base-900 dark:text-white"
-          >
-            {doc.data.title}
-          </Text>
-          <Text tag="p" variant="textSM" class="text-base-500 dark:text-white"
-            >{doc.data.description}</Text
-          >
-        </div>
-      </div>
-    </header>
-
-    <!-- Document content -->
-    <Wrapper variant="prose" class="px-8 py-12">
-      <Content />
-    </Wrapper>
-
-    <!-- Pagination -->
-
-    <div
-      class="w-full grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x"
+      </header>
+      <!-- Main content -->
+      <Wrapper variant="prose" class="px-8 py-4">
+        <Content />
+      </Wrapper>
+    </div>
+    <aside
+      class="hidden lg:block w-64 lg:sticky lg:top-14 p-8 h-full lg:self-start"
     >
-      <div class="w-full">
+      <div class="space-y-2">
         {
-          prevDoc && (
-            <a
-              href={`/docs/${prevDoc.slug}`}
-              class="flex flex-col w-full p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
-            >
-              <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
-                Previous
-              </div>
-              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                {prevDoc.data.title}
-              </div>
-              <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                {prevDoc.data.category.replace("-", " ")}
-              </div>
-            </a>
-          )
+          headings
+            .filter((h) => h.depth === 2 || h.depth === 3)
+            .map((heading) => (
+              <a
+                href={`#${heading.slug}`}
+                class="block hover:text-accent-600 text-base-500 dark:text-base-400 text-xs"
+                style={`padding-left: ${heading.depth === 3 ? "1rem" : "0"}`}
+              >
+                {heading.text}
+              </a>
+            ))
         }
       </div>
-
-      <div class="w-full">
-        {
-          nextDoc && (
-            <a
-              href={`/docs/${nextDoc.slug}`}
-              class="flex flex-col justify-end w-full p-8 text-right group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
-            >
-              <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
-                Next
-              </div>
-              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                {nextDoc.data.title}
-              </div>
-              <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                {nextDoc.data.category.replace("-", " ")}
-              </div>
-            </a>
-          )
-        }
-      </div>
+    </aside>
+  </div>
+  <div
+    class="w-full grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-t border-base-200 dark:border-base-800"
+  >
+    <div class="w-full">
+      {
+        prevDoc && (
+          <a
+            href={`/docs/${prevDoc.slug}`}
+            class="flex flex-col w-full p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+          >
+            <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+              Previous
+            </div>
+            <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+              {prevDoc.data.title}
+            </div>
+            <div class="text-xs capitalize text-base-500 dark:text-base-400">
+              {prevDoc.data.category.replace("-", " ")}
+            </div>
+          </a>
+        )
+      }
+    </div>
+    <div class="w-full">
+      {
+        nextDoc && (
+          <a
+            href={`/docs/${nextDoc.slug}`}
+            class="flex flex-col justify-end w-full p-8 text-right group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+          >
+            <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+              Next
+            </div>
+            <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+              {nextDoc.data.title}
+            </div>
+            <div class="text-xs capitalize text-base-500 dark:text-base-400">
+              {nextDoc.data.category.replace("-", " ")}
+            </div>
+          </a>
+        )
+      }
     </div>
   </div>
-
   <DocsFooter />
-  <script type="module">
-    document.addEventListener("DOMContentLoaded", () => {
-      function copyToClipboard(text, button) {
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            button.textContent = "Copied!";
-            button.classList.add("copied");
-            setTimeout(() => {
-              button.textContent = "Copy";
-              button.classList.remove("copied");
-            }, 2000);
-          })
-          .catch((err) => {
-            console.error("Failed to copy: ", err);
-            button.textContent = "Failed to copy";
-            setTimeout(() => {
-              button.textContent = "Copy";
-            }, 2000);
-          });
-      }
-
-      document.querySelectorAll("pre code").forEach((block) => {
-        const button = document.createElement("button");
-        button.textContent = "Copy";
-        button.onclick = () => copyToClipboard(block.textContent, button);
-        button.className =
-          "copy-button absolute right-10 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-700 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
-        block.parentElement.insertBefore(button, block);
-      });
-    });
-  </script>
 </DocsLayout>
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    function copyToClipboard(text, button) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "Copy";
+            button.classList.remove("copied");
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          button.textContent = "Failed to copy";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 2000);
+        });
+    }
+    document.querySelectorAll("pre code").forEach((block) => {
+      const button = document.createElement("button");
+      button.textContent = "Copy";
+      button.onclick = () => copyToClipboard(block.textContent, button);
+      button.className =
+        "copy-button absolute right-2 top-2 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-700 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
+      block.parentElement.insertBefore(button, block);
+    });
+  });
+</script>
