@@ -23,6 +23,7 @@ The template follows a typical Astro project structure. You'll find the followin
 - `src/components/`: Ideal for placing your Astro/React/Vue/Svelte/Preact components.
 - `public/`: For static assets such as images that you want to serve directly.
 
+
 ## Commands
 
 All commands are run from the root of the project, from a terminal:
