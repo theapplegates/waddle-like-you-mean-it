@@ -1,12 +1,23 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-
+import tailwindcss from '@tailwindcss/vite';
+import sitemap from "@astrojs/sitemap";
+import mdx from '@astrojs/mdx';
+// https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   markdown: {
+    drafts: true,
     shikiConfig: {
-      theme: 'github-light',
-      wrap: true
+      theme: "css-variables"
     }
-  }
+  },
+  shikiConfig: {
+    wrap: true,
+    skipInline: false,
+    drafts: true
+  },
+  site: 'https://yourdomain.com',
+  integrations: [sitemap(), mdx()]
 });

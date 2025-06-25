@@ -1,0 +1,128 @@
+---
+import { getCollection } from "astro:content";
+
+// Load docs content collection
+const docs = await Promise.all(
+  (await getCollection("docs")).map(async (entry) => ({
+    title: entry.data.title,
+    content: entry.body, // or entry.data.description if you have a summary
+    category: entry.data.category || "Docs",
+    url: `/docs/${entry.slug}`,
+  }))
+);
+---
+
+<div class="relative">
+  <div
+    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+  >
+    <svg
+      class="h-5 w-5 text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+  </div>
+  <input
+    id="search-input"
+    type="text"
+    placeholder="Search documentation..."
+    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 text-sm"
+  />
+
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden max-h-80 overflow-y-auto"
+  >
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"
+></script>
+
+<script is:inline define:vars={{ docs }}>
+  // Wait for DOM and Fuse to be available
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search-input");
+    const resultsContainer = document.getElementById("search-results");
+
+    const fuse = new Fuse(docs, {
+      keys: ["title", "content", "category"],
+      threshold: 0.3,
+      includeMatches: true,
+    });
+
+    function highlightMatches(text, matches = [], key = "") {
+      if (!matches) return text;
+      const relevant = matches.filter((match) => match.key === key);
+      if (relevant.length === 0) return text;
+
+      let result = text;
+      const indices = relevant
+        .flatMap((m) => m.indices)
+        .sort((a, b) => b[0] - a[0]);
+      for (const [start, end] of indices) {
+        const before = result.slice(0, start);
+        const match = result.slice(start, end + 1);
+        const after = result.slice(end + 1);
+        result = `${before}<mark class="bg-yellow-200 px-1 rounded">${match}</mark>${after}`;
+      }
+      return result;
+    }
+
+    function renderResults(results, query) {
+      if (!resultsContainer) return;
+      if (!query.trim()) {
+        resultsContainer.classList.add("hidden");
+        return;
+      }
+
+      if (results.length === 0) {
+        resultsContainer.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500">No results for "${query}"</div>`;
+      } else {
+        resultsContainer.innerHTML = results
+          .slice(0, 8)
+          .map((result) => {
+            const { title, content, category, url } = result.item;
+            const matches = result.matches;
+
+            return `
+            <a href="${url}" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors">
+              <div class="text-sm font-medium text-gray-900">${highlightMatches(title, matches, "title")}</div>
+              <div class="text-xs text-gray-500 mt-1">${category}</div>
+              <div class="text-sm text-gray-600 mt-1 line-clamp-2">${highlightMatches(content, matches, "content")}</div>
+            </a>
+          `;
+          })
+          .join("");
+      }
+
+      resultsContainer.classList.remove("hidden");
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value;
+      const results = query.trim() ? fuse.search(query) : [];
+      renderResults(results, query);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        resultsContainer.classList.add("hidden");
+        searchInput.blur();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".relative")) {
+        resultsContainer.classList.add("hidden");
+      }
+    });
+  });
+</script>

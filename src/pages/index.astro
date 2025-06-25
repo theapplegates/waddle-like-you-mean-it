@@ -1,36 +1,46 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout 
-  title="Documentation Hub" 
+<BaseLayout
+  title="Documentation Hub"
   description="Welcome to our comprehensive documentation. Find guides, API references, and examples to help you get started."
 >
-  <div class="min-h-screen bg-gradient-to-br from-primary-50 to-white">
+  <div class="min-h-screen bg-gradient-to-br from-accent-50 to-white">
     <!-- Hero Section -->
     <div class="relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="text-center">
-          <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
+          <h1 class="text-4xl font-bold text-base-900 sm:text-5xl md:text-6xl">
             <span class="block">Welcome to our</span>
-            <span class="block text-primary-600">Documentation</span>
+            <span class="block text-accent-600">Documentation</span>
           </h1>
-          <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-600">
-            Find comprehensive guides, API references, and examples to help you integrate our platform seamlessly into your applications.
+          <p class="mt-6 max-w-2xl mx-auto text-xl text-base-600">
+            Find comprehensive guides, API references, and examples to help you
+            integrate our platform seamlessly into your applications.
           </p>
           <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/docs/getting-started/introduction"
-              class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors"
+              class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 transition-colors"
             >
               Get Started
-              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              <svg
+                class="ml-2 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
               </svg>
             </a>
             <a
               href="/docs/api/overview"
-              class="inline-flex items-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              class="inline-flex items-center px-8 py-3 border border-base-300 text-base font-medium rounded-md text-base-700 bg-white hover:bg-base-50 transition-colors"
             >
               API Reference
             </a>
@@ -40,115 +50,240 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <!-- Features Section -->
-    <div class="py-16 bg-white border-t border-gray-200">
+    <div class="py-16 bg-white border-t border-base-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold text-gray-900">Everything You Need</h2>
-          <p class="mt-4 text-lg text-gray-600">Comprehensive documentation to help you succeed</p>
+          <h2 class="text-3xl font-bold text-base-900">Everything You Need</h2>
+          <p class="mt-4 text-lg text-base-600">
+            Comprehensive documentation to help you succeed
+          </p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Quick Start -->
-          <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
-            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          <div
+            class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200"
+          >
+            <div
+              class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Quick Start</h3>
-            <p class="text-gray-600 mb-4">Get up and running in minutes with our step-by-step guide</p>
-            <a href="/docs/getting-started/quick-start" class="text-green-600 hover:text-green-700 font-medium">
+            <h3 class="text-lg font-semibold text-base-900 mb-2">
+              Quick Start
+            </h3>
+            <p class="text-base-600 mb-4">
+              Get up and running in minutes with our step-by-step guide
+            </p>
+            <a
+              href="/docs/getting-started/quick-start"
+              class="text-green-600 hover:text-green-700 font-medium"
+            >
               Start now →
             </a>
           </div>
 
           <!-- API Reference -->
-          <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
-            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+          <div
+            class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200"
+          >
+            <div
+              class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">API Reference</h3>
-            <p class="text-gray-600 mb-4">Complete reference for all endpoints and methods</p>
-            <a href="/docs/api/overview" class="text-blue-600 hover:text-blue-700 font-medium">
+            <h3 class="text-lg font-semibold text-base-900 mb-2">
+              API Reference
+            </h3>
+            <p class="text-base-600 mb-4">
+              Complete reference for all endpoints and methods
+            </p>
+            <a
+              href="/docs/api/overview"
+              class="text-blue-600 hover:text-blue-700 font-medium"
+            >
               Explore API →
             </a>
           </div>
 
           <!-- Examples -->
-          <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
-            <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          <div
+            class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200"
+          >
+            <div
+              class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Examples</h3>
-            <p class="text-gray-600 mb-4">Practical examples and code samples</p>
-            <a href="/docs/examples/basic-usage" class="text-purple-600 hover:text-purple-700 font-medium">
+            <h3 class="text-lg font-semibold text-base-900 mb-2">Examples</h3>
+            <p class="text-base-600 mb-4">
+              Practical examples and code samples
+            </p>
+            <a
+              href="/docs/examples/basic-usage"
+              class="text-purple-600 hover:text-purple-700 font-medium"
+            >
               View examples →
             </a>
           </div>
 
           <!-- Guides -->
-          <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200">
-            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          <div
+            class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200"
+          >
+            <div
+              class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                ></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Guides</h3>
-            <p class="text-gray-600 mb-4">In-depth guides for advanced configurations</p>
-            <a href="/docs/guides/configuration" class="text-orange-600 hover:text-orange-700 font-medium">
+            <h3 class="text-lg font-semibold text-base-900 mb-2">Guides</h3>
+            <p class="text-base-600 mb-4">
+              In-depth guides for advanced configurations
+            </p>
+            <a
+              href="/docs/guides/configuration"
+              class="text-orange-600 hover:text-orange-700 font-medium"
+            >
               Read guides →
             </a>
           </div>
 
           <!-- Support -->
-          <div class="bg-gradient-to-br from-teal-50 to-teal-100 p-6 rounded-lg border border-teal-200">
-            <div class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 11-9.75 9.75A9.75 9.75 0 0112 2.25z"></path>
+          <div
+            class="bg-gradient-to-br from-teal-50 to-teal-100 p-6 rounded-lg border border-teal-200"
+          >
+            <div
+              class="w-12 h-12 bg-teal-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 11-9.75 9.75A9.75 9.75 0 0112 2.25z"
+                ></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Support</h3>
-            <p class="text-gray-600 mb-4">Get help when you need it most</p>
-            <a href="/docs/help/faq" class="text-teal-600 hover:text-teal-700 font-medium">
+            <h3 class="text-lg font-semibold text-base-900 mb-2">Support</h3>
+            <p class="text-base-600 mb-4">Get help when you need it most</p>
+            <a
+              href="/docs/help/faq"
+              class="text-teal-600 hover:text-teal-700 font-medium"
+            >
               Get help →
             </a>
           </div>
 
           <!-- Search -->
-          <div class="bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-lg border border-pink-200">
-            <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          <div
+            class="bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-lg border border-pink-200"
+          >
+            <div
+              class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center mb-4"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Powerful Search</h3>
-            <p class="text-gray-600 mb-4">Find exactly what you're looking for instantly</p>
-            <span class="text-pink-600 font-medium">Try searching above ↗</span>
+            <h3 class="text-lg font-semibold text-base-900 mb-2">
+              Powerful Search
+            </h3>
+            <p class="text-base-600 mb-4">
+              Find exactly what you're looking for instantly
+            </p>
+            <span class="text-pink-600 font-medium">Try searching above ↗</span
+            >
           </div>
         </div>
       </div>
     </div>
 
     <!-- CTA Section -->
-    <div class="bg-primary-600">
+    <div class="bg-accent-600">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center">
           <h2 class="text-3xl font-bold text-white">Ready to Get Started?</h2>
-          <p class="mt-4 text-xl text-primary-100">
-            Jump right in with our quick start guide or explore the full documentation.
+          <p class="mt-4 text-xl text-accent-100">
+            Jump right in with our quick start guide or explore the full
+            documentation.
           </p>
           <div class="mt-8">
             <a
               href="/docs/getting-started/introduction"
-              class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-primary-50 transition-colors"
+              class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-accent-600 bg-white hover:bg-accent-50 transition-colors"
             >
               Start Reading
-              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              <svg
+                class="ml-2 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
               </svg>
             </a>
           </div>
