@@ -121,7 +121,7 @@ const formatDate = (date: Date) => {
           Copy page as Markdown for LLMs
         </Button>
         <Button id="ask-chatgpt" size="xxs" variant="muted">
-          Ask ChatGPT
+          Ask ChatGPTø
         </Button>
         <Button id="ask-claude" size="xxs" variant="muted"> Ask Claude </Button>
       </div>
@@ -161,7 +161,12 @@ const formatDate = (date: Date) => {
     <aside
       class="hidden lg:block w-64 lg:sticky lg:top-14 p-4 pl-0 h-full lg:self-start"
     >
-      <div>
+      <Text
+        tag="h4"
+        variant="textSM"
+        class="text ml-4 text-base-900 dark:text-white">On this page</Text
+      >
+      <div class="mt-4">
         {
           headings
             .filter((h) => h.depth === 2 || h.depth === 3)
