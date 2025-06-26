@@ -8,8 +8,12 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import CircleCheck from "@/components/fundations/icons/CircleCheck.astro";
 import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
 import ArrowDownright from "@/components/fundations/icons/ArrowDownright.astro";
+import GPT from "@/components/fundations/icons/GPT.astro";
+import Claude from "@/components/fundations/icons/Claude.astro";
+import Markdown from "@/components/fundations/icons/Markdown.astro";
 // Scripts
 import AskGPT from "@/components/fundations/scripts/AskGPT.astro";
+import Github from "@/components/fundations/icons/GitHub.astro";
 import AskClaude from "@/components/fundations/scripts/AskClaude.astro";
 import CopyAsMarkdown from "@/components/fundations/scripts/CopyAsMarkdown.astro";
 import CopyToClipboard from "@/components/fundations/scripts/CopyToClipboard.astro";
@@ -114,29 +118,50 @@ const formatDate = (date: Date) => {
           <Content />
         </Wrapper>
       </div>
-      <div
-        class="flex px-8 py-4 gap-2 border-t border-base-200 dark:border-base-800"
-      >
-        <Button id="copy-markdown" size="xxs" variant="muted">
-          Copy page as Markdown for LLMs
-        </Button>
-        <Button id="ask-chatgpt" size="xxs" variant="muted">
-          Ask ChatGPTø
-        </Button>
-        <Button id="ask-claude" size="xxs" variant="muted"> Ask Claude </Button>
-      </div>
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 items-center px-8 py-4 gap-y-12 lg:h-16 border-t border-base-200 dark:border-base-800"
-      >
-        <div class="text-sm text-base-500">
-          Found an issue with this page?
-          <a href="#_" class="text-accent-600 hover:text-accent-700"
-            >Edit on GitHub</a
+      <div class="px-8 py-12 border-t border-base-200 dark:border-base-800">
+        <div class="gap-2 space-y-4">
+          <button
+            id="copy-markdown"
+            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
           >
-        </div>
-        <div class="ml-auto">
-          <div id="feedback-buttons" class="flex gap-2 items-center ml-auto">
-            <span class="text-sm text-base-500 dark:text-base-400">
+            <Markdown
+              slot="icon"
+              size="sm"
+              class="text-base-900 dark:text-white"
+            />
+            Copy page Markdown for LLMs
+          </button>
+          <button
+            id="ask-chatgpt"
+            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+          >
+            <GPT slot="icon" size="sm" class="text-base-900 dark:text-white" />
+            Ask ChatGPTø
+          </button>
+          <button
+            id="ask-claude"
+            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+          >
+            <Claude
+              slot="icon"
+              size="sm"
+              class="text-base-900 dark:text-white"
+            />
+            Ask Claude
+          </button>
+          <a
+            href="#_"
+            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+          >
+            <Github
+              slot="icon"
+              size="sm"
+              class="text-base-900 dark:text-white"
+            />
+            Edit on GitHub</a
+          >
+          <div id="feedback-buttons" class="flex gap-2 items-center">
+            <span class="text-xs text-base-500 dark:text-base-400">
               Was this helpful?</span
             >
             <Button size="xxs" variant="muted" id="yes-btn"> Yes </Button>
