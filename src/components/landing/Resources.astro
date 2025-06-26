@@ -2,33 +2,33 @@
 import Text from "@/components/fundations/elements/Text.astro";
 // Icons
 import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
-const features = [
+
+const resources = [
   {
-    id: "test-mode",
-    title: "Quick Start",
-    description: "Get up and running in minutes with our step-by-step guide",
-    href: "/docs/getting-started/quick-start",
-  },
-  {
-    id: "webhooks",
-    title: "API Reference",
-    description: "Complete reference for all endpoints and methods",
-    href: "/docs/api/overview",
-    cta: "Explore API ",
-  },
-  {
-    id: "logs",
-    title: "Guides",
-    description: "In-depth guides for advanced configurations",
-    href: "/docs/guides/configuration",
-    cta: "Read guides ",
-  },
-  {
-    id: "retries",
+    id: "support",
     title: "Support",
-    description: "Get help when you need it most",
+    description: "Browse our FAQs or get direct help from our support team.",
     href: "/docs/help/faq",
-    cta: "Get help ",
+  },
+  {
+    id: "community",
+    title: "Community",
+    description:
+      "Join our Discord and forums to connect with other developers.",
+    href: "#_",
+  },
+  {
+    id: "tutorials",
+    title: "Tutorials",
+    description:
+      "Hands-on tutorials to guide you through core features and patterns.",
+    href: "/blog/",
+  },
+  {
+    id: "integrations",
+    title: "Integrations",
+    description: "Explore popular tools and third-party integrations.",
+    href: "/integrations",
   },
 ];
 ---
@@ -38,55 +38,50 @@ const features = [
     <div class="max-w-2xl">
       <Text
         tag="h2"
-        id="get-started-heading"
+        id="resources-heading"
         variant="textLG"
         class="font-medium text-base-900 mt-auto dark:text-white"
       >
-        Getting started
+        Resources
       </Text>
       <Text
         tag="p"
         variant="textSM"
-        class="mt-4 text-base-500 dark:text-base-300 leading-6 text-pretty"
+        class="mt-4 text-base-500 dark:text-base-300 leading-6 text-balance"
       >
-        Get started by scaffolding a new Astro project or adding docs to an
-        existing site. You can write pages in Markdown or MDX, customize layouts
-        with Tailwind CSS, and extend functionality with Astro integrations.
-        When you’re ready, deploy anywhere — Astro works great with static hosts
-        and edge platforms.
+        Find the help you need to succeed with your project — from support and
+        tutorials to community and third-party integrations.
       </Text>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mt-12">
       {
-        features.map((feature) => {
-          return (
-            <div class="  flex flex-col h-full justify-between">
-              <div>
-                <Text
-                  tag="h3"
-                  variant="textBase"
-                  class=" font-medium text-base-900 dark:text-white"
-                >
-                  {feature.title}
-                </Text>
-                <Text tag="p" variant="textSM" class="mt-2 text-base-500">
-                  {feature.description}
-                </Text>
-              </div>
-              <a
-                href={feature.href}
-                class="mt-8 text-sm text-accent-600 hover:text-base-900 dark:text-accent-400 items-center  gap-2 flex group"
-                aria-label={`${feature.title}: ${feature.description}`}
+        resources.map((item) => (
+          <div class="flex flex-col  justify-between h-full p-4 bg-base-50 rounded-xl dark:bg-base-800 gap-12 ">
+            <div>
+              <Text
+                tag="h3"
+                variant="textBase"
+                class="font-medium text-base-900 dark:text-white"
               >
-                Read further
-                <ChevronRight
-                  size="sm"
-                  class="group-hover:translate-x-2 duration-300"
-                />
-              </a>
+                {item.title}
+              </Text>
+              <Text tag="p" variant="textSM" class="mt-2 text-base-500">
+                {item.description}
+              </Text>
             </div>
-          );
-        })
+            <a
+              href={item.href}
+              class=" text-sm text-accent-600 hover:text-base-900 dark:text-accent-400 items-center gap-2 flex group"
+              aria-label={`${item.title}: ${item.description}`}
+            >
+              Explore
+              <ChevronRight
+                size="sm"
+                class="group-hover:translate-x-2 duration-300"
+              />
+            </a>
+          </div>
+        ))
       }
     </div>
   </div>
