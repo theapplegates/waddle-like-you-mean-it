@@ -44,56 +44,53 @@ const features = [
 
 <section>
   <Wrapper variant="standard" class="py-4 border-t">
-    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
-      <div class="text-balance lg:w-1/3">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-2">
+      <div class="text-balance p-8 bg-accent-600">
         <Text
           tag="h2"
           id="get-started-heading"
           variant="displaySM"
-          class="font-medium tracking-tight text-black"
+          class="font-medium tracking-tight text-white"
         >
           Everything you need to get started and go further
         </Text>
-        <Text tag="p" variant="textBase" class="mt-4 text-base-500">
+        <Text tag="p" variant="textBase" class="mt-4 text-base-100">
           Comprehensive documentation, practical guides, and expert tips to help
           you succeed
         </Text>
       </div>
-      <div class="lg:w-2/3">
-        <div class="flex flex-col gap-2 lg:sticky lg:top-0 lg:z-40" role="list">
-          {
-            features.map((feature) => {
-              return (
-                <div class="flex flex-col h-full p-4 bg-dots-light   group hover:bg-white  duration-300 outline-transparent hover:outline hover:outline-base-10 bg-burst focus:outline focus:outline-accent-500 focus:ring-2 relative ">
-                  <div class="p-4  bg-white group-hover:bg-dots-light ">
-                    <Button
-                      isLink={true}
-                      iconOnly
-                      size="xs"
-                      variant="muted"
-                      href={feature.href}
-                      role="listitem"
-                      aria-label={`${feature.title}: ${feature.description}`}
-                    >
-                      <ChevronRight slot="icon" size="sm" />
-                    </Button>
-                    <Text
-                      tag="h3"
-                      variant="textBase"
-                      class=" font-medium text-base-900 mt-24"
-                    >
-                      {feature.title}
-                    </Text>
-                    <Text tag="p" variant="textSM" class="mt-2 text-base-500">
-                      {feature.description}
-                    </Text>
-                  </div>
-                </div>
-              );
-            })
-          }
-        </div>
-      </div>
+      {
+        features.map((feature) => {
+          return (
+            <div class="flex flex-col h-full p-4 bg-dots-light   group hover:bg-white  duration-300 outline-transparent hover:outline hover:outline-base-10 bg-burst focus:outline focus:outline-accent-500 focus:ring-2 relative ">
+              <div class="p-4  bg-white group-hover:bg-dots-light h-full">
+                <Button
+                  isLink={true}
+                  iconOnly
+                  size="xs"
+                  variant="muted"
+                  href={feature.href}
+                  role="listitem"
+                  class="ml-auto"
+                  aria-label={`${feature.title}: ${feature.description}`}
+                >
+                  <ChevronRight slot="icon" size="sm" />
+                </Button>
+                <Text
+                  tag="h3"
+                  variant="textBase"
+                  class=" font-medium text-base-900 mt-24"
+                >
+                  {feature.title}
+                </Text>
+                <Text tag="p" variant="textSM" class="mt-2 text-base-500">
+                  {feature.description}
+                </Text>
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
   </Wrapper>
 </section>

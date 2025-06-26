@@ -6,34 +6,30 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
 <section>
-  <Wrapper variant="standard" class="py-32">
-    <div class="text-center text-balance">
+  <Wrapper variant="standard" class="pt-32 pb-8">
+    <div class="text-balance max-w-md text-center mx-auto">
       <Text
         tag="h1"
-        variant="displayLG"
+        variant="displayMD"
         class="font-medium tracking-tight text-black"
       >
-        Developer documentation portal
+        Your next developer documentation portal
       </Text>
-      <Text
-        tag="p"
-        variant="textBase"
-        class="max-w-xl mx-auto mt2 text-base-500"
-      >
+      <Text tag="p" variant="textBase" class="mt2 text-base-500">
         Your complete resource for guides, API references, and integration
         support
       </Text>
     </div>
     <div
-      class="flex flex-wrap items-center justify-center w-full mt-10 just gap-2"
+      class="flex flex-wrap items-center w-full mt-10 just gap-2 justify-center"
     >
       <Button
         isLink={true}
-        size="sm"
+        size="xs"
         variant="accent"
         href="/docs/getting-started/introduction">Get started</Button
       >
-      <Button isLink={true} size="sm" variant="muted" href="/docs/api/overview"
+      <Button isLink={true} size="xs" variant="muted" href="/docs/api/overview"
         >Start free trial</Button
       >
     </div>

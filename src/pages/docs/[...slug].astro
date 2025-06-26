@@ -9,9 +9,13 @@ import CircleCheck from "@/components/fundations/icons/CircleCheck.astro";
 import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
 import ArrowDownright from "@/components/fundations/icons/ArrowDownright.astro";
 // Scripts
+import AskGPT from "@/components/fundations/scripts/AskGPT.astro";
+import AskClaude from "@/components/fundations/scripts/AskClaude.astro";
+import CopyAsMarkdown from "@/components/fundations/scripts/CopyAsMarkdown.astro";
 import CopyToClipboard from "@/components/fundations/scripts/CopyToClipboard.astro";
 import TocAnimationScript from "@/components/fundations/scripts/TocAnimationScript.astro";
 import DocsFeedbackButton from "@/components/fundations/scripts/DocsFeedbackButton.astro";
+// Content
 import { type CollectionEntry, getCollection } from "astro:content";
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
@@ -67,7 +71,7 @@ const formatDate = (date: Date) => {
             <div
               class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
             >
-              <a href="/" class="hover:text-accent-600 not-prose">Home</a>
+              <a href="/" class="hover:text-accent-600">Home</a>
               <ChevronRight size="xs" />
               <span class="capitalize"
                 >{doc.data.category.replace("-", " ")}</span
@@ -104,9 +108,23 @@ const formatDate = (date: Date) => {
         </div>
       </header>
       <!-- Main content -->
-      <Wrapper variant="prose" class="px-8 py-4">
-        <Content />
-      </Wrapper>
+
+      <div id="markdown-content">
+        <Wrapper variant="prose" class="px-8 py-4">
+          <Content />
+        </Wrapper>
+      </div>
+      <div
+        class="flex px-8 py-4 gap-2 border-t border-base-200 dark:border-base-800"
+      >
+        <Button id="copy-markdown" size="xxs" variant="muted">
+          Copy page as Markdown for LLMs
+        </Button>
+        <Button id="ask-chatgpt" size="xxs" variant="muted">
+          Ask ChatGPT
+        </Button>
+        <Button id="ask-claude" size="xxs" variant="muted"> Ask Claude </Button>
+      </div>
       <div
         class="grid grid-cols-1 lg:grid-cols-2 items-center px-8 py-4 gap-y-12 lg:h-16 border-t border-base-200 dark:border-base-800"
       >
@@ -215,3 +233,6 @@ const formatDate = (date: Date) => {
 <TocAnimationScript />
 <DocsFeedbackButton />
 <CopyToClipboard />
+<AskGPT />
+<AskClaude />
+<CopyAsMarkdown />
