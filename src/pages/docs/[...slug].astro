@@ -2,10 +2,11 @@
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Icons
 import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
-import ChevronLeft from "@/components/fundations/icons/ChevronLeft.astro";
+import CircleCheck from "@/components/fundations/icons/CircleCheck.astro";
 // Components
 import DocsFooter from "@/components/global/footers/DocsFooter.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
@@ -51,13 +52,27 @@ const formatDate = (date: Date) => {
 
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
-
   <div
     class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
   >
     <div class="flex-1 max-w-4xl divide-y divide-base-200 dark:divide-base-800">
-      <header class="px-8 py-4">
-        <div class="flex flex-col justify-between h-full gap-24 lg:gap-62">
+      <header class="px-8 py-4 relative">
+        <div
+          style="background-image: 
+  repeating-linear-gradient(
+    45deg,
+    rgba(120, 120, 120, 0.06) 0px,
+    rgba(120, 120, 120, 0.06) 2px,
+    transparent 2px,
+    transparent 4px
+  ),
+  linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));"
+          class="absolute inset-0 mask-l-from-0% mask-b-from-0%"
+        >
+        </div>
+        <div
+          class="flex flex-col justify-between h-full gap-24 lg:gap-48 relative"
+        >
           <div>
             <div class="flex items-center text-xs gap-1 text-base-500">
               <a href="/" class="hover:text-accent-600 not-prose">Home</a>
@@ -99,9 +114,41 @@ const formatDate = (date: Date) => {
       <Wrapper variant="prose" class="px-8 py-4">
         <Content />
       </Wrapper>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 items-center px-8 py-4 gap-y-12 lg:h-16"
+      >
+        <div class="text-sm text-base-500">
+          Found an issue with this page?
+          <a href="#_" class="text-accent-600 hover:text-accent-700"
+            >Edit on GitHub</a
+          >
+        </div>
+        <div class="ml-auto">
+          <div id="feedback-buttons" class="flex gap-2 items-center ml-auto">
+            <span class="text-sm text-base-500 dark:text-base-400">
+              Was this helpful?</span
+            >
+            <Button size="xxs" variant="muted" id="yes-btn"> Yes </Button>
+            <Button size="xxs" variant="muted" id="no-btn"> No </Button>
+          </div>
+          <span id="thank-you" class="hidden">
+            <div class="duration-300 flex justify-center md:justify-start">
+              <div
+                class="flex items-center gap-3 rounded-full bg-emerald-50/50 py-1 pr-3 pl-1.5 text-sm text-emerald-900 ring-1 ring-emerald-500/20 ring-inset dark:bg-emerald-500/5 dark:text-emerald-200 dark:ring-emerald-500/30"
+              >
+                <CircleCheck
+                  size="sm"
+                  class="size-6 flex-none fill-emerald-500 stroke-white dark:fill-emerald-200/20 dark:stroke-emerald-200"
+                />
+                Thanks for your feedback!
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
     </div>
     <aside
-      class="hidden lg:block w-64 lg:sticky lg:top-14 p-8 h-full lg:self-start"
+      class="hidden lg:block w-64 lg:sticky lg:top-14 p-4 h-full lg:self-start"
     >
       <div class="space-y-2">
         {
@@ -110,7 +157,7 @@ const formatDate = (date: Date) => {
             .map((heading) => (
               <a
                 href={`#${heading.slug}`}
-                class="block hover:text-accent-600 text-base-500 dark:text-base-400 text-xs"
+                class="block hover:text-accent-600 text-base-500 dark:text-base-400 text-xs select-none font-mono"
                 style={`padding-left: ${heading.depth === 3 ? "1rem" : "0"}`}
               >
                 {heading.text}
@@ -120,7 +167,8 @@ const formatDate = (date: Date) => {
       </div>
     </aside>
   </div>
-  <div
+  <nav
+    aria-label="Documentation pagination"
     class="w-full grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-t border-base-200 dark:border-base-800"
   >
     <div class="w-full">
@@ -128,16 +176,18 @@ const formatDate = (date: Date) => {
         prevDoc && (
           <a
             href={`/docs/${prevDoc.slug}`}
-            class="flex flex-col w-full p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+            class="flex flex-col w-full gap-12 p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
           >
-            <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+            <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mon">
               Previous
-            </div>
-            <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-              {prevDoc.data.title}
-            </div>
-            <div class="text-xs capitalize text-base-500 dark:text-base-400">
-              {prevDoc.data.category.replace("-", " ")}
+            </span>
+            <div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {prevDoc.data.title}
+              </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {prevDoc.data.category.replace("-", " ")}
+              </div>
             </div>
           </a>
         )
@@ -148,22 +198,24 @@ const formatDate = (date: Date) => {
         nextDoc && (
           <a
             href={`/docs/${nextDoc.slug}`}
-            class="flex flex-col justify-end w-full p-8 text-right group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
+            class="flex flex-col gap-12 justify-end w-full p-8  group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
           >
-            <div class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+            <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mono">
               Next
-            </div>
-            <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-              {nextDoc.data.title}
-            </div>
-            <div class="text-xs capitalize text-base-500 dark:text-base-400">
-              {nextDoc.data.category.replace("-", " ")}
+            </span>
+            <div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {nextDoc.data.title}
+              </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {nextDoc.data.category.replace("-", " ")}
+              </div>
             </div>
           </a>
         )
       }
     </div>
-  </div>
+  </nav>
   <DocsFooter />
 </DocsLayout>
 <script type="module">
@@ -192,8 +244,22 @@ const formatDate = (date: Date) => {
       button.textContent = "Copy";
       button.onclick = () => copyToClipboard(block.textContent, button);
       button.className =
-        "copy-button absolute right-2 top-2 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-700 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
+        "copy-button absolute right-2 top-2 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-900 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
       block.parentElement.insertBefore(button, block);
     });
+  });
+</script>
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    const yesBtn = document.getElementById("yes-btn");
+    const noBtn = document.getElementById("no-btn");
+    const feedbackButtons = document.getElementById("feedback-buttons");
+    const thankYou = document.getElementById("thank-you");
+    const handleFeedback = () => {
+      feedbackButtons.classList.add("hidden");
+      thankYou.classList.remove("hidden");
+    };
+    yesBtn.addEventListener("click", handleFeedback);
+    noBtn.addEventListener("click", handleFeedback);
   });
 </script>
