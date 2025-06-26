@@ -118,7 +118,7 @@ const formatDate = (date: Date) => {
           <Content />
         </Wrapper>
       </div>
-      <div class="px-8 py-12 border-t border-base-200 dark:border-base-800">
+      <div class="p-8 border-t border-base-200 dark:border-base-800">
         <div class="gap-2 space-y-4">
           <button
             id="copy-markdown"
@@ -136,7 +136,7 @@ const formatDate = (date: Date) => {
             class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
           >
             <GPT slot="icon" size="sm" class="text-base-900 dark:text-white" />
-            Ask ChatGPTø
+            Ask ChatGPT
           </button>
           <button
             id="ask-claude"
@@ -170,15 +170,52 @@ const formatDate = (date: Date) => {
           <span id="thank-you" class="hidden">
             <div class="duration-300 flex justify-center md:justify-start">
               <div
-                class="flex items-center gap-3 rounded-full bg-emerald-50/50 py-1 pr-3 pl-1.5 text-sm text-emerald-900 ring-1 ring-emerald-500/20 ring-inset dark:bg-emerald-500/5 dark:text-emerald-200 dark:ring-emerald-500/30"
+                class="text-base-600 dark:text-base-300 text-xs w-full text-left flex items-center gap-2"
               >
-                <CircleCheck
-                  size="sm"
-                  class="size-6 flex-none fill-emerald-500 stroke-white dark:fill-emerald-200/20 dark:stroke-emerald-200"
-                />
+                <CircleCheck size="sm" />
                 Thanks for your feedback!
               </div>
             </div>
+            <form action="" class="max-w-sm mt-4 space-y-2">
+              <div>
+                <div class="flex items-baseline justify-between mb-1 sr-only">
+                  <label
+                    for="message"
+                    class="text-xs font-medium text-base-500 dark:text-base-300"
+                    >Your Message</label
+                  >
+                </div>
+                <div class="relative z-0 focus-within:z-10">
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    autofocus="true"
+                    placeholder="What's on your mind?"
+                    class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent transition duration-300 ease-in-out focus:z-10 rounded-md text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-500 focus:ring-accent-100 focus:ring-2 focus:outline-none shadow-sm dark:bg-base-900 dark:ring-base-800 dark:placeholder-base-500"
+                  ></textarea>
+                </div>
+                <Text
+                  tag="p"
+                  variant="textXS"
+                  class="text-base-500 dark:text-base-400 mt-1"
+                >
+                  Did you mean to reach out to <a
+                    class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 underline"
+                    href="/forms/contact">Support</a
+                  >
+                </Text>
+              </div>
+              <Button
+                size="xxs"
+                variant="accent"
+                gap=""
+                type="submit"
+                class="w-fit"
+              >
+                Send Message
+              </Button>
+            </form>
           </span>
         </div>
       </div>
@@ -198,7 +235,7 @@ const formatDate = (date: Date) => {
             .map((heading) => (
               <a
                 href={`#${heading.slug}`}
-                class="block hover:text-accent-600 py-1 text-base-500 dark:text-base-400 text-xs select-none  border-l-2 border-transparent transition-all duration-200 toc-link"
+                class="block hover:text-accent-600 dark:hover:text-accent-400 py-1 text-base-500 dark:text-base-400 text-xs select-none  border-l-2 border-transparent transition-all duration-200 toc-link"
                 style={`padding-left: ${heading.depth === 3 ? "1.8rem" : "1rem"}`}
                 data-heading-id={heading.slug}
                 data-heading-depth={heading.depth}

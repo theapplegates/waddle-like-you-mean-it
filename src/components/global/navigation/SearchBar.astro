@@ -1,7 +1,7 @@
 ---
 // Assets
 import Search from "@/components/fundations/icons/Search.astro";
-import RoundedX from "@/components/fundations/icons/RoundedX.astro";
+import Command from "@/components/fundations/icons/Command.astro";
 // Content
 import { getCollection } from "astro:content";
 const { searchId = "default" } = Astro.props;
@@ -21,10 +21,22 @@ const modalId = `search-modal-${searchId}`;
 <!-- Trigger Button -->
 <button
   onclick={`document.getElementById('${modalId}').classList.remove('hidden')`}
-  class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent dark:bg-base-900 transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 dark:ring-base-800 placeholder-base-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-100 focus:outline-none shadow-sm focus:ring-offset-white dark:focus:ring-offset-base-900"
+  class="flex items-center justify-between w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent dark:bg-base-900 transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 dark:ring-base-800 placeholder-base-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-100 focus:outline-none shadow-sm focus:ring-offset-white dark:focus:ring-offset-base-900"
 >
-  <Search slot="icon" size="sm" />
+  <div class="flex items-center gap-2">
+    <Search slot="icon" size="sm" />
+    <span>Search docs</span>
+  </div>
+  <kbd
+    class="ml-4 hidden sm:inline-block text-sm text-base-400 dark:text-base-500"
+  >
+    <div class="flex items-center gap-1">
+      <Command slot="icon" size="sm" />
+      K
+    </div>
+  </kbd>
 </button>
+
 <!-- Modal -->
 <div
   id={modalId}
@@ -73,7 +85,7 @@ const modalId = `search-modal-${searchId}`;
     <!-- Results -->
     <div
       id={resultsId}
-      class="flex flex-col w-full overflow-y-auto bg-white max-h-80 rounded-b-md scrollbar-hide focus:outline-none space-y-1 focus:ring-2 focus:ring-accent-500"
+      class="flex flex-col w-full overflow-y-auto bg-white dark:bg-base-800 max-h-80 rounded-b-md scrollbar-hide focus:outline-none space-y-1 focus:ring-2 focus:ring-accent-500"
     >
     </div>
   </div>
@@ -113,7 +125,7 @@ const modalId = `search-modal-${searchId}`;
       let lastIndex = 0;
       for (const [start, end] of indices) {
         result += text.slice(lastIndex, start);
-        result += `<mark class="font-medium text-blue-600 bg-blue-50">${text.slice(start, end + 1)}</mark>`;
+        result += `<mark class="font-medium text-accent-600 bg-accent-50 dark:bg-base-700 dark:text-accent-300">${text.slice(start, end + 1)}</mark>`;
         lastIndex = end + 1;
       }
       result += text.slice(lastIndex);
@@ -125,18 +137,18 @@ const modalId = `search-modal-${searchId}`;
         return;
       }
       if (results.length === 0) {
-        resultsContainer.innerHTML = `<div class="block p-4 hover:bg-base-50  transition-colors">No results for "${query}"</div>`;
+        resultsContainer.innerHTML = `<div class="block p-4 hover:bg-base-50 text-base-900 dark:text-white dark:hover:bg-base-700  transition-colors">No results for "${query}"</div>`;
       } else {
         resultsContainer.innerHTML = results
-          .slice(0, 8)
+
           .map((result) => {
             const { title, content, category, url } = result.item;
             const matches = result.matches;
             return `
-              <a href="${url}" class="block p-4 hover:bg-base-50 transition-colors">
-                <div class="text-sm font-medium text-base-900">${highlightMatches(title, matches, "title")}</div>
-                <div class="mt-1 text-xs text-base-500">${category}</div>
-                <div class="mt-1 text-sm text-base-600 line-clamp-2">${highlightMatches(content, matches, "content")}</div>
+              <a href="${url}" class="block p-4 hover:bg-base-50 transition-colors dark:hover:bg-base-700">
+                <div class="text-sm font-medium text-base-900 dark:text-white">${highlightMatches(title, matches, "title")}</div>
+                <div class="mt-1 text-xs text-base-500 dark:text-base-300 capitalize">${category}</div>
+                <div class="mt-1 text-sm text-base-600 line-clamp-2 dark:text-base-300">${highlightMatches(content, matches, "content")}</div>
               </a>
             `;
           })
@@ -164,4 +176,25 @@ const modalId = `search-modal-${searchId}`;
   } else {
     initializeSearch();
   }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSearch);
+  } else {
+    initializeSearch();
+  }
+
+  // CMD+K / CTRL+K shortcut here 👇
+  document.addEventListener("keydown", (e) => {
+    const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+    const openKeys = (isMac && e.metaKey) || (!isMac && e.ctrlKey);
+
+    if (openKeys && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      const modal = document.getElementById(modalId);
+      const input = document.getElementById(inputId);
+      if (modal && input) {
+        modal.classList.remove("hidden");
+        setTimeout(() => input.focus(), 10);
+      }
+    }
+  });
 </script>
