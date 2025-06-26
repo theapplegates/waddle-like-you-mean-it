@@ -1,7 +1,7 @@
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-import mdx from '@astrojs/mdx';
+import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -10,14 +10,14 @@ export default defineConfig({
   markdown: {
     drafts: true,
     shikiConfig: {
-      theme: "css-variables"
-    }
+      theme: "css-variables",
+    },
   },
   shikiConfig: {
     wrap: true,
     skipInline: false,
-    drafts: true
+    drafts: true,
   },
-  site: 'https://yourdomain.com',
-  integrations: [sitemap(), mdx()]
+  site: "https://yourdomain.com",
+  integrations: [sitemap(), mdx()],
 });

@@ -1,0 +1,32 @@
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    function copyToClipboard(text, button) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "Copy";
+            button.classList.remove("copied");
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          button.textContent = "Failed to copy";
+          setTimeout(() => {
+            button.textContent = "Copy";
+          }, 2000);
+        });
+    }
+
+    document.querySelectorAll("pre code").forEach((block) => {
+      const button = document.createElement("button");
+      button.textContent = "Copy";
+      button.onclick = () => copyToClipboard(block.textContent, button);
+      button.className =
+        "copy-button absolute right-2 top-2 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-900 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
+      block.parentElement.insertBefore(button, block);
+    });
+  });
+</script>

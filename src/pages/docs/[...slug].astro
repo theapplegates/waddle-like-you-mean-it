@@ -5,10 +5,13 @@ import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Icons
-import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
 import CircleCheck from "@/components/fundations/icons/CircleCheck.astro";
-// Components
-import DocsFooter from "@/components/global/footers/DocsFooter.astro";
+import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
+import ArrowDownright from "@/components/fundations/icons/ArrowDownright.astro";
+// Scripts
+import CopyToClipboard from "@/components/fundations/scripts/CopyToClipboard.astro";
+import TocAnimationScript from "@/components/fundations/scripts/TocAnimationScript.astro";
+import DocsFeedbackButton from "@/components/fundations/scripts/DocsFeedbackButton.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
@@ -55,41 +58,31 @@ const formatDate = (date: Date) => {
   <div
     class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
   >
-    <div class="flex-1 max-w-4xl divide-y divide-base-200 dark:divide-base-800">
-      <header class="px-8 py-4 relative">
+    <div class="flex-1 max-w-4xl">
+      <header class="p-4 relative bg-dots-light dark:bg-dots-dark">
         <div
-          style="background-image: 
-  repeating-linear-gradient(
-    45deg,
-    rgba(120, 120, 120, 0.06) 0px,
-    rgba(120, 120, 120, 0.06) 2px,
-    transparent 2px,
-    transparent 4px
-  ),
-  linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));"
-          class="absolute inset-0 mask-l-from-0% mask-b-from-0%"
-        >
-        </div>
-        <div
-          class="flex flex-col justify-between h-full gap-24 lg:gap-48 relative"
+          class="flex flex-col justify-between h-full gap-24 lg:gap-48 relative p-4 bg-white dark:bg-base-900"
         >
           <div>
-            <div class="flex items-center text-xs gap-1 text-base-500">
+            <div
+              class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
+            >
               <a href="/" class="hover:text-accent-600 not-prose">Home</a>
               <ChevronRight size="xs" />
               <span class="capitalize"
                 >{doc.data.category.replace("-", " ")}</span
               >
               <ChevronRight size="xs" />
-              <span class="text-accent-600 dark:text-accent-400"
+              <span class="text-accent-500 dark:text-accent-400"
                 >{doc.data.title}</span
               >
             </div>
             <Text
               tag="p"
               variant="textXS"
-              class="mt-1 font-mono font-medium text-base-400 dark:text-base-600"
+              class="mt-1 font-mono font-medium text-base-400 flex items-center gap-2"
             >
+              <ArrowDownright size="sm" />
               Last updated: {formatDate(doc.data.lastUpdated)}
             </Text>
           </div>
@@ -115,7 +108,7 @@ const formatDate = (date: Date) => {
         <Content />
       </Wrapper>
       <div
-        class="grid grid-cols-1 lg:grid-cols-2 items-center px-8 py-4 gap-y-12 lg:h-16"
+        class="grid grid-cols-1 lg:grid-cols-2 items-center px-8 py-4 gap-y-12 lg:h-16 border-t border-base-200 dark:border-base-800"
       >
         <div class="text-sm text-base-500">
           Found an issue with this page?
@@ -148,17 +141,19 @@ const formatDate = (date: Date) => {
       </div>
     </div>
     <aside
-      class="hidden lg:block w-64 lg:sticky lg:top-14 p-4 h-full lg:self-start"
+      class="hidden lg:block w-64 lg:sticky lg:top-14 p-4 pl-0 h-full lg:self-start"
     >
-      <div class="space-y-2">
+      <div>
         {
           headings
             .filter((h) => h.depth === 2 || h.depth === 3)
             .map((heading) => (
               <a
                 href={`#${heading.slug}`}
-                class="block hover:text-accent-600 text-base-500 dark:text-base-400 text-xs select-none font-mono"
-                style={`padding-left: ${heading.depth === 3 ? "1rem" : "0"}`}
+                class="block hover:text-accent-600 py-1 text-base-500 dark:text-base-400 text-xs select-none  border-l-2 border-transparent transition-all duration-200 toc-link"
+                style={`padding-left: ${heading.depth === 3 ? "1.5rem" : "0.75rem"}`}
+                data-heading-id={heading.slug}
+                data-heading-depth={heading.depth}
               >
                 {heading.text}
               </a>
@@ -216,50 +211,7 @@ const formatDate = (date: Date) => {
       }
     </div>
   </nav>
-  <DocsFooter />
 </DocsLayout>
-<script type="module">
-  document.addEventListener("DOMContentLoaded", () => {
-    function copyToClipboard(text, button) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          button.textContent = "Copied!";
-          button.classList.add("copied");
-          setTimeout(() => {
-            button.textContent = "Copy";
-            button.classList.remove("copied");
-          }, 2000);
-        })
-        .catch((err) => {
-          console.error("Failed to copy: ", err);
-          button.textContent = "Failed to copy";
-          setTimeout(() => {
-            button.textContent = "Copy";
-          }, 2000);
-        });
-    }
-    document.querySelectorAll("pre code").forEach((block) => {
-      const button = document.createElement("button");
-      button.textContent = "Copy";
-      button.onclick = () => copyToClipboard(block.textContent, button);
-      button.className =
-        "copy-button absolute right-2 top-2 bg-white cursor-pointer border-base-50 border ml-auto flex mb-4 w-16 dark:bg-base-900 dark:text-white text-black easy-out focus:ring-2 focus:ring-accent-400 dark:focus:ring-accent-400 duration-300 transition-all dark:border-base-900 text-center justify-center px-2 rounded-md h-6 text-[0.68rem] items-center";
-      block.parentElement.insertBefore(button, block);
-    });
-  });
-</script>
-<script type="module">
-  document.addEventListener("DOMContentLoaded", () => {
-    const yesBtn = document.getElementById("yes-btn");
-    const noBtn = document.getElementById("no-btn");
-    const feedbackButtons = document.getElementById("feedback-buttons");
-    const thankYou = document.getElementById("thank-you");
-    const handleFeedback = () => {
-      feedbackButtons.classList.add("hidden");
-      thankYou.classList.remove("hidden");
-    };
-    yesBtn.addEventListener("click", handleFeedback);
-    noBtn.addEventListener("click", handleFeedback);
-  });
-</script>
+<TocAnimationScript />
+<DocsFeedbackButton />
+<CopyToClipboard />

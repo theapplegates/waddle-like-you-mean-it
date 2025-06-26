@@ -1,39 +1,39 @@
 ---
 import Text from "@/components/fundations/elements/Text.astro";
-import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-const cards = [
+import Button from "@/components/fundations/elements/Button.astro";
+// Icons
+import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
+const features = [
   {
+    id: "test-mode",
     title: "Quick Start",
     description: "Get up and running in minutes with our step-by-step guide",
     href: "/docs/getting-started/quick-start",
-    cta: "Start now →",
   },
   {
+    id: "webhooks",
     title: "API Reference",
     description: "Complete reference for all endpoints and methods",
     href: "/docs/api/overview",
-    cta: "Explore API →",
+    cta: "Explore API ",
   },
   {
-    title: "Examples",
-    description: "Practical examples and code samples",
-    href: "/docs/examples/basic-usage",
-    cta: "View examples →",
-  },
-  {
+    id: "logs",
     title: "Guides",
     description: "In-depth guides for advanced configurations",
     href: "/docs/guides/configuration",
-    cta: "Read guides →",
+    cta: "Read guides ",
   },
   {
+    id: "retries",
     title: "Support",
     description: "Get help when you need it most",
     href: "/docs/help/faq",
-    cta: "Get help →",
+    cta: "Get help ",
   },
   {
+    id: "tracking",
     title: "Powerful Search",
     description: "Find exactly what you're looking for instantly",
     href: "#",
@@ -43,39 +43,57 @@ const cards = [
 ---
 
 <section>
-  <Wrapper class="py-12">
-    <div class="text-center">
-      <Text tag="h2" variant="displaySM" class="font-medium text-base-900"
-        >Everything You Need</Text
-      >
-      <Text tag="p" variant="textBase" class="mt-2 text-base-500">
-        Comprehensive documentation to help you succeed
-      </Text>
-    </div>
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        cards.map((card) => (
-          <article
-            role="region"
-            aria-labelledby={card.title.toLowerCase().replace(/\s+/g, "-")}
-          >
-            <header>
-              <h3
-                id={card.title.toLowerCase().replace(/\s+/g, "-")}
-                class="mb-2 text-lg font-semibold text-base-900"
-              >
-                {card.title}
-              </h3>
-            </header>
-            <p class="mb-4 text-base-600">{card.description}</p>
-            <footer>
-              <a href={card.href} class="font-medium">
-                {card.cta}
-              </a>
-            </footer>
-          </article>
-        ))
-      }
+  <Wrapper variant="standard" class="py-4 border-t">
+    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div class="text-balance lg:w-1/3">
+        <Text
+          tag="h2"
+          id="get-started-heading"
+          variant="displaySM"
+          class="font-medium tracking-tight text-black"
+        >
+          Everything you need to get started and go further
+        </Text>
+        <Text tag="p" variant="textBase" class="mt-4 text-base-500">
+          Comprehensive documentation, practical guides, and expert tips to help
+          you succeed
+        </Text>
+      </div>
+      <div class="lg:w-2/3">
+        <div class="flex flex-col gap-2 lg:sticky lg:top-0 lg:z-40" role="list">
+          {
+            features.map((feature) => {
+              return (
+                <div class="flex flex-col h-full p-4 bg-dots-light   group hover:bg-white  duration-300 outline-transparent hover:outline hover:outline-base-10 bg-burst focus:outline focus:outline-accent-500 focus:ring-2 relative ">
+                  <div class="p-4  bg-white group-hover:bg-dots-light ">
+                    <Button
+                      isLink={true}
+                      iconOnly
+                      size="xs"
+                      variant="muted"
+                      href={feature.href}
+                      role="listitem"
+                      aria-label={`${feature.title}: ${feature.description}`}
+                    >
+                      <ChevronRight slot="icon" size="sm" />
+                    </Button>
+                    <Text
+                      tag="h3"
+                      variant="textBase"
+                      class=" font-medium text-base-900 mt-24"
+                    >
+                      {feature.title}
+                    </Text>
+                    <Text tag="p" variant="textSM" class="mt-2 text-base-500">
+                      {feature.description}
+                    </Text>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
     </div>
   </Wrapper>
 </section>

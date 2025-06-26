@@ -5,6 +5,10 @@ import Button from "@/components/fundations/elements/Button.astro";
 import Logo from "@/components/assets/Logo.astro";
 // Components
 import SidebarLinks from "@/components/global/navigation/SidebarLinks.astro";
+// Scripts
+import MobileMenuScript from "@/components/fundations/scripts/MobileMenuScript.astro";
+// Icons
+import RoundedX  from "@/components/fundations/icons/CircleCheck.astro";
 // Get all docs and group by category
 import { getCollection } from "astro:content";
 const allDocs = await getCollection("docs");
@@ -98,44 +102,14 @@ const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
       }
     </nav>
     <!-- Footer -->
-    <div class="px-6 py-4 border-t border-base-200 dark:border-base-800">
-      <Button isLink={true} size="sm" variant="muted"> Buy ZeroIndex </Button>
+    <div
+      class="px-6 py-4 border-t border-base-200 dark:border-base-800 relative"
+    >
+      <Button isLink={true} size="sm" variant="muted" href="#_">
+        Buy ZeroIndex
+      </Button>
     </div>
   </div>
 </aside>
-<script>
-  // Mobile menu functionality
-  const sidebar = document.getElementById("sidebar");
-  const sidebarBackdrop = document.getElementById("sidebar-backdrop");
-  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
-  const sidebarClose = document.getElementById("sidebar-close");
-  function openSidebar() {
-    sidebar?.classList.remove("-translate-x-full");
-    sidebarBackdrop?.classList.remove("hidden");
-    document.body.classList.add("menu-open");
-  }
-  function closeSidebar() {
-    sidebar?.classList.add("-translate-x-full");
-    sidebarBackdrop?.classList.add("hidden");
-    document.body.classList.remove("menu-open");
-  }
-  // Event listeners
-  mobileMenuToggle?.addEventListener("click", openSidebar);
-  sidebarClose?.addEventListener("click", closeSidebar);
-  sidebarBackdrop?.addEventListener("click", closeSidebar);
-  // Close sidebar when clicking on links (mobile)
-  const sidebarLinks = sidebar?.querySelectorAll("a");
-  sidebarLinks?.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth < 1024) {
-        closeSidebar();
-      }
-    });
-  });
-  // Handle window resize
-  window.addEventListener("resize", () => {
-    if (window.innerWidth >= 1024) {
-      closeSidebar();
-    }
-  });
-</script>
+<MobileMenuScript />
+

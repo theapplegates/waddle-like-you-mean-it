@@ -1,49 +1,41 @@
 ---
+// Fundations
 import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
 <section>
-  <Wrapper variant="standard" class="py-24 lg:py-32 ">
-    <div class="max-w-xl mx-auto text-center">
-      <Text tag="h1" variant="displayXL" class="font-medium text-base-900">
-        Welcome to our Documentation
+  <Wrapper variant="standard" class="py-32">
+    <div class="text-center text-balance">
+      <Text
+        tag="h1"
+        variant="displayLG"
+        class="font-medium tracking-tight text-black"
+      >
+        Developer documentation portal
       </Text>
-      <Text tag="p" variant="textBase" class="text-base-500 text-balance">
-        Find comprehensive guides, API references, and examples to help you
-        integrate our platform seamlessly into your applications.
+      <Text
+        tag="p"
+        variant="textBase"
+        class="max-w-xl mx-auto mt2 text-base-500"
+      >
+        Your complete resource for guides, API references, and integration
+        support
       </Text>
-      <div class="flex flex-wrap justify-center mt-10 gap-2">
-        <Button
-          isLink={true}
-          size="base"
-          variant="accent"
-          href="/docs/getting-started/introduction"
-        >
-          Get Started
-          <svg
-            class="w-5 h-5 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </Button>
-        <Button
-          isLink={true}
-          size="base"
-          variant="muted"
-          href="/docs/api/overview"
-        >
-          API Reference
-        </Button>
-      </div>
+    </div>
+    <div
+      class="flex flex-wrap items-center justify-center w-full mt-10 just gap-2"
+    >
+      <Button
+        isLink={true}
+        size="sm"
+        variant="accent"
+        href="/docs/getting-started/introduction">Get started</Button
+      >
+      <Button isLink={true} size="sm" variant="muted" href="/docs/api/overview"
+        >Start free trial</Button
+      >
     </div>
   </Wrapper>
 </section>
