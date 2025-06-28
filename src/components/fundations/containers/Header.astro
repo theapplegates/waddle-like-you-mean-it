@@ -1,0 +1,41 @@
+---
+import Dots from "@/components/assets/Dots.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+
+const {
+  title = "Page Title",
+  description,
+  class: customClass = "",
+  innerClass = "",
+} = Astro.props;
+---
+
+<div class={`relative p-4 ${customClass}`}>
+  <Dots />
+  <div
+    class={`relative flex flex-col h-full p-4 bg-white dark:bg-base-900 ${innerClass}`}
+  >
+    <div>
+      <Text
+        tag="h1"
+        variant="displaySM"
+        class="font-medium text-base-900 dark:text-white"
+      >
+        {title}
+      </Text>
+
+      {
+        description && (
+          <Text
+            tag="p"
+            variant="textBase"
+            class="mt-2 text-base-500 leading-6 dark:text-base-300 max-w-xl"
+          >
+            {description}
+          </Text>
+        )
+      }
+    </div>
+    <slot />
+  </div>
+</div>

@@ -1,49 +1,26 @@
 ---
+// Assets
+import Header from "@/components/fundations/containers/Header.astro";
 // Fundations
-import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 ---
 
 <section>
-  <div class="p-4 relative bg-dots-light dark:bg-dots-dark">
-    <div
-      class="flex flex-col justify-end h-full gap-24 lg:gap-48 relative p-4 bg-white dark:bg-base-900"
-    >
-      <div></div>
-      <div>
-        <div class="max-w-2xl text-balance">
-          <Text
-            tag="h1"
-            variant="displaySM"
-            class="font-meidum text-base-900 dark:text-white"
-          >
-            Astro JS Documentation
-          </Text>
-          <Text
-            tag="p"
-            variant="textBase"
-            class="mt-4 text-base-500 leading-6 dark:text-base-300"
-          >
-            Leverage the Astro JS API to access components, pages, server-side
-            features, and more—making it easy to integrate your project into the
-            workflows of countless dedicated Astro developers.
-          </Text>
-        </div>
-        <div class="flex flex-wrap items-center w-full mt-8 just gap-2">
-          <Button
-            isLink={true}
-            size="sm"
-            variant="accent"
-            href="/docs/getting-started/introduction">Get started</Button
-          >
-          <Button
-            isLink={true}
-            size="sm"
-            variant="muted"
-            href="/docs/api/overview">Start free trial</Button
-          >
-        </div>
-      </div>
+  <Header
+    title="Astro JS Documentation"
+    description="Leverage the Astro JS API to access components, pages, server-side features, and more—making it easy to integrate your project into the workflows of countless dedicated Astro developers."
+    innerClass="pt-24"
+  >
+    <div class="flex flex-wrap items-center w-full mt-8 just gap-2">
+      <Button
+        isLink={true}
+        size="xs"
+        variant="accent"
+        href="/docs/getting-started/introduction">Get started</Button
+      >
+      <Button isLink={true} size="xs" variant="muted" href="/docs/api/overview"
+        >Start free trial</Button
+      >
     </div>
-  </div>
+  </Header>
 </section>

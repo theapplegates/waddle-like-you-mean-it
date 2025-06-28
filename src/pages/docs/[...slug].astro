@@ -1,4 +1,6 @@
 ---
+// Assets
+import Header from "@/components/fundations/containers/Header.astro";
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
@@ -64,54 +66,37 @@ const formatDate = (date: Date) => {
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
   <div
-    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
+    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800 lg:mr-1"
   >
-    <div class="flex-1 max-w-4xl">
-      <header class="p-4 relative bg-dots-light dark:bg-dots-dark">
-        <div
-          class="flex flex-col justify-between h-full gap-24 lg:gap-48 relative p-4 bg-white dark:bg-base-900"
-        >
-          <div>
-            <div
-              class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
+    <div class="flex-1 max-w-4x">
+      <Header
+        title={doc.data.title}
+        description={doc.data.description}
+        innerClass="gap-24 lg:gap-32"
+      >
+        <div class="order-first">
+          <div
+            class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
+          >
+            <a href="/" class="hover:text-accent-600">Home</a>
+            <ChevronRight size="xs" />
+            <span class="capitalize">{doc.data.category.replace("-", " ")}</span
             >
-              <a href="/" class="hover:text-accent-600">Home</a>
-              <ChevronRight size="xs" />
-              <span class="capitalize"
-                >{doc.data.category.replace("-", " ")}</span
-              >
-              <ChevronRight size="xs" />
-              <span class="text-accent-500 dark:text-accent-400"
-                >{doc.data.title}</span
-              >
-            </div>
-            <Text
-              tag="p"
-              variant="textXS"
-              class="mt-1 font-mono font-medium text-base-400 flex items-center gap-2"
-            >
-              <ArrowDownright size="sm" />
-              Last updated: {formatDate(doc.data.lastUpdated)}
-            </Text>
-          </div>
-          <div>
-            <Text
-              tag="h1"
-              variant="displaySM"
-              class="font-meidum text-base-900 dark:text-white"
-            >
-              {doc.data.title}
-            </Text>
-            <Text
-              tag="p"
-              variant="textSM"
-              class="text-base-500 dark:text-base-400"
-              >{doc.data.description}</Text
+            <ChevronRight size="xs" />
+            <span class="text-accent-500 dark:text-accent-400"
+              >{doc.data.title}</span
             >
           </div>
+          <Text
+            tag="p"
+            variant="textXS"
+            class="flex items-center mt-1 font-mono font-medium text-base-400 gap-2"
+          >
+            <ArrowDownright size="sm" />
+            Last updated: {formatDate(doc.data.lastUpdated)}
+          </Text>
         </div>
-      </header>
-      <!-- Main content -->
+      </Header>
 
       <div id="markdown-content">
         <Wrapper variant="prose" class="px-8 py-4">
@@ -122,7 +107,7 @@ const formatDate = (date: Date) => {
         <div class="gap-2 space-y-4">
           <button
             id="copy-markdown"
-            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+            class="flex items-center w-full text-xs text-left text-base-900 dark:text-white hover:text-accent-600 gap-2"
           >
             <Markdown
               slot="icon"
@@ -133,14 +118,14 @@ const formatDate = (date: Date) => {
           </button>
           <button
             id="ask-chatgpt"
-            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+            class="flex items-center w-full text-xs text-left text-base-900 dark:text-white hover:text-accent-600 gap-2"
           >
             <GPT slot="icon" size="sm" class="text-base-900 dark:text-white" />
             Ask ChatGPT
           </button>
           <button
             id="ask-claude"
-            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+            class="flex items-center w-full text-xs text-left text-base-900 dark:text-white hover:text-accent-600 gap-2"
           >
             <Claude
               slot="icon"
@@ -151,7 +136,7 @@ const formatDate = (date: Date) => {
           </button>
           <a
             href="#_"
-            class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 flex items-center gap-2"
+            class="flex items-center w-full text-xs text-left text-base-900 dark:text-white hover:text-accent-600 gap-2"
           >
             <Github
               slot="icon"
@@ -160,7 +145,7 @@ const formatDate = (date: Date) => {
             />
             Edit on GitHub</a
           >
-          <div id="feedback-buttons" class="flex gap-2 items-center">
+          <div id="feedback-buttons" class="flex items-center gap-2">
             <span class="text-xs text-base-500 dark:text-base-400">
               Was this helpful?</span
             >
@@ -168,9 +153,9 @@ const formatDate = (date: Date) => {
             <Button size="xxs" variant="muted" id="no-btn"> No </Button>
           </div>
           <span id="thank-you" class="hidden">
-            <div class="duration-300 flex justify-center md:justify-start">
+            <div class="flex justify-center duration-300 md:justify-start">
               <div
-                class="text-base-600 dark:text-base-300 text-xs w-full text-left flex items-center gap-2"
+                class="flex items-center w-full text-xs text-left text-base-600 dark:text-base-300 gap-2"
               >
                 <CircleCheck size="sm" />
                 Thanks for your feedback!
@@ -192,16 +177,16 @@ const formatDate = (date: Date) => {
                     rows="4"
                     autofocus="true"
                     placeholder="What's on your mind?"
-                    class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent transition duration-300 ease-in-out focus:z-10 rounded-md text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-500 focus:ring-accent-100 focus:ring-2 focus:outline-none shadow-sm dark:bg-base-900 dark:ring-base-800 dark:placeholder-base-500"
+                    class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent resize transition duration-300 ease-in-out focus:z-10 rounded-md text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-500 focus:ring-accent-100 focus:ring-2 focus:outline-none shadow-sm dark:bg-base-900 dark:ring-base-800 dark:placeholder-base-500 dark:ring-offset-base-900 dark:focus:ring-accent-100/10"
                   ></textarea>
                 </div>
                 <Text
                   tag="p"
                   variant="textXS"
-                  class="text-base-500 dark:text-base-400 mt-1"
+                  class="mt-1 text-base-500 dark:text-base-400"
                 >
                   Did you mean to reach out to <a
-                    class="text-base-900 dark:text-white text-xs w-full text-left hover:text-accent-600 underline"
+                    class="w-full text-xs text-left underline text-base-900 dark:text-white hover:text-accent-600"
                     href="/forms/contact">Support</a
                   >
                 </Text>
@@ -221,21 +206,21 @@ const formatDate = (date: Date) => {
       </div>
     </div>
     <aside
-      class="hidden lg:block w-64 lg:sticky lg:top-14 p-4 pl-0 h-full lg:self-start"
+      class="hidden w-64 lg:min-h-svh p-4 pl-0 lg:block lg:sticky lg:top-14 lg:self-start lg:border-r lg:border-base-200 dark:border-base-800"
     >
       <Text
         tag="h4"
         variant="textSM"
-        class="text ml-4 text-base-900 dark:text-white">On this page</Text
+        class="ml-4 text text-base-900 dark:text-white">On this page</Text
       >
-      <div class="mt-4">
+      <div class="mt-4 h-full flex flex-col">
         {
           headings
             .filter((h) => h.depth === 2 || h.depth === 3)
             .map((heading) => (
               <a
                 href={`#${heading.slug}`}
-                class="block hover:text-accent-600 dark:hover:text-accent-400 py-1 text-base-500 dark:text-base-400 text-xs select-none  border-l-2 border-transparent transition-all duration-200 toc-link"
+                class="block py-1 text-xs border-l-2 border-transparent select-none hover:text-accent-600 dark:hover:text-accent-400 text-base-500 dark:text-base-400  transition-all duration-200 toc-link"
                 style={`padding-left: ${heading.depth === 3 ? "1.8rem" : "1rem"}`}
                 data-heading-id={heading.slug}
                 data-heading-depth={heading.depth}
@@ -247,55 +232,57 @@ const formatDate = (date: Date) => {
       </div>
     </aside>
   </div>
-  <nav
-    aria-label="Documentation pagination"
-    class="w-full grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-t border-base-200 dark:border-base-800"
-  >
-    <div class="w-full">
-      {
-        prevDoc && (
-          <a
-            href={`/docs/${prevDoc.slug}`}
-            class="flex flex-col w-full gap-12 p-8 group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
-          >
-            <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mon">
-              Previous
-            </span>
-            <div>
-              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                {prevDoc.data.title}
+  <div class="lg:mr-1 lg:border-r lg:border-base-200 dark:border-base-800">
+    <nav
+      aria-label="Documentation pagination"
+      class="w-full border-t grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-base-200 dark:border-base-800"
+    >
+      <div class="w-full">
+        {
+          prevDoc && (
+            <a
+              href={`/docs/${prevDoc.slug}`}
+              class="flex flex-col w-full p-8 gap-12 group  hover:bg-base-50 dark:hover:bg-white/1 duration-200"
+            >
+              <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mon">
+                Previous
+              </span>
+              <div>
+                <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                  {prevDoc.data.title}
+                </div>
+                <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                  {prevDoc.data.category.replace("-", " ")}
+                </div>
               </div>
-              <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                {prevDoc.data.category.replace("-", " ")}
+            </a>
+          )
+        }
+      </div>
+      <div class="w-full">
+        {
+          nextDoc && (
+            <a
+              href={`/docs/${nextDoc.slug}`}
+              class="flex flex-col justify-end w-full p-8 gap-12  group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
+            >
+              <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+                Next
+              </span>
+              <div>
+                <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                  {nextDoc.data.title}
+                </div>
+                <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                  {nextDoc.data.category.replace("-", " ")}
+                </div>
               </div>
-            </div>
-          </a>
-        )
-      }
-    </div>
-    <div class="w-full">
-      {
-        nextDoc && (
-          <a
-            href={`/docs/${nextDoc.slug}`}
-            class="flex flex-col gap-12 justify-end w-full p-8  group  hover:bg-base-50 dark:hover:bg-base-800 duration-200"
-          >
-            <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mono">
-              Next
-            </span>
-            <div>
-              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                {nextDoc.data.title}
-              </div>
-              <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                {nextDoc.data.category.replace("-", " ")}
-              </div>
-            </div>
-          </a>
-        )
-      }
-    </div>
-  </nav>
+            </a>
+          )
+        }
+      </div>
+    </nav>
+  </div>
 </DocsLayout>
 <TocAnimationScript />
 <DocsFeedbackButton />

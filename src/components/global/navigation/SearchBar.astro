@@ -28,7 +28,7 @@ const modalId = `search-modal-${searchId}`;
     <span>Search docs</span>
   </div>
   <kbd
-    class="ml-4 hidden sm:inline-block text-sm text-base-400 dark:text-base-500"
+    class="hidden ml-4 text-sm sm:inline-block text-base-400 dark:text-base-500"
   >
     <div class="flex items-center gap-1">
       <Command slot="icon" size="sm" />
@@ -40,7 +40,7 @@ const modalId = `search-modal-${searchId}`;
 <!-- Modal -->
 <div
   id={modalId}
-  class="fixed inset-0 flex items-start justify-center hidden p-6 z-60 bg-black/40 backdrop-blur-sm"
+  class="fixed inset-0 flex items-start justify-center hidden p-6 z-60 bg-black/40 backdrop-blur"
 >
   <!-- Click-outside area -->
   <div
@@ -147,7 +147,7 @@ const modalId = `search-modal-${searchId}`;
             return `
               <a href="${url}" class="block p-4 hover:bg-base-50 transition-colors dark:hover:bg-base-700">
                 <div class="text-sm font-medium text-base-900 dark:text-white">${highlightMatches(title, matches, "title")}</div>
-                <div class="mt-1 text-xs text-base-500 dark:text-base-300 capitalize">${category}</div>
+                <div class="mt-1 text-xs capitalize text-base-500 dark:text-base-300">${category}</div>
                 <div class="mt-1 text-sm text-base-600 line-clamp-2 dark:text-base-300">${highlightMatches(content, matches, "content")}</div>
               </a>
             `;

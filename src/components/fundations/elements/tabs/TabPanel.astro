@@ -1,0 +1,13 @@
+---
+// src/components/TabPanel.astro
+export interface Props {
+  tab: string;
+  class?: string;
+}
+
+const { tab, class: className = "" } = Astro.props;
+---
+
+<div data-tab-panel={tab} class={`hidden  ${className}`}>
+  <slot />
+</div>

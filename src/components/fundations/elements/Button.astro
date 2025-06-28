@@ -21,7 +21,6 @@ const defaultClass = [
   "dark:hover:bg-base-100",
   "dark:focus:ring-white",
 ];
-
 const accentClass = [
   // light
   "text-white",
@@ -29,7 +28,6 @@ const accentClass = [
   "hover:bg-accent-500",
   "focus:ring-accent-500",
 ];
-
 const mutedClass = [
   // light
   "text-base-900",
@@ -42,10 +40,10 @@ const mutedClass = [
   "dark:hover:bg-base-700",
   "dark:focus:ring-base-800",
 ];
-
 // Size
 const sizes = {
-  xxs: ["h-7.5", "px-5", "py-2", "text-xs"],
+  mini: ["h-6", "px-2.5", "py-2", "text-xs"],
+  xxs: ["h-7.5", "px-3", "py-2", "text-xs"],
   xs: ["h-8", "px-6", "py-3", "text-xs"],
   sm: ["h-9", "px-6", "py-3", "text-sm"],
   base: ["h-10", "px-8", "py-4", "text-sm"],
@@ -55,6 +53,7 @@ const sizes = {
 };
 // Icon size
 const iconSizes = {
+  mini: ["size-6", "py-2", "text-xs"],
   xxs: ["size-7.5", "py-2", "text-xs"],
   xs: ["size-8", "text-xs"],
   sm: ["size-9", "text-sm"],
@@ -97,7 +96,6 @@ const baseClass = [
   "dark:focus:ring-offset-base-900",
 ];
 ---
-
 {
   isLink ? (
     <a

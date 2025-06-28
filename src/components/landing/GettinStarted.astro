@@ -36,7 +36,7 @@ const features = [
         tag="h2"
         id="get-started-heading"
         variant="textLG"
-        class="font-medium text-base-900 mt-auto dark:text-white"
+        class="mt-auto font-medium text-base-900 dark:text-white"
       >
         Getting started
       </Text>
@@ -52,11 +52,11 @@ const features = [
         and edge platforms.
       </Text>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
         features.map((feature) => {
           return (
-            <div class="flex flex-col h-full justify-between">
+            <div class="flex flex-col justify-between h-full">
               <div>
                 <Text
                   tag="h3"
@@ -65,13 +65,17 @@ const features = [
                 >
                   {feature.title}
                 </Text>
-                <Text tag="p" variant="textSM" class="mt-2 text-base-500">
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="mt-2 text-base-600 dark:text-base-400"
+                >
                   {feature.description}
                 </Text>
               </div>
               <a
                 href={feature.href}
-                class="mt-8 text-sm text-accent-600 hover:text-base-900 dark:text-accent-400 items-center gap-2 flex group"
+                class="flex items-center mt-8 text-sm text-accent-600 hover:text-accent-500 dark:text-accent-400 gap-2 group"
                 aria-label={`${feature.title}: ${feature.description}`}
               >
                 Read further

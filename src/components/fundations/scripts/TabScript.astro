@@ -1,0 +1,67 @@
+<script>
+  class TabsComponent {
+    constructor(container: Element) {
+      this.container = container;
+      this.buttons = container.querySelectorAll("[data-tab-button]");
+      this.panels = container.querySelectorAll("[data-tab-panel]");
+      this.init();
+    }
+    private container: Element;
+    private buttons: NodeListOf<Element>;
+    private panels: NodeListOf<Element>;
+    private init() {
+      // Set initial active state
+      const defaultTab = this.container.getAttribute("data-default-tab");
+      const firstTab = this.buttons[0]?.getAttribute("data-tab");
+      const activeTab = defaultTab || firstTab;
+      if (activeTab) {
+        this.showTab(activeTab);
+      }
+      // Add click listeners
+      this.buttons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const tabId = button.getAttribute("data-tab");
+          if (tabId) {
+            this.showTab(tabId);
+          }
+        });
+      });
+    }
+    private showTab(tabId: string) {
+      // Update buttons
+      this.buttons.forEach((button) => {
+        const isActive = button.getAttribute("data-tab") === tabId;
+        // Active state classes
+        button.classList.toggle("text-sky-600", isActive);
+        button.classList.toggle("dark:text-sky-300", isActive);
+        button.classList.toggle("border-b-2", isActive);
+        button.classList.toggle("border-sky-600", isActive);
+        button.classList.toggle("dark:border-sky-400", isActive);
+        // Inactive state classes
+        button.classList.toggle("text-base-600", !isActive);
+        button.classList.toggle("dark:text-base-500", !isActive);
+        button.classList.toggle("hover:text-base-800", !isActive);
+        button.classList.toggle("dark:hover:text-base-200", !isActive);
+      });
+      // Update panels
+      this.panels.forEach((panel) => {
+        const isActive = panel.getAttribute("data-tab-panel") === tabId;
+        panel.classList.toggle("hidden", !isActive);
+        panel.classList.toggle("block", isActive);
+      });
+    }
+  }
+  // Initialize all tab containers
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-tabs-container]").forEach((container) => {
+      new TabsComponent(container);
+    });
+  });
+  // Handle page navigation (for client-side routing)
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll("[data-tabs-container]").forEach((container) => {
+      new TabsComponent(container);
+    });
+  });
+</script>

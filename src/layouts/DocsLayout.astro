@@ -8,23 +8,25 @@ import DesktopTopBar from "@/components/global/navigation/DesktopTopBar.astro";
 ---
 
 <BaseLayout hideNav={true} hideFooter={true}>
-  <div class="min-h-screen">
+  <div class="min-h-screen bg-base-100 dark:bg-base-700">
     <!-- Mobile header -->
-    <MobileTopBar />
-    <div class="flex">
-      <!-- Sidebar -->
-      <Sidebar />
-      <!-- Main content -->
-      <main class="flex-1 min-w-0 lg:pl-72">
-        <!-- Desktop header -->
-        <DesktopTopBar />
-        <!-- Content -->
-        <div class="lg:pt-14">
-          <article>
-            <slot />
-          </article>
-        </div>
-      </main>
+    <div class="bg-white dark:bg-base-900">
+      <MobileTopBar />
+      <div class="flex">
+        <!-- Sidebar -->
+        <Sidebar />
+        <!-- Main content -->
+        <main class="flex-1 min-w-0 lg:pl-72">
+          <!-- Desktop header -->
+          <DesktopTopBar />
+          <!-- Content -->
+          <div class="lg:pt-15.5">
+            <article>
+              <slot />
+            </article>
+          </div>
+        </main>
+      </div>
     </div>
   </div>
 </BaseLayout>

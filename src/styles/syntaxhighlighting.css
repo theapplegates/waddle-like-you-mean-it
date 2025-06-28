@@ -6,14 +6,49 @@ code {
 code .line::before {
   content: counter(step);
   counter-increment: step;
-  width: 1rem;
+
   margin-right: 1.5rem;
   display: inline-block;
   text-align: right;
+  padding-left: 0.5rem;
   color: theme(colors.base.400);
 }
-/* Enhanced Shiki Theme */
-/* Enhanced root styles with better typography */
+/* Shiki Diff Annotations - using the exact classes from transformerNotationDiff */
+
+.diff.add {
+  background-color: oklch(77.7% 0.152 181.912 / 10%) !important;
+  border-left: 1px solid  theme(colors.teal.500) !important;
+}
+.diff.remove {
+  background-color: oklch(83.3% 0.145 321.434 / 10%) !important;
+  border-left: 1px solid theme(colors.fuchsia.500) !important;
+}
+/* Focus annotations */
+.focused {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-left: 1px solid #0366d6 !important;
+}
+/* Meta highlight */
+.highlighted {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+/* Dark mode adjustments */
+:root .focused {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+:root .highlighted {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+/* Dark mode adjustments */
+:root.dark .focused {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+:root.dark .highlighted {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+
+/* Your existing color variables */
 :root {
   /* Enhanced Shiki code styles with improved contrast and modern colors */
   --astro-code-color-text: theme(colors.cyan.800);
@@ -72,7 +107,7 @@ code .line::before {
 /* Enhanced dark mode with better contrast and modern colors */
 :root.dark {
   --astro-code-color-text: theme(colors.cyan.200);
-  --astro-code-background: theme(colors.base.800);
+  --astro-code-background: #ffffff05;
   --astro-code-token-punctuation: theme(colors.cyan.400);
   --astro-code-token-parameter: theme(colors.cyan.200);
   --astro-code-token-line-number: theme(colors.cyan.500);

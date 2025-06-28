@@ -1,0 +1,17 @@
+---
+// src/components/TabButton.astro
+export interface Props {
+  tab: string;
+  class?: string;
+}
+
+const { tab, class: className = "" } = Astro.props;
+---
+
+<button
+  data-tab-button
+  data-tab={tab}
+  class={`px-4 py-3 text-sm font-medium border-none  cursor-pointer transition-all duration-200 border-b-2  text-base-600 hover:text-base-800 dark:text-base-400 dark:hover:text-base-200 ${className}`}
+>
+  <slot />
+</button>

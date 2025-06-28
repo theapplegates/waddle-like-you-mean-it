@@ -1,83 +1,53 @@
 ---
+// Assets
+import Dots from "@/components/assets/Dots.astro";
+import Header from "@/components/fundations/containers/Header.astro";
 // Fundations
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
-import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
-<BaseLayout>
-  <Wrapper variant="standard" class="py-32">
-    <Text
-      tag="h1"
-      variant="displaySM"
-      class="text-accent-950 font-mono font-medium"
-      >Typography: Geist - Geist Mono
+<DocsLayout>
+  <header
+    title="Typography"
+    description="Geist - Geist Mono"
+    innerClass="pt-24"
+  >
+  </header>
+  <div
+    class="flex flex-col p-8 font-medium text-base-900 dark:text-white space-y-8"
+  >
+    <Text tag="p" variant="textXS"> Text XS </Text>
+    <Text tag="p" variant="textSM"> Text SM </Text>
+    <Text tag="p" variant="textBase"> Text Base </Text>
+    <Text tag="p" variant="textLG"> Text LG </Text>
+    <Text tag="p" variant="textXL"> Text XL </Text>
+    <Text tag="p" variant="displaySM" class="font-display upercase">
+      Display SM
     </Text>
-
-    <div
-      class="flex flex-col mt-12 font-medium text-base-900 divide-y divide-base-200"
-    >
-      <div class="py-4">
-        <Text tag="p" variant="textXS"> Text XS </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="textSM"> Text SM </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="textBase"> Text Base </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="textLG"> Text LG </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="textXL"> Text XL </Text>
-      </div>
-
-      <div class="py-4">
-        <Text tag="p" variant="displaySM" class="font-display upercase">
-          Display SM
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="displayMD" class="font-display upercase">
-          Display MD
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="displayLG" class="font-display upercase">
-          Display LG
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="displayXL" class="font-display upercase">
-          Display XL
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="display2XL" class="font-display upercase">
-          Display 2XL
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="display3XL" class="font-display upercase">
-          Display 3XL
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="display4XL" class="font-display upercase">
-          Display 4XL
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="display5XL" class="font-display upercase">
-          Display 5XL
-        </Text>
-      </div>
-      <div class="py-4">
-        <Text tag="p" variant="display6XL" class="font-display upercase">
-          Display 6XL
-        </Text>
-      </div>
-    </div>
-  </Wrapper>
-</BaseLayout>
+    <Text tag="p" variant="displayMD" class="font-display upercase">
+      Display MD
+    </Text>
+    <Text tag="p" variant="displayLG" class="font-display upercase">
+      Display LG
+    </Text>
+    <Text tag="p" variant="displayXL" class="font-display upercase">
+      Display XL
+    </Text>
+    <Text tag="p" variant="display2XL" class="font-display upercase">
+      Display 2XL
+    </Text>
+    <Text tag="p" variant="display3XL" class="font-display upercase">
+      Display 3XL
+    </Text>
+    <Text tag="p" variant="display4XL" class="font-display upercase">
+      Display 4XL
+    </Text>
+    <Text tag="p" variant="display5XL" class="font-display upercase">
+      Display 5XL
+    </Text>
+    <Text tag="p" variant="display6XL" class="font-display upercase">
+      Display 6XL
+    </Text>
+  </div>
+</DocsLayout>

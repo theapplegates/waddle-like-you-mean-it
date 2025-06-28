@@ -1,31 +1,32 @@
 ---
+// Assets
+import Dots from "@/components/assets/Dots.astro";
 import Logo from "@/components/assets/Logo.astro";
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
-
 // Icons
 import GitHub from "@/components/fundations/icons/GitHub.astro";
 import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
 ---
-
 <BaseLayout hideNav={true} hideFooter={true}>
   <section>
-    <div class="p-8 bg-dots-light flex flex-col items-center h-svh">
+    <div class="flex flex-col items-center p-8 h-svh">
+      <Dots />
       <div
-        class="bg-white py-12 w-full px-8 h-full flex flex-col items-center justify-center"
+        class="flex flex-col items-center justify-center w-full h-full px-8 py-12 bg-white dark:bg-base-900 relative"
       >
         <div class="w-full max-w-md mx-auto">
           <div>
             <a href="/">
               <span class="sr-only">Back to home</span>
-              <Logo class="h-8 text-base-900" />
+              <Logo class="h-8 text-base-900 dark:text-white" />
             </a>
             <Text
               tag="h1"
               variant="displayMD"
-              class="text-accent-950 font-medium mt-12"
+              class="mt-12 font-medium text-base-900 dark:text-white"
             >
               Sign in
             </Text>
@@ -33,7 +34,9 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
           <form class="mt-10 space-y-4">
             <div class="w-full">
               <div class="flex items-baseline justify-between mb-1">
-                <label for="email" class="text-sm font-medium text-base-500"
+                <label
+                  for="email"
+                  class="text-sm font-medium text-base-600 dark:text-base-300"
                   >Email Address</label
                 >
               </div>
@@ -42,14 +45,25 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
                   id="email"
                   name="email"
                   type="email"
-                  class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-500 focus:ring-accent-100 focus:ring-2 focus:outline-none shadow-sm"
+                  class="block w-full px-4 py-2 text-xs leading-tight align-middle
+                        bg-white dark:bg-base-900
+                        border border-transparent dark:border-base-800
+                        text-base-600 dark:text-base-300
+                        ring-1 ring-base-200 dark:ring-base-700
+                        placeholder-base-400 dark:placeholder-base-500
+                        focus:z-10 h-9 rounded-md
+                        transition duration-300 ease-in-out
+                        focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300
+                        focus:outline-none shadow-sm"
                   inputmode="email"
                 />
               </div>
             </div>
             <div class="w-full">
               <div class="flex items-baseline justify-between mb-1">
-                <label for="password" class="text-sm font-medium text-base-500"
+                <label
+                  for="password"
+                  class="text-sm font-medium text-base-600 dark:text-base-300"
                   >Password</label
                 >
               </div>
@@ -58,7 +72,16 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
                   required
                   id="password"
                   name="password"
-                  class="block w-full px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent transition duration-300 ease-in-out focus:z-10 h-9 rounded-md text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-500 focus:ring-accent-100 focus:ring-2 focus:outline-none shadow-sm"
+                  class="block w-full px-4 py-2 text-xs leading-tight align-middle
+                        bg-white dark:bg-base-900
+                        border border-transparent dark:border-base-800
+                        text-base-600 dark:text-base-300
+                        ring-1 ring-base-200 dark:ring-base-700
+                        placeholder-base-400 dark:placeholder-base-500
+                        focus:z-10 h-9 rounded-md
+                        transition duration-300 ease-in-out
+                        focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300
+                        focus:outline-none shadow-sm"
                   aria-required="true"
                 />
               </div>
@@ -72,12 +95,12 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
               />
               <label
                 for="login-remember"
-                class="ml-2 text-sm font-medium text-base-500"
+                class="ml-2 text-sm font-medium text-base-600 dark:text-base-300"
               >
                 Remember me for 30 days
               </label>
             </div>
-            <div class="flex flex-wrap gap-2 items-center">
+            <div class="flex flex-wrap items-center gap-2">
               <Button
                 size="base"
                 variant="accent"
@@ -87,7 +110,9 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
               >
                 Sign in with email
               </Button>
-              <span class="lg:mx-4 text-sm text-base-500">Or use</span>
+              <span class="text-sm lg:mx-4 text-base-600 dark:text-base-300"
+                >Or use</span
+              >
               <Button iconOnly size="sm" variant="muted" type="submit">
                 <GoogleColor slot="icon" size="base" />
               </Button>
@@ -97,11 +122,11 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
               </Button>
             </div>
           </form>
-          <p class="mt-4 text-xs font-medium text-base-500">
+          <p class="mt-4 text-xs font-medium text-base-600 dark:text-base-300">
             Dont' have an account?
             <a
               href="/forms/sign-up"
-              class="font-medium text-accent-500 hover:text-base-500"
+              class="font-medium text-accent-500 hover:text-base-600 dark:text-base-300"
             >
               Sign up
             </a>
