@@ -66,49 +66,43 @@ const footerLinks = [
 ];
 ---
 
-<footer class="border-t border-base-200">
+<footer class="border-t border-base-200 dark:border-base-800">
   <Wrapper variant="standard" class="py-4">
-    <div class="lg:max-w-xs">
+    <div class="p-8">
       <a
         href="/"
         class="flex items-center font-mono text-lg font-semibold gap-2 text-base-900"
       >
         <span class="sr-only">Go to homepage</span>
-        <Logo class="h-4 text-base-900" />
+        <Logo class="h-4 text-base-900 dark:text-white" />
         ZeroIndex
       </a>
-      <Text
-        tag="p"
-        variant="textSM"
-        class="mt-1 font-normal text-base-500 text-balance"
+      
+      <div
+        class="mt-8 md:grid md:grid-cols-2 lg:grid-cols-5 md:gap-8 xl:col-span-2"
       >
-        Premium multipage themes crafted with Astro and Tailwind CSS
-      </Text>
-    </div>
-    <div
-      class="mt-8 md:grid md:grid-cols-2 lg:grid-cols-5 md:gap-8 xl:col-span-2"
-    >
-      {
-        footerLinks.map((section) => (
-          <div class="mt-12 md:mt-0">
-            <h3 class="text-black font-display">{section.heading}</h3>
-            <ul role="list" class="mt-4 text-sm space-y-2 text-base-500">
-              {section.links.map((link) => (
-                <li>
-                  <a
-                    title="Button to your page"
-                    aria-label="your label"
-                    href={link.href}
-                    class="hover:text-black"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+        {
+          footerLinks.map((section) => (
+            <div class="mt-12 md:mt-0">
+              <h3 class="text-base-900 dark:text-white font-display">{section.heading}</h3>
+              <ul role="list" class="mt-4 text-sm space-y-2 text-base-500">
+                {section.links.map((link) => (
+                  <li>
+                    <a
+                      title="Button to your page"
+                      aria-label="your label"
+                      href={link.href}
+                      class="hover:text-black"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </Wrapper>
 </footer>

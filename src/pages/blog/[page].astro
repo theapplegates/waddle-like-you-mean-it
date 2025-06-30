@@ -33,7 +33,6 @@ const paginatedPosts = sortedPosts.slice(start, start + POSTS_PER_PAGE);
 // Tags
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 ---
-
 <DocsLayout>
   <section>
     <RightSidebarLayout>
@@ -43,7 +42,7 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
           description="Articles, tutorials about ZeroIndex"
           innerClass="pt-24"
         />
-        <div class="flex flex-col px-8 pb-12 mt-4 gap-2">
+        <div class="flex flex-col px-8 pb-8 mt-4 gap-2">
           {paginatedPosts.map((post) => <BlogEntry post={post} />)}
         </div>
       </div>
