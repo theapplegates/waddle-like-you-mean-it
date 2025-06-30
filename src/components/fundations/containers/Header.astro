@@ -10,16 +10,15 @@ const {
 } = Astro.props;
 ---
 
-<div class={`relative p-4 ${customClass}`}>
-  <Dots />
+<div class={`relative ${customClass}`}>
   <div
-    class={`relative flex flex-col h-full p-4 bg-white dark:bg-base-900 ${innerClass}`}
+    class={`relative flex flex-col h-full p-8 bg-white dark:bg-base-900 ${innerClass}`}
   >
     <div>
       <Text
         tag="h1"
         variant="displaySM"
-        class="font-medium text-base-900 dark:text-white"
+        class="font-semibold text-base-900 dark:text-white"
       >
         {title}
       </Text>
@@ -29,7 +28,7 @@ const {
           <Text
             tag="p"
             variant="textBase"
-            class="mt-2 text-base-500 leading-6 dark:text-base-300 max-w-xl"
+            class="max-w-xl mt-2 text-base-500 leading-6 dark:text-base-300"
           >
             {description}
           </Text>

@@ -9,6 +9,7 @@ const {
   class: className,
   ...rest
 } = Astro.props;
+
 const defaultClass = [
   // light
   "text-white",
@@ -21,6 +22,7 @@ const defaultClass = [
   "dark:hover:bg-base-100",
   "dark:focus:ring-white",
 ];
+
 const accentClass = [
   // light
   "text-white",
@@ -28,6 +30,7 @@ const accentClass = [
   "hover:bg-accent-500",
   "focus:ring-accent-500",
 ];
+
 const mutedClass = [
   // light
   "text-base-900",
@@ -40,6 +43,161 @@ const mutedClass = [
   "dark:hover:bg-base-700",
   "dark:focus:ring-base-800",
 ];
+
+const infoClass = [
+  // light
+  "text-white",
+  "bg-cyan-500",
+  "hover:bg-cyan-700",
+  "focus:ring-cyan-500",
+  // dark
+  "dark:text-white",
+  "dark:bg-cyan-500/50",
+  "dark:hover:bg-cyan-700",
+  "dark:focus:ring-cyan-400",
+];
+
+const successClass = [
+  // light
+  "text-white",
+  "bg-emerald-500",
+  "hover:bg-emerald-700",
+  "focus:ring-emerald-500",
+  // dark
+  "dark:text-white",
+  "dark:bg-emerald-500/50",
+  "dark:hover:bg-emerald-700",
+  "dark:focus:ring-emerald-400",
+];
+
+const warningClass = [
+  // light
+  "text-white",
+  "bg-orange-500",
+  "hover:bg-orange-700",
+  "focus:ring-orange-500",
+  // dark
+
+  "dark:bg-orange-500/50",
+  "dark:hover:bg-orange-500",
+  "dark:focus:ring-orange-400",
+];
+
+const dangerClass = [
+  // light
+  "text-white",
+  "bg-rose-500",
+  "hover:bg-rose-700",
+  "focus:ring-rose-500",
+  // dark
+  "dark:text-white",
+  "dark:bg-rose-500/50",
+  "dark:hover:bg-rose-700",
+  "dark:focus:ring-rose-400",
+];
+
+const outlineClass = [
+  // light
+  "text-base-800",
+  "bg-transparent",
+  "border",
+  "border-base-200",
+  "hover:bg-base-50",
+  "hover:border-base-400",
+  "focus:ring-base-500",
+  // dark
+  "dark:text-base-200",
+  "dark:border-base-500",
+  "dark:hover:bg-base-800",
+  "dark:hover:border-base-500",
+  "dark:focus:ring-base-400",
+];
+
+const outlineAccentClass = [
+  // light
+  "text-accent-500",
+  "bg-transparent",
+  "border",
+  "border-accent-200",
+  "hover:bg-accent-50",
+  "hover:border-accent-400",
+  "focus:ring-accent-500",
+  // dark
+  "dark:text-accent-400",
+  "dark:border-accent-500",
+  "dark:hover:bg-accent-900",
+  "dark:hover:border-accent-500",
+  "dark:focus:ring-accent-400",
+];
+
+const outlineInfoClass = [
+  // light
+  "text-cyan-500",
+  "bg-transparent",
+  "border",
+  "border-cyan-200",
+  "hover:bg-cyan-50",
+  "hover:border-cyan-400",
+  "focus:ring-cyan-500",
+  // dark
+  "dark:text-cyan-400",
+  "dark:border-cyan-500",
+  "dark:hover:bg-cyan-900",
+  "dark:hover:border-cyan-500",
+  "dark:focus:ring-cyan-400",
+];
+
+const outlineSuccessClass = [
+  // light
+  "text-emerald-500",
+  "bg-transparent",
+  "border",
+  "border-emerald-200",
+  "hover:bg-emerald-50",
+  "hover:border-emerald-400",
+  "focus:ring-emerald-500",
+  // dark
+  "dark:text-emerald-400",
+  "dark:border-emerald-500",
+  "dark:hover:bg-emerald-900",
+  "dark:hover:border-emerald-500",
+  "dark:focus:ring-emerald-400",
+];
+
+const outlineWarningClass = [
+  // light
+  "text-orange-500",
+  "bg-transparent",
+  "border",
+  "border-orange-200",
+  "hover:bg-orange-50",
+  "hover:border-orange-400",
+  "focus:ring-orange-500",
+  // dark
+  "dark:text-orange-400",
+  "dark:border-orange-500",
+  "dark:hover:bg-orange-900",
+  "dark:hover:border-orange-500",
+  "dark:focus:ring-orange-400",
+];
+
+const outlineDangerClass = [
+  // light
+  "text-rose-500",
+  "bg-transparent",
+  "border",
+  "border-rose-200",
+  "hover:bg-rose-50",
+  "hover:border-rose-400",
+  "focus:ring-rose-500",
+  // dark
+  "dark:text-rose-400",
+  "dark:border-rose-500",
+  "dark:hover:bg-rose-900",
+  "dark:hover:border-rose-500",
+  "dark:focus:ring-rose-400",
+];
+
 // Size
 const sizes = {
   mini: ["h-6", "px-2.5", "py-2", "text-xs"],
@@ -51,6 +209,7 @@ const sizes = {
   lg: ["h-12", "px-8", "py-4", "text-lg"],
   xl: ["h-13", "px-8", "py-4", "text-lg"],
 };
+
 // Icon size
 const iconSizes = {
   mini: ["size-6", "py-2", "text-xs"],
@@ -62,6 +221,7 @@ const iconSizes = {
   lg: ["size-12", "text-lg"],
   xl: ["size-13", "text-lg"],
 };
+
 // Gaps
 const gapMap = {
   xs: ["gap-2"],
@@ -70,15 +230,28 @@ const gapMap = {
   md: ["gap-10"],
   lg: ["gap-12"],
 };
+
 const variantClass = {
   default: defaultClass,
   accent: accentClass,
   muted: mutedClass,
+  info: infoClass,
+  success: successClass,
+  warning: warningClass,
+  danger: dangerClass,
+  outline: outlineClass,
+  "outline-accent": outlineAccentClass,
+  "outline-info": outlineInfoClass,
+  "outline-success": outlineSuccessClass,
+  "outline-warning": outlineWarningClass,
+  "outline-danger": outlineDangerClass,
   none: [],
 };
+
 const sizeClass = iconOnly ? iconSizes[size] : sizes[size] || [];
 const gapClass = !iconOnly && gap ? gapMap[gap] : [];
 const additionalClasses = className ? className.split(" ") : [];
+
 const baseClass = [
   "flex",
   "items-center",
@@ -86,7 +259,6 @@ const baseClass = [
   "justify-center",
   "transition-all",
   "rounded-full",
-  "items-center",
   "duration-300",
   "focus:ring-2",
   "focus:ring-none",
@@ -96,6 +268,7 @@ const baseClass = [
   "dark:focus:ring-offset-base-900",
 ];
 ---
+
 {
   isLink ? (
     <a

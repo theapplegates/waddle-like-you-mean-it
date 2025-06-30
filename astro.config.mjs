@@ -10,6 +10,9 @@ import {
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    "/blog": "/blog/1",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

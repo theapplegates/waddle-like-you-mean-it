@@ -5,16 +5,15 @@ interface Props {
   docs: Array<{ slug: string; title: string; order: number }>;
   index: number;
 }
-
 const { title, docs, index } = Astro.props;
 const currentPath = Astro.url.pathname;
 const sectionId = `section-${title.toLowerCase().replace(/\s+/g, "-")}`;
-const isOpenByDefault = docs.some(
-  (doc) =>
-    currentPath === `/docs/${doc.slug}` || currentPath === `/docs/${doc.slug}/`
-);
+// Check if current path matches any doc or the static links
+const isOpenByDefault = 
+  docs.some((doc) => currentPath === `/docs/${doc.slug}` || currentPath === `/docs/${doc.slug}/`) ||
+  (title.toLowerCase() === "integrations" && (currentPath === "/integrations" || currentPath === "/integrations/")) ||
+  (title.toLowerCase() === "changelog" && (currentPath === "/changelog" || currentPath === "/changelog/"));
 ---
-
 <div class="relative" id={sectionId}>
   <div class="relative accordion-section group">
     <div
@@ -25,7 +24,6 @@ const isOpenByDefault = docs.some(
       data-background
     >
     </div>
-
     <button
       class="relative w-full text-left px-4 py-2.5 text-xs font-medium text-base-900 dark:text-white transition-colors duration-200 focus:outline-none z-10"
       aria-expanded={isOpenByDefault}
@@ -34,7 +32,6 @@ const isOpenByDefault = docs.some(
     >
       {title}
     </button>
-
     <div
       class="overflow-hidden accordion-content transition-all duration-500 ease-in-out"
       style={`height: ${isOpenByDefault ? "auto" : "0"}; opacity: ${
@@ -42,11 +39,36 @@ const isOpenByDefault = docs.some(
       }; transform: translateY(${isOpenByDefault ? "0" : "-0.5rem"});`}
     >
       <nav class="relative z-10 flex flex-col pb-2">
+        {/* Add static links for Integrations and Changelog sections */}
+        {title.toLowerCase() === "integrations" && (
+          <a
+            href="/integrations"
+            class={`block px-3 ml-4 py-2 text-xs transition-colors duration-200 border-l ${
+              currentPath === "/integrations" || currentPath === "/integrations/"
+                ? "border-l-accent-500 dark:border-l-accent-400 text-base-600 dark:text-base-300 font-medium"
+                : "border-l-base-300 dark:border-l-base-500 text-base-500 dark:text-base-300 hover:text-base-600 dark:hover:text-white"
+            }`}
+          >
+            View Integrations
+          </a>
+        )}
+        {title.toLowerCase() === "changelog" && (
+          <a
+            href="/changelog"
+            class={`block px-3 ml-4 py-2 text-xs transition-colors duration-200 border-l ${
+              currentPath === "/changelog" || currentPath === "/changelog/"
+                ? "border-l-accent-500 dark:border-l-accent-400 text-base-600 dark:text-base-300 font-medium"
+                : "border-l-base-300 dark:border-l-base-500 text-base-500 dark:text-base-300 hover:text-base-600 dark:hover:text-white"
+            }`}
+          >
+            View Changelog
+          </a>
+        )}
+        {/* Regular docs links */}
         {
           docs.map((doc) => {
             const href = `/docs/${doc.slug}`;
             const isActive = currentPath === href || currentPath === `${href}/`;
-
             return (
               <a
                 href={href}
@@ -65,25 +87,31 @@ const isOpenByDefault = docs.some(
     </div>
   </div>
 </div>
-
 <script type="module">
+  // Run the script once the DOM is fully loaded
   document.addEventListener("DOMContentLoaded", () => {
+    // Select all accordion sections
     const sections = document.querySelectorAll(".accordion-section");
 
     sections.forEach((section) => {
-      const toggle = section.querySelector("[data-accordion-trigger]");
-      const content = section.querySelector(".accordion-content");
-      const background = section.querySelector("[data-background]");
+      // Select key elements within each accordion section
+      const toggle = section.querySelector("[data-accordion-trigger]"); // The button that toggles the section
+      const content = section.querySelector(".accordion-content"); // The collapsible content
+      const background = section.querySelector("[data-background]"); // Background highlight element
 
+      // Add click listener to the toggle button
       toggle?.addEventListener("click", () => {
+        // Check if the current section is already open
         const isOpen = toggle.getAttribute("aria-expanded") === "true";
 
+        // Loop through all sections to close others
         sections.forEach((s) => {
           const t = s.querySelector("[data-accordion-trigger]");
           const c = s.querySelector(".accordion-content");
           const b = s.querySelector("[data-background]");
 
           if (s !== section) {
+            // Collapse all other sections
             c.style.height = "0";
             c.style.opacity = "0";
             c.style.transform = "translateY(-0.5rem)";
@@ -95,7 +123,9 @@ const isOpenByDefault = docs.some(
           }
         });
 
+        // Toggle current section
         if (isOpen) {
+          // If open, close it
           content.style.height = "0";
           content.style.opacity = "0";
           content.style.transform = "translateY(-0.5rem)";
@@ -105,6 +135,7 @@ const isOpenByDefault = docs.some(
           section.classList.remove("border-base-100");
           section.classList.add("border-transparent");
         } else {
+          // If closed, open it with smooth animation
           const scrollHeight = content.scrollHeight + "px";
           content.style.height = scrollHeight;
           content.style.opacity = "1";

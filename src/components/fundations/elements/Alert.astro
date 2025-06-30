@@ -1,6 +1,4 @@
 ---
-// Fundations
-import Text from "@/components/fundations/elements/Text.astro";
 // Icons
 import Close from "@/components/fundations/icons/Close.astro";
 import Error from "@/components/fundations/icons/Error.astro";
@@ -8,9 +6,10 @@ import Warning from "@/components/fundations/icons/Warning.astro";
 import Info from "@/components/fundations/icons/RoundedInfo.astro";
 import Resources from "@/components/fundations/icons/Resources.astro";
 import Success from "@/components/fundations/icons/RoundedCheck.astro";
+
 const {
-  icon: customIcon = null,
-  variant = "warning",
+  icon: customIcon = undefined,
+  variant = "info",
   title = "",
   description = "",
   list = [],
@@ -18,61 +17,69 @@ const {
   dismissible = false,
   role = "alert",
 } = Astro.props;
+
 // Define variant styles with default icons
 const variants = {
   warning: {
     bg: "bg-orange-50/50 dark:bg-orange-600/5",
     iconColor: "text-orange-500 dark:text-orange-300",
-    titleColor: "text-orange-500 dark:text-orange-300",
-    textColor: "text-base-600 dark:text-base-400",
+    titleColor:
+      "text-orange-500 dark:text-orange-300 font-medium text-base leading-6",
+    textColor: "text-base-600 dark:text-base-400 text-sm leading-5",
     linkColor:
-      "text-base-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-300",
-    outlineColor: "outline-orange-100 dark:outline-orange-500/10 ",
+      "text-base-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-300 text-sm underline",
+    outlineColor: "outline-orange-100 dark:outline-orange-500/10",
     defaultIcon: Warning,
   },
   error: {
     bg: "bg-rose-50/50 dark:bg-rose-600/5",
     iconColor: "text-rose-500 dark:text-rose-300",
-    titleColor: "text-rose-500 dark:text-rose-300",
-    textColor: "text-base-600 dark:text-base-400",
+    titleColor:
+      "text-rose-500 dark:text-rose-300 font-medium text-base leading-6",
+    textColor: "text-base-600 dark:text-base-400 text-sm leading-5",
     linkColor:
-      "text-base-900 dark:text-white hover:text-rose-500 dark:hover:text-rose-300",
-    outlineColor: "outline-rose-100 dark:outline-rose-500/10 ",
+      "text-base-900 dark:text-white hover:text-rose-500 dark:hover:text-rose-300 text-sm underline",
+    outlineColor: "outline-rose-100 dark:outline-rose-500/10",
     defaultIcon: Error,
   },
   info: {
     bg: "bg-indigo-50/50 dark:bg-indigo-600/5",
     iconColor: "text-indigo-500 dark:text-indigo-300",
-    titleColor: "text-indigo-500 dark:text-indigo-300",
-    textColor: "text-base-600 dark:text-base-400",
+    titleColor:
+      "text-indigo-500 dark:text-indigo-300 font-medium text-base leading-6",
+    textColor: "text-base-600 dark:text-base-400 text-sm leading-5",
     linkColor:
-      "text-base-900 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300",
-    outlineColor: "outline-indigo-100 dark:outline-indigo-500/15 ",
+      "text-base-900 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300 text-sm underline",
+    outlineColor: "outline-indigo-100 dark:outline-indigo-500/15",
     defaultIcon: Info,
   },
   success: {
     bg: "bg-emerald-50/50 dark:bg-emerald-600/5",
     iconColor: "text-emerald-500 dark:text-emerald-300",
-    titleColor: "text-emerald-500 dark:text-emerald-300",
-    textColor: "text-base-600 dark:text-base-400",
+    titleColor:
+      "text-emerald-500 dark:text-emerald-300 font-medium text-base leading-6",
+    textColor: "text-base-600 dark:text-base-400 text-sm leading-5",
     linkColor:
-      "text-base-900 dark:text-white hover:text-emerald-500 dark:hover:text-emerald-300 ",
-    outlineColor: "outline-emerald-100 dark:outline-emerald-500/15 ",
+      "text-base-900 dark:text-white hover:text-emerald-500 dark:hover:text-emerald-300 text-sm underline",
+    outlineColor: "outline-emerald-100 dark:outline-emerald-500/15",
     defaultIcon: Success,
   },
   neutral: {
     bg: "bg-base-50/50 dark:bg-base-600/5",
     iconColor: "text-base-500 dark:text-emerald-300",
-    titleColor: "text-base-500 dark:text-base-300",
-    textColor: "text-base-600 dark:text-base-400",
+    titleColor:
+      "text-base-500 dark:text-base-300 font-medium text-base leading-6",
+    textColor: "text-base-600 dark:text-base-400 text-sm leading-5",
     linkColor:
-      "text-base-900 dark:text-white hover:text-base-600 dark:hover:text-base-300",
-    outlineColor: "outline-base-100 dark:outline-base-500/15 ",
+      "text-base-900 dark:text-white hover:text-base-600 dark:hover:text-base-300 text-sm underline",
+    outlineColor: "outline-base-100 dark:outline-base-500/15",
     defaultIcon: Resources,
   },
 };
+
 const currentVariant = variants[variant] || variants.warning;
-const Icon = customIcon || currentVariant.defaultIcon;
+const Icon =
+  customIcon === null ? null : customIcon || currentVariant.defaultIcon;
 ---
 
 <div
@@ -84,42 +91,20 @@ const Icon = customIcon || currentVariant.defaultIcon;
     {
       Icon && (
         <div class="shrink-0">
-          <Icon
-            size="sm"
-            aria-hidden="true"
-            class={` ${currentVariant.iconColor}`}
-          />
+          <Icon size="sm" aria-hidden="true" class={currentVariant.iconColor} />
         </div>
       )
     }
     <div class={Icon ? "ml-3" : ""}>
-      {
-        title && (
-          <Text
-            tag="h3"
-            variant="textBase"
-            class={` -mt-1 font-medium ${currentVariant.titleColor}`}
-          >
-            {title}
-          </Text>
-        )
-      }
+      {title && <h3 class={`-mt-1 ${currentVariant.titleColor}`}>{title}</h3>}
       {
         description && (
-          <Text
-            tag="h3"
-            variant="textSM"
-            class={`mt-2 ${currentVariant.textColor}`}
-          >
-            {description}
-          </Text>
+          <div class={`mt-2 ${currentVariant.textColor}`}>{description}</div>
         )
       }
       {
         list.length > 0 && (
-          <ul
-            class={`mt-2 list-disc list-inside text-sm ${currentVariant.textColor}`}
-          >
+          <ul class={`mt-2 list-disc list-inside ${currentVariant.textColor}`}>
             {list.map((item) => (
               <li>{item}</li>
             ))}
@@ -128,11 +113,11 @@ const Icon = customIcon || currentVariant.defaultIcon;
       }
       {
         links.length > 0 && (
-          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+          <div class="flex flex-wrap mt-4 gap-4">
             {links.map((link) => (
               <a
                 href={link.href}
-                class={`underline ${currentVariant.linkColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded`}
+                class={`${currentVariant.linkColor} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded`}
               >
                 {link.label}
               </a>
@@ -143,14 +128,14 @@ const Icon = customIcon || currentVariant.defaultIcon;
     </div>
     {
       dismissible && (
-        <div class="ml-auto pl-3">
+        <div class="pl-3 ml-auto">
           <button
             type="button"
             class={`inline-flex rounded-md p-1.5 ${currentVariant.iconColor} hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             aria-label="Dismiss alert"
             onclick="this.closest('[role=alert]').remove()"
           >
-            <Close slot="icon" size="sm" />
+            <Close size="sm" />
           </button>
         </div>
       )

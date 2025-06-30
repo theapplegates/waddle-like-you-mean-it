@@ -13,15 +13,15 @@ export interface Props {
 const { targetSelector = "pre code" } = Astro.props;
 ---
 
-<div class="copy-button-container absolute top-1 right-1 z-10">
+<div class="absolute z-10 copy-button-container top-1 right-1">
   <Button
     iconOnly
     size="mini"
     variant="muted"
-    class="copy-btn absolute right-2 top-2 opacity-0 transition-opacity duration-200"
+    class="absolute opacity-0 copy-btn right-2 top-2 transition-opacity duration-200"
   >
     <Copy slot="icon" size="xs" class="copy-icon" />
-    <CircleCheck slot="icon" size="xs" class="check-icon hidden" />
+    <CircleCheck slot="icon" size="xs" class="hidden check-icon" />
   </Button>
 </div>
 

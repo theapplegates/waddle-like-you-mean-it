@@ -1,9 +1,0 @@
-@import "tailwindcss";
-.bg-dots-light {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.18) 30%, transparent 40%);
-  background-size: 3px 3px;
-}
-.bg-dots-dark {
-  background-image: radial-gradient(rgba(255, 255, 255) 30%, transparent 40%);
-  background-size: 5px 5px;
-}

@@ -1,5 +1,5 @@
 ---
-title: "Shiki Basic Usage Examples"
+title: "Shiki anotations usage examples"
 description: "Simple examples to get you started with basic functionality."
 category: "examples"
 order: 1

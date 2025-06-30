@@ -1,10 +1,9 @@
 ---
-// Assets
-import Header from "@/components/fundations/containers/Header.astro";
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
+import Header from "@/components/fundations/containers/Header.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Icons
 import CircleCheck from "@/components/fundations/icons/CircleCheck.astro";
@@ -66,27 +65,30 @@ const formatDate = (date: Date) => {
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
   <div
-    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800 lg:mr-1"
+    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
   >
-    <div class="flex-1 max-w-4x">
+    <div class="flex-1">
       <Header
         title={doc.data.title}
         description={doc.data.description}
         innerClass="gap-24 lg:gap-32"
       >
         <div class="order-first">
-          <div
-            class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
-          >
-            <a href="/" class="hover:text-accent-600">Home</a>
-            <ChevronRight size="xs" />
-            <span class="capitalize">{doc.data.category.replace("-", " ")}</span
+          <nav aria-label="Breadcrumb">
+            <ol
+              class="flex items-center text-xs gap-1 text-base-500 dark:text-base-300"
             >
-            <ChevronRight size="xs" />
-            <span class="text-accent-500 dark:text-accent-400"
-              >{doc.data.title}</span
-            >
-          </div>
+              <a href="/" class="hover:text-accent-600">Home</a>
+              <ChevronRight size="xs" />
+              <span class="capitalize"
+                >{doc.data.category.replace("-", " ")}</span
+              >
+              <ChevronRight size="xs" />
+              <span class="text-accent-500 dark:text-accent-400"
+                >{doc.data.title}</span
+              >
+            </ol>
+          </nav>
           <Text
             tag="p"
             variant="textXS"
@@ -103,7 +105,7 @@ const formatDate = (date: Date) => {
           <Content />
         </Wrapper>
       </div>
-      <div class="p-8 border-t border-base-200 dark:border-base-800">
+      <div class="p-8 border-t border-base-200 dark:border-base-700">
         <div class="gap-2 space-y-4">
           <button
             id="copy-markdown"
@@ -206,14 +208,14 @@ const formatDate = (date: Date) => {
       </div>
     </div>
     <aside
-      class="hidden w-64 lg:min-h-svh p-4 pl-0 lg:block lg:sticky lg:top-14 lg:self-start lg:border-r lg:border-base-200 dark:border-base-800"
+      class="hidden w-64 p-4 pl-0 lg:min-h-svh lg:block lg:sticky lg:top-14 lg:self-start"
     >
       <Text
         tag="h4"
         variant="textSM"
         class="ml-4 text text-base-900 dark:text-white">On this page</Text
       >
-      <div class="mt-4 h-full flex flex-col">
+      <div class="flex flex-col h-full mt-4">
         {
           headings
             .filter((h) => h.depth === 2 || h.depth === 3)
@@ -232,57 +234,56 @@ const formatDate = (date: Date) => {
       </div>
     </aside>
   </div>
-  <div class="lg:mr-1 lg:border-r lg:border-base-200 dark:border-base-800">
-    <nav
-      aria-label="Documentation pagination"
-      class="w-full border-t grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-base-200 dark:border-base-800"
-    >
-      <div class="w-full">
-        {
-          prevDoc && (
-            <a
-              href={`/docs/${prevDoc.slug}`}
-              class="flex flex-col w-full p-8 gap-12 group  hover:bg-base-50 dark:hover:bg-white/1 duration-200"
-            >
-              <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mon">
-                Previous
-              </span>
-              <div>
-                <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                  {prevDoc.data.title}
-                </div>
-                <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                  {prevDoc.data.category.replace("-", " ")}
-                </div>
+
+  <nav
+    aria-label="Documentation pagination"
+    class="w-full border-t grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-base-200 dark:border-base-700"
+  >
+    <div class="w-full">
+      {
+        prevDoc && (
+          <a
+            href={`/docs/${prevDoc.slug}`}
+            class="flex flex-col w-full p-8 gap-12 group  hover:bg-base-50 dark:hover:bg-white/1 duration-200"
+          >
+            <span class="text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400 font-mon">
+              Previous
+            </span>
+            <div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {prevDoc.data.title}
               </div>
-            </a>
-          )
-        }
-      </div>
-      <div class="w-full">
-        {
-          nextDoc && (
-            <a
-              href={`/docs/${nextDoc.slug}`}
-              class="flex flex-col justify-end w-full p-8 gap-12  group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
-            >
-              <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
-                Next
-              </span>
-              <div>
-                <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                  {nextDoc.data.title}
-                </div>
-                <div class="text-xs capitalize text-base-500 dark:text-base-400">
-                  {nextDoc.data.category.replace("-", " ")}
-                </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {prevDoc.data.category.replace("-", " ")}
               </div>
-            </a>
-          )
-        }
-      </div>
-    </nav>
-  </div>
+            </div>
+          </a>
+        )
+      }
+    </div>
+    <div class="w-full">
+      {
+        nextDoc && (
+          <a
+            href={`/docs/${nextDoc.slug}`}
+            class="flex flex-col justify-end w-full p-8 gap-12  group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
+          >
+            <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
+              Next
+            </span>
+            <div>
+              <div class="text-sm font-medium truncate text-base-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                {nextDoc.data.title}
+              </div>
+              <div class="text-xs capitalize text-base-500 dark:text-base-400">
+                {nextDoc.data.category.replace("-", " ")}
+              </div>
+            </div>
+          </a>
+        )
+      }
+    </div>
+  </nav>
 </DocsLayout>
 <TocAnimationScript />
 <DocsFeedbackButton />

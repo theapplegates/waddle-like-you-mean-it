@@ -1,14 +1,14 @@
 # Zero Index
 
 ## Template Integrations
-- Tailwind CSS v4  
+
+- Tailwind CSS v4
 - Astro SEO - Powered by [@astrolib/seo](https://github.com/onwidget/astrolib/tree/main/packages/seo)
 - Astro Sitemap - https://docs.astro.build/en/guides/integrations-guide/sitemap/
 
 ## Template Structure
 
 The template follows a typical Astro project structure. You'll find the following key directories and files:
-
 
 ```
 /
@@ -23,7 +23,6 @@ The template follows a typical Astro project structure. You'll find the followin
 - `src/components/`: Ideal for placing your Astro/React/Vue/Svelte/Preact components.
 - `public/`: For static assets such as images that you want to serve directly.
 
-
 ## Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -37,9 +36,10 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro --help` | Get help using the Astro CLI                     |
 
-Learn more - Explore more through Astro's official [documentation](https://docs.astro.build).
-------
+## Learn more - Explore more through Astro's official [documentation](https://docs.astro.build).
+
 ## This update includes:
+
 - Reusable components
   This template now includes reusable components, such as the `Text` component:
 
@@ -53,7 +53,7 @@ Learn more - Explore more through Astro's official [documentation](https://docs.
 - **Content Slot:** Add any content inside the component, including optional left and right icons.
   Example usage:
 
-```astro
+```html
 <Text tag="h1" variant="displayXL" class="text-center">
   Welcome to the new version!
 </Text>
@@ -69,13 +69,15 @@ Learn more - Explore more through Astro's official [documentation](https://docs.
 - **Slots:** Include icons or extra content with optional `left-icon` and `right-icon` slots.  
   Example usage:
 
-```astro
+```html
 <!-- Default button -->
-<Button size="small" variant="primary">Primary small</Button>
+<button size="small" variant="primary">Primary small</button>
 <!-- Button with icon -->
-<Button iconOnly size="small" variant="primary">·</Button>
+<button iconOnly size="small" variant="primary">·</button>
 <!-- Button as link -->
-<Button isLink={true} href="#_" size="small" variant="primary">Primary small</Button>
+<button isLink="{true}" href="#_" size="small" variant="primary">
+  Primary small
+</button>
 ```
 
 - Wrapper Component  
@@ -85,12 +87,14 @@ Learn more - Explore more through Astro's official [documentation](https://docs.
 - **Custom Classes:** Add or change styles with the `class` prop.
 - **Content Slot:** Easily add any child components or content inside.
 
-```astro
-<Wrapper variant="standard">
-Your content goes here
-</Wrapper>
+```html
+<Wrapper variant="standard"> Your content goes here </Wrapper>
 ```
-------
+
+---
+
 ### [Support](https://lexingtonthemes.com/legal/support/)
-  ### [Documentation](https://lexingtonthemes.com/documentation/)
+
+### [Documentation](https://lexingtonthemes.com/documentation/)
+
 ### [Get your bundle](https://lexingtonthemes.com)
