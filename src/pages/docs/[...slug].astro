@@ -1,6 +1,7 @@
 ---
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import RightSidebarLayout from "@/layouts/RightSidebarLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 import Header from "@/components/fundations/containers/Header.astro";
@@ -64,10 +65,8 @@ const formatDate = (date: Date) => {
 
 <DocsLayout title={doc.data.title} description={doc.data.description}>
   <!-- Document header -->
-  <div
-    class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
-  >
-    <div class="flex-1">
+  <RightSidebarLayout>
+    <div slot="main">
       <Header
         title={doc.data.title}
         description={doc.data.description}
@@ -207,9 +206,7 @@ const formatDate = (date: Date) => {
         </div>
       </div>
     </div>
-    <aside
-      class="hidden w-64 p-4 pl-0 lg:min-h-svh lg:block lg:sticky lg:top-14 lg:self-start"
-    >
+    <div slot="sidebar">
       <Text
         tag="h4"
         variant="textSM"
@@ -232,8 +229,8 @@ const formatDate = (date: Date) => {
             ))
         }
       </div>
-    </aside>
-  </div>
+    </div>
+  </RightSidebarLayout>
 
   <nav
     aria-label="Documentation pagination"
