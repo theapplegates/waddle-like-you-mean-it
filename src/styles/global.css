@@ -32,10 +32,7 @@
   --color-base-800: oklch(0.269 0 0);
   --color-base-900: oklch(0.205 0 0);
   --color-base-950: oklch(0.145 0 0);
-
-
 }
-
 :root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

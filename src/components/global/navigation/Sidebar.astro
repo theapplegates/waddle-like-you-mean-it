@@ -7,15 +7,28 @@ import Logo from "@/components/assets/Logo.astro";
 import SidebarLinks from "@/components/global/navigation/SidebarLinks.astro";
 // Scripts
 import MobileMenuScript from "@/components/fundations/scripts/MobileMenuScript.astro";
+
 const staticLinks = [
   { href: "/integrations", title: "Integrations" },
   { href: "/changelog", title: "Changelog" },
   { href: "/infopages/licensing", title: "Licensing" },
 ];
+
 // Get all docs and group by category
 import { getCollection } from "astro:content";
 const allDocs = await getCollection("docs");
-const groupedDocs = allDocs.reduce(
+
+// Define category display names and order - ONLY include categories you want
+const categoryConfig = {
+  "getting-started": { name: "Getting Started", order: 1 },
+  navigation: { name: "Navigaton", order: 2 },
+  components: { name: "Components", order: 3 },
+  shiki: { name: "Shiki", order: 4 },
+  help: { name: "Help & Support", order: 5 },
+};
+
+// Group all docs first, then filter
+const allGroupedDocs = allDocs.reduce(
   (acc, doc) => {
     const category = doc.data.category;
     if (!acc[category]) {
@@ -30,23 +43,30 @@ const groupedDocs = allDocs.reduce(
   },
   {} as Record<string, Array<{ slug: string; title: string; order: number }>>
 );
+
+// Filter to only include configured categories
+const groupedDocs = Object.keys(allGroupedDocs)
+  .filter((category) => categoryConfig[category])
+  .reduce(
+    (acc, category) => {
+      acc[category] = allGroupedDocs[category];
+      return acc;
+    },
+    {} as Record<string, Array<{ slug: string; title: string; order: number }>>
+  );
+
 // Sort docs within each category by order
 Object.keys(groupedDocs).forEach((category) => {
   groupedDocs[category].sort((a, b) => a.order - b.order);
 });
-// Define category display names and order
-const categoryConfig = {
-  "getting-started": { name: "Getting Started", order: 1 },
-  guides: { name: "Guides", order: 2 },
-  components: { name: "Components", order: 3 },
-  examples: { name: "Examples", order: 4 },
-  help: { name: "Help & Support", order: 5 },
-};
+
+// Sort categories
 const sortedCategories = Object.keys(groupedDocs).sort((a, b) => {
   const orderA = categoryConfig[a]?.order || 999;
   const orderB = categoryConfig[b]?.order || 999;
   return orderA - orderB;
 });
+
 // Get current path for active state
 const currentPath = Astro.url.pathname;
 ---
@@ -56,14 +76,14 @@ const currentPath = Astro.url.pathname;
   class="fixed inset-0 z-40 hidden bg-base-900/50 lg:hidden"
 >
 </div>
+
 <aside
   id="sidebar"
   class="fixed inset-y-0 z-50 lg:top-0 lg:left-0 bg-base-100 lg:z-50 w-72 dark:bg-base-700 transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0"
 >
   <div
-    class="flex flex-col h-full bg-white border-r lg:ml-1 lg:border lg:rounded-tl-xl border-base-200 dark:border-base-700 lg:mt-1 dark:bg-base-900"
+    class="flex flex-col h-full bg-white border-r lg:ml-1 lg:border lg:rounded-tl-xl border-base-200 dark:border-base-800 lg:mt-1 dark:bg-base-900"
   >
-  
     <div class="flex items-center justify-between px-8 h-14">
       <a
         href="/"
@@ -90,6 +110,7 @@ const currentPath = Astro.url.pathname;
         </svg>
       </button>
     </div>
+
     <nav class="flex-1 px-4 py-6 overflow-y-auto space-y-1">
       {
         sortedCategories.map((categoryKey, index) => {
@@ -123,8 +144,9 @@ const currentPath = Astro.url.pathname;
         })
       }
     </nav>
+
     <div
-      class="relative px-6 py-4 border-t border-base-200 dark:border-base-700"
+      class="relative px-6 py-4 border-t border-base-200 dark:border-base-800"
     >
       <Button isLink={true} size="sm" variant="muted" href="#_">
         Buy ZeroIndex
@@ -132,4 +154,5 @@ const currentPath = Astro.url.pathname;
     </div>
   </div>
 </aside>
+
 <MobileMenuScript />

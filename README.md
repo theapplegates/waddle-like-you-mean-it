@@ -38,59 +38,15 @@ All commands are run from the root of the project, from a terminal:
 
 ## Learn more - Explore more through Astro's official [documentation](https://docs.astro.build).
 
-## This update includes:
+---
 
-- Reusable components
-  This template now includes reusable components, such as the `Text` component:
-
-- Text Component  
-  A versatile and reusable component for handling text across your project, ensuring consistency and easy customization.
-
-- **HTML Tags:** Easily change the HTML element (like `p`, `h1`, `span`, `a`) using the `tag` prop, with `p` being the default.
-- **Variants:** Pick from preset text styles (such as `displayXL` or `textBase`) for a consistent look.
-- **Custom Classes:** Add or adjust styles with the `class` prop.
-- **Accessibility:** Customize with additional props like `id`, `href`, `title`, and `style`.
-- **Content Slot:** Add any content inside the component, including optional left and right icons.
-  Example usage:
-
-```html
-<Text tag="h1" variant="displayXL" class="text-center">
-  Welcome to the new version!
-</Text>
-```
-
-- Button Component  
-  A customizable button component with options to fit your design needs:
-
-- **Variants:** Choose from predefined styles like `primary` (dark background) and `secondary` (lighter background), with support for dark mode.
-- **Sizes:** Select `small` or `medium` for different button heights and padding.
-- **Gaps:** Control the spacing between content with the `gapSize` prop (either `small` or `medium`).
-- **Custom Classes:** Apply additional styles using the `class` prop.
-- **Slots:** Include icons or extra content with optional `left-icon` and `right-icon` slots.  
-  Example usage:
-
-```html
-<!-- Default button -->
-<button size="small" variant="primary">Primary small</button>
-<!-- Button with icon -->
-<button iconOnly size="small" variant="primary">·</button>
-<!-- Button as link -->
-<button isLink="{true}" href="#_" size="small" variant="primary">
-  Primary small
-</button>
-```
-
-- Wrapper Component  
-  A flexible layout component that helps with consistent spacing and alignment.
-
-- **Variants:** The default `standard` variant includes responsive widths, centered content, and padding.
-- **Custom Classes:** Add or change styles with the `class` prop.
-- **Content Slot:** Easily add any child components or content inside.
-
-```html
-<Wrapper variant="standard"> Your content goes here </Wrapper>
-```
-
+Read the docs see all components:
+- [Links](/system/links)
+- [Buttons](/system/buttons)
+- [Colors](/system/colors)
+- [Alerts](/system/alerts)
+- [Badges](/system/badges)
+- [Typography](/system/typography)
 ---
 
 ### [Support](https://lexingtonthemes.com/legal/support/)

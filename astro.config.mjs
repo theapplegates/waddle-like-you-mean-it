@@ -32,14 +32,13 @@ export default defineConfig({
         }),
         transformerMetaHighlight(),
       ],
-      wrap: true,
+      wrap: false,
     },
   },
   site: "https://yourdomain.com",
   integrations: [
     sitemap(),
     mdx({
-      // Important: Make sure MDX uses the same Shiki config
       syntaxHighlight: "shiki",
       shikiConfig: {
         theme: "css-variables",

@@ -126,7 +126,7 @@ code .line::before {
   --astro-code-token-tag: theme(colors.indigo.300);
   /* Strings - bright green */
   --astro-code-token-string: theme(colors.lime.300);
-  --astro-code-token-string-expression: theme(colors.lime.400);
+  --astro-code-token-string-expression: theme(colors.lime.300);
   /* Variables and identifiers - cyan */
   --astro-code-token-variable: theme(colors.cyan.300);
   --astro-code-token-namespace: theme(colors.cyan.200);
