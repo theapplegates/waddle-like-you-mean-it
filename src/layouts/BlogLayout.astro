@@ -3,6 +3,7 @@
 import { Image } from "astro:assets";
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import RightSidebarLayout from "@/layouts/RightSidebarLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Header from "@/components/fundations/containers/Header.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
@@ -26,10 +27,8 @@ const relatedPosts = allPosts.filter((post) =>
 
 <DocsLayout>
   <section>
-    <div
-      class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
-    >
-      <div class="flex-1">
+    <RightSidebarLayout>
+      <div slot="main">
         <Header
           title={frontmatter.page}
           description={frontmatter.description}
@@ -43,7 +42,7 @@ const relatedPosts = allPosts.filter((post) =>
             src={frontmatter.image.url}
             class="object-cover object-center mt-8 size-full max-h-120 lg:col-span-2 rounded-xl"
           />
-          <Wrapper variant="prose"><slot /></Wrapper>
+          <Wrapper variant="prose" class="mt-8"><slot /></Wrapper>
         </section>
         <div
           class="p-8 border-t border-base-200 dark:border-base-700 grid grid-cols-1 lg:grid-cols-2 gap-8"
@@ -107,16 +106,18 @@ const relatedPosts = allPosts.filter((post) =>
           </div>
 
           <div class="flex flex-col gap-2 lg:ml-auto">
-            <Text tag="p" variant="textXS" class="text-base-500 dark:text-base-300">
+            <Text
+              tag="p"
+              variant="textXS"
+              class="text-base-500 dark:text-base-300"
+            >
               Share this article:
             </Text>
             <ShareButtons description={frontmatter.description} />
           </div>
         </div>
       </div>
-      <aside
-        class="hidden w-64 p-4 pl-0 lg:min-h-svh lg:block lg:sticky lg:top-14 lg:self-start"
-      >
+      <div slot="rightAside">
         <Text
           tag="h4"
           variant="textSM"
@@ -139,8 +140,8 @@ const relatedPosts = allPosts.filter((post) =>
               ))
           }
         </div>
-      </aside>
-    </div>
+      </div>
+    </RightSidebarLayout>
   </section>
   <nav
     aria-label="Infopage pagination"

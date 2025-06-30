@@ -1,9 +1,9 @@
 ---
 // Assets
 import { Image } from "astro:assets";
-
 // Fundations
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import RightSidebarLayout from "@/layouts/RightSidebarLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Header from "@/components/fundations/containers/Header.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
@@ -22,10 +22,8 @@ const breadcrumbs = [
 
 <DocsLayout>
   <section>
-    <div
-      class="flex flex-col lg:flex-row lg:divide-x lg:divide-base-200 dark:divide-base-800"
-    >
-      <div class="flex-1">
+    <RightSidebarLayout>
+      <div slot="main">
         <Header
           title={frontmatter.page}
           description={frontmatter.description}
@@ -93,9 +91,7 @@ const breadcrumbs = [
           <Wrapper variant="prose" class="px-8 py-8"><slot /></Wrapper>
         </section>
       </div>
-      <aside
-        class="hidden w-64 p-4 pl-0 lg:min-h-svh lg:block lg:sticky lg:top-14 lg:self-start"
-      >
+      <div slot="rightAside">
         <Text
           tag="h4"
           variant="textSM"
@@ -118,8 +114,8 @@ const breadcrumbs = [
               ))
           }
         </div>
-      </aside> 
-    </div>
+      </div>
+    </RightSidebarLayout>
     <nav
       aria-label="Infopage pagination"
       class="w-full border-t grid grid-cols-1 md:grid-cols-2 divide-y divide-base-200 dark:divide-base-800 lg:divide-y-0 lg:divide-x border-base-200 dark:border-base-700"

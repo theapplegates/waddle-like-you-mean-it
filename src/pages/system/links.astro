@@ -15,7 +15,7 @@ function formatLabel(text: string) {
 
 <DocsLayout>
   <section>
-    <Header title="Buttons" innerClass="pt-24" />
+    <Header title="Links" innerClass="pt-24" />
     <div class="p-8 flex flex-col gap-y-24">
       {
         [
@@ -46,6 +46,7 @@ function formatLabel(text: string) {
                 {["mini", "xxs", "xs", "sm", "base", "md", "lg", "xl"].map(
                   (size) => (
                     <Button
+                    isLink={true}
                       href="#_"
                       size={size}
                       variant={variant}
