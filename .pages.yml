@@ -5,7 +5,7 @@ media:
   label: Images
   input: src/images
   output: src/images
-  path: ""          # start picker at /src/images
+  path: ""
   extensions: [png, jpg, jpeg, webp, svg]
 
 settings:
@@ -54,13 +54,13 @@ content:
       - { name: body, label: Body, type: rich-text }
 
   # ---------------------
-  # DOCS (content collection; reads existing .md/.mdx)
+  # DOCS (read existing Markdown/MDX)
   # ---------------------
   - name: docs
     label: Docs
     type: content
     path: src/content/docs
-    filename: "{primary}.md"
+    recursive: true          # include subfolders
     view:
       primary: title
       fields: [title, category, lastUpdated]
