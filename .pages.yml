@@ -28,7 +28,7 @@ content:
     fields:
       - { name: email,        label: Email,        type: string, required: true }
       - { name: integration,  label: Integration,  type: string, required: true }
-      - { name: description,  label: Description,  type: text,   required: true }
+      - { name: description,  label: Description,  type: text,    required: true }
       - name: permissions
         label: Permissions
         type: string
@@ -54,20 +54,19 @@ content:
       - { name: body, label: Body, type: rich-text }
 
   # ---------------------
-  # DOCS — MD (show only folders that contain index.md)
+  # DOCS — MD (index.md in subfolders)
   # ---------------------
   - name: docs-md
     label: Docs (MD)
     type: collection
     path: src/content/docs
-    extensions: [md]
-    filename: "index.md"
-    subfolders: true
+    filename: "index.md"     # <-- must match your real file name
+    subfolders: true         # default is true; explicit here for clarity
     view:
       layout: tree
       node:
-        filename: index.md
-        hideDirs: others      # only show node folders (those with index.md)
+        filename: index.md   # display folders as nodes when they contain index.md
+        hideDirs: nodes
       primary: title
       fields: [title, category, lastUpdated]
       sort: [category, title]
@@ -80,20 +79,19 @@ content:
       - { name: body,        label: Body,         type: rich-text }
 
   # ---------------------
-  # DOCS — MDX (show only folders that contain index.mdx)
+  # DOCS — MDX (index.mdx in subfolders)
   # ---------------------
   - name: docs-mdx
     label: Docs (MDX)
     type: collection
     path: src/content/docs
-    extensions: [mdx]
-    filename: "index.mdx"
+    filename: "index.mdx"    # <-- matches MDX variant
     subfolders: true
     view:
       layout: tree
       node:
         filename: index.mdx
-        hideDirs: others      # only show node folders (those with index.mdx)
+        hideDirs: nodes
       primary: title
       fields: [title, category, lastUpdated]
       sort: [category, title]
