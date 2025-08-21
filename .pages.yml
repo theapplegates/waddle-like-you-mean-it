@@ -40,7 +40,7 @@ content:
         fields:
           - { name: title, label: Title, type: string }
           - { name: value, label: Value, type: string }
-          - { name: url,   label: URL,   type: string } # optional in Astro schema; not marked required here
+          - { name: url,   label: URL,   type: string }
       - name: logo
         label: Logo
         type: object
@@ -54,23 +54,51 @@ content:
       - { name: body, label: Body, type: rich-text }
 
   # ---------------------
-  # DOCS — MD + MDX (recursive subfolders)
+  # DOCS — MD (index.md in subfolders)
   # ---------------------
-  - name: docs
-    label: Docs
+  - name: docs-md
+    label: Docs (MD)
     type: collection
     path: src/content/docs
-    extensions: [md, mdx]
-    filename: "{slug}.{ext}"       # matches existing files incl. index.md / index.mdx
-    recursive: true
+    filename: "index.md"     # <-- must match your real file name
+    subfolders: true         # default is true; explicit here for clarity
     view:
+      layout: tree
+      node:
+        filename: index.md   # display folders as nodes when they contain index.md
+        hideDirs: nodes
       primary: title
       fields: [title, category, lastUpdated]
       sort: [category, title]
     fields:
       - { name: title,       label: Title,        type: string, required: true }
-      - { name: description, label: Description,  type: text,   required: true }
-      - { name: category,    label: Category,     type: string, required: true }
+      - { name: description, label: Description,  type: text }
+      - { name: category,    label: Category,     type: string }
+      - { name: order,       label: Order,        type: number }
+      - { name: lastUpdated, label: Last Updated, type: date }
+      - { name: body,        label: Body,         type: rich-text }
+
+  # ---------------------
+  # DOCS — MDX (index.mdx in subfolders)
+  # ---------------------
+  - name: docs-mdx
+    label: Docs (MDX)
+    type: collection
+    path: src/content/docs
+    filename: "index.mdx"    # <-- matches MDX variant
+    subfolders: true
+    view:
+      layout: tree
+      node:
+        filename: index.mdx
+        hideDirs: nodes
+      primary: title
+      fields: [title, category, lastUpdated]
+      sort: [category, title]
+    fields:
+      - { name: title,       label: Title,        type: string, required: true }
+      - { name: description, label: Description,  type: text }
+      - { name: category,    label: Category,     type: string }
       - { name: order,       label: Order,        type: number }
       - { name: lastUpdated, label: Last Updated, type: date }
       - { name: body,        label: Body,         type: rich-text }
