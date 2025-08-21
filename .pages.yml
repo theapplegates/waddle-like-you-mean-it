@@ -54,13 +54,13 @@ content:
       - { name: body, label: Body, type: rich-text }
 
   # ---------------------
-  # DOCS (content collection)
+  # DOCS (content collection; reads existing .md/.mdx)
   # ---------------------
   - name: docs
     label: Docs
-    type: collection
+    type: content
     path: src/content/docs
-    filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    filename: "{primary}.md"
     view:
       primary: title
       fields: [title, category, lastUpdated]
@@ -71,7 +71,6 @@ content:
       - { name: category,    label: Category,     type: string }
       - { name: order,       label: Order,        type: number }
       - { name: lastUpdated, label: Last Updated, type: date }
-      - { name: body,        label: Body,         type: rich-text }
 
   # ---------------------
   # INFO PAGES
