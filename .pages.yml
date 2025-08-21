@@ -1,4 +1,5 @@
 # .pages.yml — Pages CMS config (images in src/images)
+
 media:
   name: images
   label: Images
@@ -6,9 +7,11 @@ media:
   output: src/images
   path: ""
   extensions: [png, jpg, jpeg, webp, svg]
+
 settings:
   content:
     merge: true
+
 content:
   # ---------------------
   # INTEGRATIONS
@@ -23,9 +26,9 @@ content:
       fields: [integration, email]
       sort: [integration]
     fields:
-      - { name: email,        label: Email,        type: string }
-      - { name: integration,  label: Integration,  type: string }
-      - { name: description,  label: Description,  type: text }
+      - { name: email,        label: Email,        type: string, required: true }
+      - { name: integration,  label: Integration,  type: string, required: true }
+      - { name: description,  label: Description,  type: text,    required: true }
       - name: permissions
         label: Permissions
         type: string
@@ -37,7 +40,7 @@ content:
         fields:
           - { name: title, label: Title, type: string }
           - { name: value, label: Value, type: string }
-          - { name: url,   label: URL,   type: string }
+          - { name: url,   label: URL,   type: string } # optional in Astro schema; not marked required here
       - name: logo
         label: Logo
         type: object
@@ -49,13 +52,16 @@ content:
           - { name: alt, label: Alt text, type: string }
       - { name: tags, label: Tags, type: string, list: true }
       - { name: body, label: Body, type: rich-text }
+
   # ---------------------
-  # DOCS — read existing MD / MDX (recursively)
+  # DOCS — MD + MDX (recursive subfolders)
   # ---------------------
   - name: docs
     label: Docs
     type: collection
     path: src/content/docs
+    extensions: [md, mdx]
+    filename: "{slug}.{ext}"       # matches existing files incl. index.md / index.mdx
     recursive: true
     view:
       primary: title
@@ -63,11 +69,12 @@ content:
       sort: [category, title]
     fields:
       - { name: title,       label: Title,        type: string, required: true }
-      - { name: description, label: Description,  type: text }
-      - { name: category,    label: Category,     type: string }
+      - { name: description, label: Description,  type: text,   required: true }
+      - { name: category,    label: Category,     type: string, required: true }
       - { name: order,       label: Order,        type: number }
       - { name: lastUpdated, label: Last Updated, type: date }
       - { name: body,        label: Body,         type: rich-text }
+
   # ---------------------
   # INFO PAGES
   # ---------------------
@@ -82,8 +89,9 @@ content:
       sort: [page]
     fields:
       - { name: page,    label: Page,     type: string, required: true }
-      - { name: pubDate, label: Pub Date, type: date }
+      - { name: pubDate, label: Pub Date, type: date,   required: true }
       - { name: body,    label: Body,     type: rich-text }
+
   # ---------------------
   # CHANGELOG
   # ---------------------
@@ -101,8 +109,8 @@ content:
         order: desc
     fields:
       - { name: page,        label: Page,        type: string, required: true }
-      - { name: description, label: Description, type: text }
-      - { name: pubDate,     label: Pub Date,    type: date }
+      - { name: description, label: Description, type: text,   required: true }
+      - { name: pubDate,     label: Pub Date,    type: date,   required: true }
       - name: image
         label: Image
         type: object
@@ -113,6 +121,7 @@ content:
             options: { media: images }
           - { name: alt, label: Alt text, type: string }
       - { name: body, label: Body, type: rich-text }
+
   # ---------------------
   # TEAM
   # ---------------------
@@ -147,6 +156,7 @@ content:
           - { name: linkedin, label: LinkedIn, type: string }
           - { name: email,    label: Email,    type: string }
       - { name: body, label: Body, type: rich-text }
+
   # ---------------------
   # POSTS
   # ---------------------
@@ -164,9 +174,9 @@ content:
         order: desc
     fields:
       - { name: title,       label: Title,       type: string, required: true }
-      - { name: pubDate,     label: Pub Date,    type: date }
-      - { name: description, label: Description, type: text }
-      - { name: team,        label: Team,        type: string }
+      - { name: pubDate,     label: Pub Date,    type: date,   required: true }
+      - { name: description, label: Description, type: text,   required: true }
+      - { name: team,        label: Team,        type: string, required: true }
       - name: image
         label: Cover Image
         type: object
