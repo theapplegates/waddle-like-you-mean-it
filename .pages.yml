@@ -1,4 +1,4 @@
-# .pages.yml — Pages CMS config (images live in src/images)
+# .pages.yml — Pages CMS config (images in src/images)
 
 media:
   name: images
@@ -54,13 +54,13 @@ content:
       - { name: body, label: Body, type: rich-text }
 
   # ---------------------
-  # DOCS (read existing Markdown/MDX)
+  # DOCS — read existing MD / MDX (recursively)
   # ---------------------
   - name: docs
     label: Docs
     type: content
     path: src/content/docs
-    recursive: true          # include subfolders
+    recursive: true
     view:
       primary: title
       fields: [title, category, lastUpdated]
