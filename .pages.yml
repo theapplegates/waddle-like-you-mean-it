@@ -56,10 +56,15 @@ content:
   # ---------------------
   # DOCS — read existing MD / MDX (recursively)
   # ---------------------
+   # ---------------------
+  # DOCS (MD + MDX)
+  # ---------------------
   - name: docs
     label: Docs
-    type: content
+    type: collection
     path: src/content/docs
+    extensions: [md, mdx]
+    filename: "{year}{month}{day}-{hour}{minute}{second}.md"
     recursive: true
     view:
       primary: title
@@ -71,6 +76,8 @@ content:
       - { name: category,    label: Category,     type: string }
       - { name: order,       label: Order,        type: number }
       - { name: lastUpdated, label: Last Updated, type: date }
+      - { name: body,        label: Body,         type: rich-text }
+
 
   # ---------------------
   # INFO PAGES
