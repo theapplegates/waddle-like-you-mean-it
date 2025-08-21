@@ -1,5 +1,6 @@
 # .pages.yml — Pages CMS config (images in src/images)
 
+# Media configuration
 media:
   name: images
   label: Images
@@ -8,39 +9,60 @@ media:
   path: ""
   extensions: [png, jpg, jpeg, webp, svg]
 
+# Global settings
 settings:
   content:
     merge: true
 
+# Content collections
 content:
-  # ---------------------
+  # =====================
   # INTEGRATIONS
-  # ---------------------
+  # =====================
   - name: integrations
     label: Integrations
     type: collection
     path: src/content/integrations
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    
     view:
       primary: integration
       fields: [integration, email]
       sort: [integration]
+    
     fields:
-      - { name: email,        label: Email,        type: string }
-      - { name: integration,  label: Integration,  type: string }
-      - { name: description,  label: Description,  type: text }
+      - name: email
+        label: Email
+        type: string
+      
+      - name: integration
+        label: Integration
+        type: string
+      
+      - name: description
+        label: Description
+        type: text
+      
       - name: permissions
         label: Permissions
         type: string
         list: true
+      
       - name: details
         label: Details
         type: object
         list: true
         fields:
-          - { name: title, label: Title, type: string }
-          - { name: value, label: Value, type: string }
-          - { name: url,   label: URL,   type: string }
+          - name: title
+            label: Title
+            type: string
+          - name: value
+            label: Value
+            type: string
+          - name: url
+            label: URL
+            type: string
+      
       - name: logo
         label: Logo
         type: object
@@ -48,58 +70,99 @@ content:
           - name: url
             label: Image
             type: image
-            options: { media: images }
-          - { name: alt, label: Alt text, type: string }
-      - { name: tags, label: Tags, type: string, list: true }
-      - { name: body, label: Body, type: rich-text }
+            options:
+              media: images
+          - name: alt
+            label: Alt text
+            type: string
+      
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      
+      - name: body
+        label: Body
+        type: rich-text
 
-  # ---------------------
+  # =====================
   # DOCS (MD + MDX)
-  # ---------------------
+  # =====================
   - name: docs
     label: Docs
     type: collection
     path: src/content/docs
     extensions: [md, mdx]
-    filename: "{slug}.{ext}"   # allow both md & mdx, matches existing files
     recursive: true
+    # IMPORTANT: no "filename" line here during diagnosis
+    
     view:
       primary: title
-      fields: [title, category, lastUpdated]
-      sort: [category, title]
+      fields: [title]
+    
     fields:
-      - { name: title,       label: Title,        type: string, required: true }
-      - { name: description, label: Description,  type: text }
-      - { name: category,    label: Category,     type: string }
-      - { name: order,       label: Order,        type: number }
-      - { name: lastUpdated, label: Last Updated, type: date }
-      - { name: body,        label: Body,         type: rich-text }
+      - name: title
+        label: Title
+        type: string
+        # not required
+      
+      - name: description
+        label: Description
+        type: text
+      
+      - name: category
+        label: Category
+        type: string
+      
+      - name: order
+        label: Order
+        type: number
+      
+      - name: lastUpdated
+        label: Last Updated
+        type: date
+      
+      - name: body
+        label: Body
+        type: rich-text
 
-  # ---------------------
+  # =====================
   # INFO PAGES
-  # ---------------------
+  # =====================
   - name: infopages
     label: Info Pages
     type: collection
     path: src/content/infopages
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    
     view:
       primary: page
       fields: [page, pubDate]
       sort: [page]
+    
     fields:
-      - { name: page,    label: Page,     type: string, required: true }
-      - { name: pubDate, label: Pub Date, type: date }
-      - { name: body,    label: Body,     type: rich-text }
+      - name: page
+        label: Page
+        type: string
+        required: true
+      
+      - name: pubDate
+        label: Pub Date
+        type: date
+      
+      - name: body
+        label: Body
+        type: rich-text
 
-  # ---------------------
+  # =====================
   # CHANGELOG
-  # ---------------------
+  # =====================
   - name: changelog
     label: Changelog
     type: collection
     path: src/content/changelog
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    
     view:
       primary: page
       fields: [page, pubDate]
@@ -107,10 +170,21 @@ content:
       default:
         sort: pubDate
         order: desc
+    
     fields:
-      - { name: page,        label: Page,        type: string, required: true }
-      - { name: description, label: Description, type: text }
-      - { name: pubDate,     label: Pub Date,    type: date }
+      - name: page
+        label: Page
+        type: string
+        required: true
+      
+      - name: description
+        label: Description
+        type: text
+      
+      - name: pubDate
+        label: Pub Date
+        type: date
+      
       - name: image
         label: Image
         type: object
@@ -118,26 +192,44 @@ content:
           - name: url
             label: Image
             type: image
-            options: { media: images }
-          - { name: alt, label: Alt text, type: string }
-      - { name: body, label: Body, type: rich-text }
+            options:
+              media: images
+          - name: alt
+            label: Alt text
+            type: string
+      
+      - name: body
+        label: Body
+        type: rich-text
 
-  # ---------------------
+  # =====================
   # TEAM
-  # ---------------------
+  # =====================
   - name: team
     label: Team
     type: collection
     path: src/content/team
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    
     view:
       primary: name
       fields: [name, role]
       sort: [name]
+    
     fields:
-      - { name: name,  label: Name,  type: string, required: true }
-      - { name: role,  label: Role,  type: string }
-      - { name: bio,   label: Bio,   type: text }
+      - name: name
+        label: Name
+        type: string
+        required: true
+      
+      - name: role
+        label: Role
+        type: string
+      
+      - name: bio
+        label: Bio
+        type: text
+      
       - name: image
         label: Image
         type: object
@@ -145,26 +237,42 @@ content:
           - name: url
             label: Image
             type: image
-            options: { media: images }
-          - { name: alt, label: Alt text, type: string }
+            options:
+              media: images
+          - name: alt
+            label: Alt text
+            type: string
+      
       - name: socials
         label: Socials
         type: object
         fields:
-          - { name: twitter,  label: Twitter,  type: string }
-          - { name: website,  label: Website,  type: string }
-          - { name: linkedin, label: LinkedIn, type: string }
-          - { name: email,    label: Email,    type: string }
-      - { name: body, label: Body, type: rich-text }
+          - name: twitter
+            label: Twitter
+            type: string
+          - name: linkedin
+            label: LinkedIn
+            type: string
+          - name: website
+            label: Website
+            type: string
+          - name: email
+            label: Email
+            type: string
+      
+      - name: body
+        label: Body
+        type: rich-text
 
-  # ---------------------
+  # =====================
   # POSTS
-  # ---------------------
+  # =====================
   - name: posts
     label: Posts
     type: collection
     path: src/content/posts
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
+    
     view:
       primary: title
       fields: [title, pubDate, team]
@@ -172,11 +280,25 @@ content:
       default:
         sort: pubDate
         order: desc
+    
     fields:
-      - { name: title,       label: Title,       type: string, required: true }
-      - { name: pubDate,     label: Pub Date,    type: date }
-      - { name: description, label: Description, type: text }
-      - { name: team,        label: Team,        type: string }
+      - name: title
+        label: Title
+        type: string
+        required: true
+      
+      - name: pubDate
+        label: Pub Date
+        type: date
+      
+      - name: description
+        label: Description
+        type: text
+      
+      - name: team
+        label: Team
+        type: string
+      
       - name: image
         label: Cover Image
         type: object
@@ -184,7 +306,17 @@ content:
           - name: url
             label: Image
             type: image
-            options: { media: images }
-          - { name: alt, label: Alt text, type: string }
-      - { name: tags, label: Tags, type: string, list: true }
-      - { name: body, label: Body, type: rich-text }
+            options:
+              media: images
+          - name: alt
+            label: Alt text
+            type: string
+      
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      
+      - name: body
+        label: Body
+        type: rich-text
