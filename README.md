@@ -39,6 +39,10 @@ All commands are run from the root of the project, from a terminal:
 ## Learn more - Explore more through Astro's official [documentation](https://docs.astro.build).
 
 ---
+Updated on 02nd Jan 2026
+- Rewmoved icons not in use
+- General updates
+---
 Updated on 21th August 2025
 
 ### Optional CMS with pagesCMS
