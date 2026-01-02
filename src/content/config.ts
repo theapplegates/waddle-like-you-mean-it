@@ -30,7 +30,7 @@ const docsCollection = defineCollection({
     lastUpdated: z.date().optional(),
   }),
 });
-const infopages = defineCollection({
+const legal = defineCollection({
   schema: z.object({
     page: z.string(),
     pubDate: z.date(),
@@ -83,10 +83,10 @@ const postsCollection = defineCollection({
     }),
 });
 export const collections = {
-  team: team,
-  docs: docsCollection,
-  infopages: infopages,
-  changelog: changelog,
-  posts: postsCollection,
-  integrations: integrations,
+  team,
+  docsCollection,
+  legal,
+  changelog,
+  postsCollection,
+  integrations,
 };

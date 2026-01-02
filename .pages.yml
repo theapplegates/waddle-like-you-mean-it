@@ -104,12 +104,12 @@ content:
       - { name: body,        label: Body,         type: rich-text }
 
   # ---------------------
-  # INFO PAGES
+  # Legal
   # ---------------------
-  - name: infopages
+  - name: legal
     label: Info Pages
     type: collection
-    path: src/content/infopages
+    path: src/content/legal
     filename: "{year}{month}{day}-{hour}{minute}{second}.md"
     view:
       primary: page

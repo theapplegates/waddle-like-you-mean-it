@@ -10,7 +10,7 @@ import GitHub from "@/components/fundations/icons/GitHub.astro";
 import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
 ---
 
-<BaseLayout hideNav={true} hideFooter={true}>
+<BaseLayout hideNav="{true}" hideFooter="{true}">
   <section>
     <div
       class="relative flex flex-col items-center justify-center w-full h-svh px-8 py-12"
@@ -26,7 +26,7 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
             variant="displayMD"
             class="mt-12 font-medium text-base-900 dark:text-white"
           >
-            Sign in
+            Sign up
           </Text>
         </div>
         <form class="mt-10 space-y-4">
@@ -35,24 +35,16 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
               <label
                 for="email"
                 class="text-sm font-medium text-base-600 dark:text-base-300"
-                >Email Address</label
               >
+                Email Address
+              </label>
             </div>
             <div class="relative z-0 focus-within:z-10">
               <input
                 id="email"
                 name="email"
                 type="email"
-                class="block w-full px-4 py-2 text-xs leading-tight bg-white border border-transparent align-middle
-                         dark:bg-base-900
-                         dark:border-base-800
-                         text-base-600 dark:text-base-300
-                         ring-1 ring-base-200 dark:ring-base-700
-                         placeholder-base-400 dark:placeholder-base-500
-                         focus:z-10 h-9 rounded-md
-                         transition duration-300 ease-in-out
-                         focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300
-                         focus:outline-none shadow-sm"
+                class="block w-full px-4 py-2 text-xs leading-tight bg-white border border-transparent align-middle dark:bg-base-900 dark:border-base-800 text-base-600 dark:text-base-300 ring-1 ring-base-200 dark:ring-base-700 placeholder-base-400 dark:placeholder-base-500 focus:z-10 h-9 rounded-md transition duration-300 ease-in-out focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300 focus:outline-none shadow-sm"
                 inputmode="email"
               />
             </div>
@@ -62,41 +54,40 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
               <label
                 for="password"
                 class="text-sm font-medium text-base-600 dark:text-base-300"
-                >Password</label
               >
+                Password
+              </label>
             </div>
             <div class="relative z-0 focus-within:z-10">
               <input
                 required
                 id="password"
                 name="password"
-                class="block w-full px-4 py-2 text-xs leading-tight bg-white border border-transparent align-middle
-                         dark:bg-base-900
-                         dark:border-base-800
-                         text-base-600 dark:text-base-300
-                         ring-1 ring-base-200 dark:ring-base-700
-                         placeholder-base-400 dark:placeholder-base-500
-                         focus:z-10 h-9 rounded-md
-                         transition duration-300 ease-in-out
-                         focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300
-                         focus:outline-none shadow-sm"
+                type="password"
+                class="block w-full px-4 py-2 text-xs leading-tight bg-white border border-transparent align-middle dark:bg-base-900 dark:border-base-800 text-base-600 dark:text-base-300 ring-1 ring-base-200 dark:ring-base-700 placeholder-base-400 dark:placeholder-base-500 focus:z-10 h-9 rounded-md transition duration-300 ease-in-out focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300 focus:outline-none shadow-sm"
                 aria-required="true"
               />
             </div>
           </div>
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              id="login-remember"
-              name="login-remember"
-              class="rounded shadow border-base-300 text-accent-600 focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 size-4"
-            />
-            <label
-              for="login-remember"
-              class="ml-2 text-sm font-medium text-base-600 dark:text-base-300"
-            >
-              Remember me for 30 days
-            </label>
+          <div class="w-full">
+            <div class="flex items-baseline justify-between mb-1">
+              <label
+                for="confirm-password"
+                class="text-sm font-medium text-base-600 dark:text-base-300"
+              >
+                Confirm Password
+              </label>
+            </div>
+            <div class="relative z-0 focus-within:z-10">
+              <input
+                required
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                class="block w-full px-4 py-2 text-xs leading-tight bg-white border border-transparent align-middle dark:bg-base-900 dark:border-base-800 text-base-600 dark:text-base-300 ring-1 ring-base-200 dark:ring-base-700 placeholder-base-400 dark:placeholder-base-500 focus:z-10 h-9 rounded-md transition duration-300 ease-in-out focus:border-accent-500 focus:ring-2 focus:ring-accent-100 dark:focus:ring-accent-300 focus:outline-none shadow-sm"
+                aria-required="true"
+              />
+            </div>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <Button
@@ -121,12 +112,12 @@ import GoogleColor from "@/components/fundations/icons/GoogleColor.astro";
           </div>
         </form>
         <p class="mt-4 text-xs font-medium text-base-600 dark:text-base-300">
-          Dont' have an account?
+          Already have an account?
           <a
-            href="/forms/sign-up"
+            href="/sign-in"
             class="font-medium text-accent-500 hover:text-base-600 dark:text-base-300"
           >
-            Sign up
+            Sign in
           </a>
         </p>
       </div>
