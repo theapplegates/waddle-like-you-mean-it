@@ -1,20 +1,18 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import IntegrationsLayout from "@/layouts/IntegrationsLayout.astro";
 
 // Step 1: getStaticPaths
 export async function getStaticPaths() {
   const allIntegrations = await getCollection("integrations");
 
-  // You can optionally filter or sort here, depending on your needs
-  const sorted = allIntegrations.sort(
-    (a, b) =>
-      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  const sorted = [...allIntegrations].sort((a, b) =>
+    a.id.localeCompare(b.id)
   );
 
   return sorted.map((page) => ({
-    params: { slug: page.slug },
-    props: { slug: page.slug },
+    params: { slug: page.id },
+    props: { slug: page.id },
     trailingSlash: false,
   }));
 }
@@ -23,17 +21,14 @@ export async function getStaticPaths() {
 const { slug } = Astro.props;
 
 const allIntegrations = await getCollection("integrations");
-const sorted = allIntegrations.sort(
-  (a, b) =>
-    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
-);
+const sorted = [...allIntegrations].sort((a, b) => a.id.localeCompare(b.id));
 
-const index = sorted.findIndex((item) => item.slug === slug);
+const index = sorted.findIndex((item) => item.id === slug);
 const page = sorted[index];
 const previous = sorted[index - 1] || null;
 const next = sorted[index + 1] || null;
 
-const { Content } = await page.render();
+const { Content } = await render(page);
 ---
 
 <IntegrationsLayout frontmatter={page.data} previous={previous} next={next}>

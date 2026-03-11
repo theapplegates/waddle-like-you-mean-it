@@ -103,10 +103,10 @@ const breadcrumbs = [
               .filter((h) => h.depth === 2 || h.depth === 3)
               .map((heading) => (
                 <a
-                  href={`#${heading.slug}`}
+                  href={`#${heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}`}
                   class="block py-1 text-xs border-l-2 border-transparent select-none hover:text-accent-600 dark:hover:text-accent-400 text-base-500 dark:text-base-400  transition-all duration-200 toc-link"
                   style={`padding-left: ${heading.depth === 3 ? "1.8rem" : "1rem"}`}
-                  data-heading-id={heading.slug}
+                  data-heading-id={heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}
                   data-heading-depth={heading.depth}
                 >
                   {heading.text}
@@ -124,7 +124,7 @@ const breadcrumbs = [
         {
           previous && (
             <a
-              href={`/changelog/${previous.slug}`}
+              href={`/changelog/${previous.id}`}
               class="flex flex-col w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
             >
               <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
@@ -146,7 +146,7 @@ const breadcrumbs = [
         {
           next && (
             <a
-              href={`/changelog/${next.slug}`}
+              href={`/changelog/${next.id}`}
               class="flex flex-col justify-end w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
             >
               <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">

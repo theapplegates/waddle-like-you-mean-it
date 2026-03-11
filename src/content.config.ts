@@ -1,5 +1,9 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
+
 const integrations = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/integrations" }),
   schema: ({ image }) =>
     z.object({
       email: z.string(),
@@ -10,7 +14,7 @@ const integrations = defineCollection({
         z.object({
           title: z.string(),
           value: z.string(),
-          url: z.optional(z.string()),
+          url: z.string().optional(),
         })
       ),
       logo: z.object({
@@ -20,35 +24,46 @@ const integrations = defineCollection({
       tags: z.array(z.string()),
     }),
 });
-const docsCollection = defineCollection({
-  type: "content",
+
+const docs = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/docs",
+    generateId: ({ entry }) => entry.replace(/\.(mdx?|md)$/i, ""),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
     category: z.string(),
     order: z.number().optional(),
-    lastUpdated: z.date().optional(),
+    lastUpdated: z.coerce.date().optional(),
   }),
 });
+
 const legal = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/legal" }),
   schema: z.object({
     page: z.string(),
-    pubDate: z.date(),
+    pubDate: z.coerce.date(),
   }),
 });
+
 const changelog = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/changelog" }),
   schema: ({ image }) =>
     z.object({
       page: z.string(),
       description: z.string(),
-      pubDate: z.date(),
+      pubDate: z.coerce.date(),
       image: z.object({
         url: image(),
         alt: z.string(),
       }),
     }),
 });
+
 const team = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/team" }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -68,11 +83,13 @@ const team = defineCollection({
         .optional(),
     }),
 });
-const postsCollection = defineCollection({
+
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      pubDate: z.date(),
+      pubDate: z.coerce.date(),
       description: z.string(),
       team: z.string(),
       image: z.object({
@@ -82,11 +99,12 @@ const postsCollection = defineCollection({
       tags: z.array(z.string()),
     }),
 });
+
 export const collections = {
   team,
-  docsCollection,
+  docs,
   legal,
   changelog,
-  postsCollection,
+  posts,
   integrations,
 };

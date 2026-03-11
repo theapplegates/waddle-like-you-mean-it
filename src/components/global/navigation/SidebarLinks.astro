@@ -12,8 +12,8 @@ const sectionId = `section-${title.toLowerCase().replace(/\s+/g, "-")}`;
 const isOpenByDefault =
   docs.some(
     (doc) =>
-      currentPath === `/docs/${doc.slug}` ||
-      currentPath === `/docs/${doc.slug}/`
+      currentPath === `/docs/${doc.id}` ||
+      currentPath === `/docs/${doc.id}/`
   ) ||
   (title.toLowerCase() === "integrations" &&
     (currentPath === "/integrations" || currentPath === "/integrations/")) ||

@@ -32,7 +32,7 @@ Each section is collapsed or expanded based on the current page. This logic is h
 
 ```ts
 const isOpenByDefault =
-  docs.some((doc) => currentPath === `/docs/${doc.slug}` || currentPath === `/docs/${doc.slug}/`) ||
+  docs.some((doc) => currentPath === `/docs/${doc.id}` || currentPath === `/docs/${doc.id}/`) ||
   (title.toLowerCase() === "integrations" && currentPath.startsWith("/integrations")) ||
   (title.toLowerCase() === "changelog" && currentPath.startsWith("/changelog"));
 ```

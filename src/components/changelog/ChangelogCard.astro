@@ -5,7 +5,7 @@ import Text from "@/components/fundations/elements/Text.astro";
 import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
 // Content
 const { page, description, pubDate, image, url } = {
-  url: "/changelog/" + Astro.props.post.slug,
+  url: "/changelog/" + Astro.props.post.id,
   page: Astro.props.post.data.page,
   image: Astro.props.post.data.image.url,
   description: Astro.props.post.data.description,

@@ -22,13 +22,13 @@ import CopyToClipboard from "@/components/fundations/scripts/CopyToClipboard.ast
 import TocAnimationScript from "@/components/fundations/scripts/TocAnimationScript.astro";
 import DocsFeedbackButton from "@/components/fundations/scripts/DocsFeedbackButton.astro";
 // Content
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
   // Sort docs by order within each category
   const sortedDocs = docs.sort((a, b) => {
     if (a.data.category === b.data.category) {
-      return a.data.order - b.data.order;
+      return (a.data.order ?? 0) - (b.data.order ?? 0);
     }
     return a.data.category.localeCompare(b.data.category);
   });
@@ -37,7 +37,7 @@ export async function getStaticPaths() {
     const nextDoc =
       index < sortedDocs.length - 1 ? sortedDocs[index + 1] : null;
     return {
-      params: { slug: doc.slug },
+      params: { slug: doc.id },
       props: {
         doc,
         prevDoc,
@@ -47,12 +47,12 @@ export async function getStaticPaths() {
   });
 }
 type Props = {
-  doc: CollectionEntry<"docs">;
-  prevDoc: CollectionEntry<"docs"> | null;
-  nextDoc: CollectionEntry<"docs"> | null;
+  doc: Awaited<ReturnType<typeof getCollection<"docs">>>[number];
+  prevDoc: Awaited<ReturnType<typeof getCollection<"docs">>>[number] | null;
+  nextDoc: Awaited<ReturnType<typeof getCollection<"docs">>>[number] | null;
 };
 const { doc, prevDoc, nextDoc } = Astro.props;
-const { Content, headings } = await doc.render();
+const { Content, headings } = await render(doc);
 // Format the date
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -218,10 +218,10 @@ const formatDate = (date: Date) => {
             .filter((h) => h.depth === 2 || h.depth === 3)
             .map((heading) => (
               <a
-                href={`#${heading.slug}`}
+                href={`#${heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}`}
                 class="hover:text-accent-600 dark:hover:text-accent-400 text-base-500 dark:text-base-400 toc-link block py-1 text-xs transition-all duration-200 border-l-2 border-transparent select-none"
                 style={`padding-left: ${heading.depth === 3 ? "1.8rem" : "1rem"}`}
-                data-heading-id={heading.slug}
+                data-heading-id={heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}
                 data-heading-depth={heading.depth}
               >
                 {heading.text}
@@ -240,7 +240,7 @@ const formatDate = (date: Date) => {
       {
         prevDoc && (
           <a
-            href={`/docs/${prevDoc.slug}`}
+            href={`/docs/${prevDoc.id}`}
             class="group hover:bg-base-50 dark:hover:bg-white/1 flex flex-col w-full gap-12 p-8 duration-200"
           >
             <span class="text-base-500 dark:text-base-400 font-mon text-xs font-medium tracking-wide uppercase">
@@ -262,7 +262,7 @@ const formatDate = (date: Date) => {
       {
         nextDoc && (
           <a
-            href={`/docs/${nextDoc.slug}`}
+            href={`/docs/${nextDoc.id}`}
             class="group hover:bg-base-50 dark:hover:bg-white/1 flex flex-col justify-end w-full gap-12 p-8 duration-200"
           >
             <span class="text-base-500 dark:text-base-400 font-mono text-xs font-medium tracking-wide uppercase">

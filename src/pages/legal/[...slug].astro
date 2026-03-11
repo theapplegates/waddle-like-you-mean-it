@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import LegalLayout from "../../layouts/LegalLayout.astro";
 
 export async function getStaticPaths() {
@@ -11,8 +11,8 @@ export async function getStaticPaths() {
   );
 
   return sorted.map((page) => ({
-    params: { slug: page.slug },
-    props: { slug: page.slug },
+    params: { slug: page.id },
+    props: { slug: page.id },
     trailingSlash: false,
   }));
 }
@@ -26,13 +26,12 @@ const sorted = allPages.sort(
     new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
 
-const index = sorted.findIndex((item) => item.slug === slug);
+const index = sorted.findIndex((item) => item.id === slug);
 const page = sorted[index];
 const previous = sorted[index - 1] || null;
 const next = sorted[index + 1] || null;
 
-// ✅ Extract both Content and headings
-const { Content, headings } = await page.render();
+const { Content, headings } = await render(page);
 ---
 
 <LegalLayout

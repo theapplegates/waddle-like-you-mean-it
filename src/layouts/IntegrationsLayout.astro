@@ -124,7 +124,7 @@ const breadcrumbs = [
         {
           previous && (
             <a
-              href={`/integrations/${previous.slug}`}
+              href={`/integrations/${previous.id}`}
               class="flex flex-col w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
             >
               <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
@@ -146,7 +146,7 @@ const breadcrumbs = [
         {
           next && (
             <a
-              href={`/integrations/${next.slug}`}
+              href={`/integrations/${next.id}`}
               class="flex flex-col justify-end w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
             >
               <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">

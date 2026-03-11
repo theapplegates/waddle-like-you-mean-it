@@ -16,7 +16,7 @@ import TocAnimationScript from "@/components/fundations/scripts/TocAnimationScri
 // Content
 const { frontmatter, previous, next, headings = [] } = Astro.props;
 import { getEntry } from "astro:content";
-const team = await getEntry("team", frontmatter.team);
+const team = await getEntry("team", frontmatter.team) ?? null;
 // Get all posts and filter by tag
 import { getCollection } from "astro:content";
 const allPosts = await getCollection("posts");
@@ -51,7 +51,7 @@ const relatedPosts = allPosts.filter((post) =>
             {
               team && (
                 <div class="flex items-center gap-3 hover:opacity-80 transition ">
-                  <a href={`/team/${team.slug}`}>
+                  <a href={`/team/${team.id}`}>
                     {team?.data?.image?.url && (
                       <Image
                         width={100}
@@ -129,10 +129,10 @@ const relatedPosts = allPosts.filter((post) =>
               .filter((h) => h.depth === 2 || h.depth === 3)
               .map((heading) => (
                 <a
-                  href={`#${heading.slug}`}
+                  href={`#${heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}`}
                   class="block py-1 text-xs border-l-2 border-transparent select-none hover:text-accent-600 dark:hover:text-accent-400 text-base-500 dark:text-base-400  transition-all duration-200 toc-link"
                   style={`padding-left: ${heading.depth === 3 ? "1.8rem" : "1rem"}`}
-                  data-heading-id={heading.slug}
+                  data-heading-id={heading.slug ?? heading.text.toLowerCase().replace(/\s+/g, "-")}
                   data-heading-depth={heading.depth}
                 >
                   {heading.text}
@@ -151,7 +151,7 @@ const relatedPosts = allPosts.filter((post) =>
       {
         previous && (
           <a
-            href={`/blog/posts/${previous.slug}`}
+            href={`/blog/posts/${previous.id}`}
             class="flex flex-col w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
           >
             <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">
@@ -173,7 +173,7 @@ const relatedPosts = allPosts.filter((post) =>
       {
         next && (
           <a
-            href={`/blog/posts/${next.slug}`}
+            href={`/blog/posts/${next.id}`}
             class="flex flex-col justify-end w-full p-8 gap-12 group hover:bg-base-50 dark:hover:bg-white/1 duration-200"
           >
             <span class="font-mono text-xs font-medium tracking-wide uppercase text-base-500 dark:text-base-400">

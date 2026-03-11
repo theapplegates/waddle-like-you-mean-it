@@ -8,9 +8,9 @@ const { searchId = "default" } = Astro.props;
 const docs = await Promise.all(
   (await getCollection("docs")).map(async (entry) => ({
     title: entry.data.title,
-    content: entry.data.description || entry.body.slice(0, 200),
+    content: entry.data.description || (entry.body?.slice(0, 200) ?? ""),
     category: entry.data.category || "Docs",
-    url: `/docs/${entry.slug}`,
+    url: `/docs/${entry.id}`,
   }))
 );
 const inputId = `search-input-${searchId}`;

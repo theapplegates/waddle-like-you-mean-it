@@ -35,7 +35,7 @@ const allGroupedDocs = allDocs.reduce(
       acc[category] = [];
     }
     acc[category].push({
-      slug: doc.slug,
+      slug: doc.id,
       title: doc.data.title,
       order: doc.data.order || 999,
     });

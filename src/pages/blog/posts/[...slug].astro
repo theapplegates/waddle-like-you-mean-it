@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 export async function getStaticPaths() {
   const blogEntries = await getCollection("posts");
   return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { pageSlug: entry.slug },
+    params: { slug: entry.id },
+    props: { pageSlug: entry.id },
   }));
 }
 const { pageSlug } = Astro.props;
@@ -18,11 +18,11 @@ const sorted = validPosts.sort(
   (a, b) =>
     new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
-const index = sorted.findIndex((item) => item.slug === pageSlug);
+const index = sorted.findIndex((item) => item.id === pageSlug);
 const page = sorted[index];
 const previous = sorted[index - 1] || null;
 const next = sorted[index + 1] || null;
-const { Content, headings } = await page.render();
+const { Content, headings } = await render(page);
 ---
 <BlogLayout
   frontmatter={page.data}
