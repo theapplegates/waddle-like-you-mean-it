@@ -3,6 +3,7 @@
 **Zeroindex** is a Lexington Themes Astro template for a **product-style marketing and docs site**: a docs-style shell (sidebar, mobile top bar) wraps a **home** landing (`Hero`, getting-started, resources), **blog**, **changelog**, **integrations**, **team**, **legal**, **sign-in / sign-up**, and **system** UI reference pages. Primary use case: **SaaS / developer product** sites that need documentation, content collections, and a component showcase.
 
 **Publisher:** [Lexington Themes](https://lexingtonthemes.com/)  
+**Design rules:** [.cursor/skills/zeroindex-design/SKILL.md](./.cursor/skills/zeroindex-design/SKILL.md) - read before creating or changing any UI.  
 **Theme specs / bundle / support (from README):** [Zeroindex template](https://lexingtonthemes.com/templates/zeroindex) · [Documentation](https://lexingtonthemes.com/documentation) · [Theme changelog](https://lexingtonthemes.com/changelog/zeroindex) · [Support](https://lexingtonthemes.com/legal/support/) · [Get the bundle](https://lexingtonthemes.com)
 
 ---
